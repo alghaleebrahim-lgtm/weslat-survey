@@ -6,64 +6,60 @@
 <meta name="theme-color" content="#002EB0">
 <title>وصلت — الاستبيان الشهري لخدمة العملاء</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@500;700;800&display=swap" rel="stylesheet">
 <script>
 tailwind.config = { theme: { extend: {
   colors: {
-    brand: { DEFAULT:'#002EB0', dark:'#001E77', soft:'#E9EEFB', line:'#C9D6F5' },
-    gold:  { DEFAULT:'#FFBA08', soft:'#FFF4D6', deep:'#8A6100' },
-    ink:   { DEFAULT:'#0B1220', mid:'#43506B', light:'#8391AE' },
+    brand:{DEFAULT:'#002EB0',dark:'#001E77',soft:'#E9EEFB',line:'#C9D6F5'},
+    gold:{DEFAULT:'#FFBA08',soft:'#FFF4D6',deep:'#8A6100'},
+    ink:{DEFAULT:'#0B1220',mid:'#43506B',light:'#8391AE'},
     canvas:'#F4F6FB',
-    alert: { DEFAULT:'#B42318', soft:'#FDECEA' },
-    good:  { DEFAULT:'#067647', soft:'#E7F5EE' }
+    alert:{DEFAULT:'#B42318',soft:'#FDECEA'},
+    good:{DEFAULT:'#067647',soft:'#E7F5EE'}
   },
-  fontFamily: { body:['"IBM Plex Sans Arabic"','system-ui','sans-serif'], head:['"Noto Kufi Arabic"','system-ui','sans-serif'] }
+  fontFamily:{ body:['"IBM Plex Sans Arabic"','system-ui','sans-serif'], head:['"Noto Kufi Arabic"','system-ui','sans-serif'] }
 }}}
 </script>
 <style>
-  body { background:#F4F6FB; -webkit-text-size-adjust:100%; }
-  .num { font-variant-numeric: tabular-nums; }
-  /* 16px = يمنع تكبير الشاشة تلقائياً في iOS */
-  .fld { width:100%; background:#fff; border:1px solid #D9E0EF; border-radius:.75rem; padding:.8rem .85rem;
-         font-size:16px; color:#0B1220; min-height:48px; -webkit-appearance:none; appearance:none; }
-  select.fld { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238391AE' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-               background-repeat:no-repeat; background-position:left .7rem center; background-size:18px; padding-left:2.2rem; }
-  .fld:focus { outline:none; border-color:#002EB0; box-shadow:0 0 0 3px rgba(0,46,176,.12); }
-  .lbl { font-size:.8rem; font-weight:600; color:#43506B; margin-bottom:.35rem; display:block; }
-  .card { background:#fff; border:1px solid #E6EAF4; border-radius:1rem; }
-  .subcard { background:#FBFCFE; border:1px solid #E6EAF4; border-radius:.9rem; }
-  .bar { height:8px; border-radius:99px; background:#EDF1FA; overflow:hidden; }
-  .bar > i { display:block; height:100%; border-radius:99px; }
-  .star { width:44px; height:44px; font-size:1.7rem; line-height:1; color:#D9E0EF; background:none; border:none; padding:0; }
-  .star.on { color:#FFBA08; }
-  .star:focus-visible { outline:2px solid #002EB0; outline-offset:2px; border-radius:8px; }
-  .chip { display:inline-flex; align-items:center; gap:.25rem; font-size:.72rem; font-weight:600; padding:.2rem .55rem; border-radius:99px; }
-  .btn { min-height:48px; border-radius:.85rem; font-weight:700; font-size:.95rem; display:inline-flex; align-items:center; justify-content:center; gap:.4rem; }
-  .btn-primary { background:#002EB0; color:#fff; }
-  .btn-primary:active { background:#001E77; }
-  .btn-ghost { background:#fff; color:#43506B; border:1px solid #D9E0EF; }
-  .btn-wa { background:#128C7E; color:#fff; }
-  tbody tr:nth-child(even) { background:#FBFCFE; }
-  .fade { animation:fade .22s ease-out; }
-  @keyframes fade { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
-  @media (prefers-reduced-motion: reduce){ .fade{animation:none;} }
-  .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); }
-  @media print {
-    @page { size:A4; margin:12mm; }
-    body { background:#fff; }
-    .no-print { display:none !important; }
-    .print-only { display:block !important; }
-    .card { box-shadow:none !important; break-inside:avoid; }
-    .page-break { break-before:page; }
+  body{background:#F4F6FB;-webkit-text-size-adjust:100%}
+  .num{font-variant-numeric:tabular-nums}
+  .fld{width:100%;background:#fff;border:1px solid #D9E0EF;border-radius:.75rem;padding:.8rem .85rem;font-size:16px;color:#0B1220;min-height:48px;-webkit-appearance:none;appearance:none}
+  select.fld{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238391AE' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left .7rem center;background-size:18px;padding-left:2.2rem}
+  .fld:focus{outline:none;border-color:#002EB0;box-shadow:0 0 0 3px rgba(0,46,176,.12)}
+  .lbl{font-size:.8rem;font-weight:600;color:#43506B;margin-bottom:.35rem;display:block}
+  .card{background:#fff;border:1px solid #E6EAF4;border-radius:1rem}
+  .subcard{background:#FBFCFE;border:1px solid #E6EAF4;border-radius:.9rem}
+  .bar{height:8px;border-radius:99px;background:#EDF1FA;overflow:hidden}
+  .bar>i{display:block;height:100%;border-radius:99px}
+  .star{width:44px;height:44px;font-size:1.7rem;line-height:1;color:#D9E0EF;background:none;border:none;padding:0}
+  .star.on{color:#FFBA08}
+  .chip{display:inline-flex;align-items:center;gap:.25rem;font-size:.72rem;font-weight:600;padding:.2rem .55rem;border-radius:99px}
+  .btn{min-height:48px;border-radius:.85rem;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:0 1rem}
+  .btn-primary{background:#002EB0;color:#fff}
+  .btn-ghost{background:#fff;color:#43506B;border:1px solid #D9E0EF}
+  .btn-wa{background:#128C7E;color:#fff}
+  tbody tr:nth-child(even){background:#FBFCFE}
+  .chartbox{position:relative;height:280px}
+  @media (max-width:640px){.chartbox{height:240px}}
+  .fade{animation:fade .22s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 1rem)}
+  @media print{
+    @page{size:A4;margin:12mm}
+    body{background:#fff}
+    .no-print{display:none!important}
+    .print-only{display:block!important}
+    .card{break-inside:avoid}
+    .page-break{break-before:page}
   }
-  .print-only { display:none; }
+  .print-only{display:none}
 </style>
 </head>
 <body class="font-body text-ink">
 
-<!-- ==================== الهيدر ==================== -->
 <header class="no-print sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#E6EAF4]">
   <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center gap-3 justify-between">
     <div class="flex items-center gap-2.5 min-w-0">
@@ -77,35 +73,29 @@ tailwind.config = { theme: { extend: {
     </div>
     <div id="adminTabs" class="hidden items-center gap-1 bg-canvas p-1 rounded-xl border border-[#E6EAF4] shrink-0">
       <button id="tabBtnDash" class="px-3 py-2 rounded-lg text-[.8rem] font-bold">التقرير</button>
-      <button id="tabBtnSet"  class="px-3 py-2 rounded-lg text-[.8rem] font-bold">الروابط</button>
+      <button id="tabBtnSet" class="px-3 py-2 rounded-lg text-[.8rem] font-bold">الروابط</button>
     </div>
   </div>
 </header>
 
 <main class="max-w-6xl mx-auto px-4 py-5">
 
-<!-- ============================================================ -->
-<!-- ================== 1) نموذج الفرع (موبايل) ================= -->
-<!-- ============================================================ -->
+<!-- ==================== نموذج الموظفين ==================== -->
 <section id="viewForm" class="hidden fade max-w-xl mx-auto">
-
   <div class="card p-4 mb-4">
     <h2 class="font-head font-bold text-base mb-1">استبيان خدمة العملاء الشهري</h2>
-    <p class="text-sm text-ink-mid">عبّي النموذج مرة واحدة في نهاية الشهر من واقع مكالمات ورسائل العملاء عندك.</p>
+    <p class="text-sm text-ink-mid">عبّي النموذج في نهاية الشهر من واقع مكالمات ورسائل العملاء.</p>
   </div>
 
-  <!-- بيانات التقرير -->
   <div class="card p-4 mb-3">
     <h3 class="font-head font-bold text-sm mb-3 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> بيانات التقرير</h3>
     <div class="grid grid-cols-2 gap-3">
       <div><label class="lbl" for="fMonth">الشهر</label><select id="fMonth" class="fld"></select></div>
       <div><label class="lbl" for="fYear">السنة</label><select id="fYear" class="fld"></select></div>
-      <div><label class="lbl" for="fBranch">الفرع</label><select id="fBranch" class="fld"></select></div>
-      <div><label class="lbl" for="fAgent">اسمك</label><input id="fAgent" class="fld" placeholder="الاسم"></div>
     </div>
+    <div class="mt-3"><label class="lbl" for="fAgent">اسمك</label><input id="fAgent" class="fld" placeholder="الاسم الكامل"></div>
   </div>
 
-  <!-- المدن الأكثر طلباً -->
   <div class="card p-4 mb-3">
     <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> المدن الأكثر طلباً</h3>
     <p class="text-xs text-ink-light mb-3">المدن اللي العملاء شحنوا منها أو ليها بكثرة.</p>
@@ -113,7 +103,6 @@ tailwind.config = { theme: { extend: {
     <button type="button" onclick="addDemand()" class="btn btn-ghost w-full mt-3">+ إضافة مدينة</button>
   </div>
 
-  <!-- استفسارات التغطية -->
   <div class="card p-4 mb-3">
     <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-gold rounded-full"></span> استفسارات التغطية</h3>
     <p class="text-xs text-ink-light mb-3">مدن سأل عنها العملاء — وضّح إذا الخدمة متوفرة فيها ولا لأ.</p>
@@ -121,7 +110,6 @@ tailwind.config = { theme: { extend: {
     <button type="button" onclick="addCoverage()" class="btn btn-ghost w-full mt-3">+ إضافة استفسار</button>
   </div>
 
-  <!-- المشاكل التشغيلية -->
   <div class="card p-4 mb-3">
     <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-alert rounded-full"></span> المشاكل حسب المدينة</h3>
     <p class="text-xs text-ink-light mb-3">كل صف = نوع مشكلة واحد في مدينة واحدة.</p>
@@ -129,14 +117,13 @@ tailwind.config = { theme: { extend: {
     <button type="button" onclick="addIssue()" class="btn btn-ghost w-full mt-3">+ إضافة مشكلة</button>
   </div>
 
-  <!-- التقييم -->
   <div class="card p-4 mb-3">
     <h3 class="font-head font-bold text-sm mb-3 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> تقييم عام لخدمات الشحن</h3>
     <div id="rateBox" class="mb-4"></div>
     <label class="lbl" for="fImpression">انطباع العملاء خلال الشهر</label>
     <textarea id="fImpression" rows="3" class="fld mb-3" placeholder="أكتر شي سمعتو من العملاء…"></textarea>
     <label class="lbl" for="fSuggestions">ملاحظات لتحسين الشحن والتغليف</label>
-    <textarea id="fSuggestions" rows="3" class="fld" placeholder="مقترحات عملية من واقع الفرع…"></textarea>
+    <textarea id="fSuggestions" rows="3" class="fld" placeholder="مقترحات عملية…"></textarea>
   </div>
 
   <p id="formMsg" class="text-sm font-bold text-center mb-2"></p>
@@ -144,34 +131,29 @@ tailwind.config = { theme: { extend: {
     <button onclick="submitResponse()" class="btn btn-primary w-full">إرسال رد الشهر</button>
     <button onclick="resetForm(true)" class="btn btn-ghost w-full mt-2">تفريغ النموذج</button>
   </div>
-
   <div id="agentSaved" class="mt-6"></div>
 </section>
 
-<!-- شاشة نجاح الإرسال -->
+<!-- ==================== شاشة الإرسال ==================== -->
 <section id="viewDone" class="hidden fade max-w-xl mx-auto">
   <div class="card p-6 text-center">
     <div class="w-14 h-14 rounded-full bg-good-soft text-good grid place-items-center mx-auto mb-3 text-2xl">✓</div>
-    <h2 class="font-head font-bold text-lg mb-1">تم استلام ردك</h2>
+    <h2 class="font-head font-bold text-lg mb-1">تم حفظ ردك</h2>
     <p id="doneMeta" class="text-sm text-ink-mid mb-4"></p>
     <div id="doneStatus" class="mb-4"></div>
-    <div class="space-y-2">
-      <button onclick="startNew()" class="btn btn-ghost w-full">إدخال رد جديد</button>
-    </div>
+    <button onclick="startNew()" class="btn btn-ghost w-full">إدخال رد جديد</button>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- ==================== 2) تقرير الإدارة ====================== -->
-<!-- ============================================================ -->
+<!-- ==================== تقرير الإدارة ==================== -->
 <section id="viewDash" class="hidden fade">
   <div class="print-only mb-4 pb-3" style="border-bottom:2px solid #002EB0">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
       <div>
-        <div style="font-family:'Noto Kufi Arabic'; font-weight:800; font-size:20px; color:#002EB0">وصلت — التقرير الشهري لخدمة العملاء</div>
-        <div style="font-size:12px; color:#43506B">شحنتك… وعدنا</div>
+        <div style="font-family:'Noto Kufi Arabic';font-weight:800;font-size:20px;color:#002EB0">وصلت — التقرير الشهري لخدمة العملاء</div>
+        <div style="font-size:12px;color:#43506B">شحنتك… وعدنا</div>
       </div>
-      <div id="printMeta" style="font-size:12px; color:#43506B; text-align:left"></div>
+      <div id="printMeta" style="font-size:12px;color:#43506B;text-align:left"></div>
     </div>
   </div>
 
@@ -179,7 +161,7 @@ tailwind.config = { theme: { extend: {
     <div class="grid grid-cols-3 gap-2 mb-3">
       <div><label class="lbl" for="dMonth">الشهر</label><select id="dMonth" class="fld"></select></div>
       <div><label class="lbl" for="dYear">السنة</label><select id="dYear" class="fld"></select></div>
-      <div><label class="lbl" for="dBranch">الفرع</label><select id="dBranch" class="fld"></select></div>
+      <div><label class="lbl" for="dAgent">الموظف</label><select id="dAgent" class="fld"></select></div>
     </div>
     <div class="flex flex-wrap gap-2">
       <button onclick="window.print()" class="btn btn-primary flex-1 min-w-[9rem]">طباعة / حفظ PDF</button>
@@ -190,21 +172,47 @@ tailwind.config = { theme: { extend: {
 
   <div id="dashEmpty" class="hidden card p-8 text-center">
     <p class="font-head font-bold mb-1">ما في ردود للفترة دي</p>
-    <p class="text-sm text-ink-mid">غيّر الشهر أو الفرع، أو استقبل ردود الفروع من تبويب «الروابط».</p>
+    <p class="text-sm text-ink-mid">استورد ردود الموظفين من تبويب «الروابط»، أو غيّر الشهر.</p>
   </div>
 
   <div id="dashBody">
     <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4"></div>
 
+    <div class="grid lg:grid-cols-2 gap-4 mb-4">
+      <div class="card p-4">
+        <h2 class="font-head font-bold mb-3">أكثر المدن طلباً</h2>
+        <div class="chartbox"><canvas id="chDemand"></canvas></div>
+      </div>
+      <div class="card p-4">
+        <h2 class="font-head font-bold mb-3">توزيع أنواع المشاكل</h2>
+        <div class="chartbox"><canvas id="chIssues"></canvas></div>
+      </div>
+      <div class="card p-4">
+        <h2 class="font-head font-bold mb-1">المدن المطلوبة للتوسع</h2>
+        <p class="text-xs text-ink-light mb-3">استفسارات على مدن التغطية فيها غير متوفرة.</p>
+        <div class="chartbox"><canvas id="chExpansion"></canvas></div>
+      </div>
+      <div class="card p-4">
+        <h2 class="font-head font-bold mb-3">تقييم الخدمة (من 5)</h2>
+        <div class="chartbox"><canvas id="chRatings"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4 page-break">
+      <h2 class="font-head font-bold mb-1">التطور الشهري</h2>
+      <p class="text-xs text-ink-light mb-3">مقارنة حجم الطلبات وحالات المشاكل عبر الشهور (كل البيانات، بدون فلتر الشهر).</p>
+      <div class="chartbox"><canvas id="chTrend"></canvas></div>
+    </div>
+
     <div class="card p-4 mb-4">
       <h2 class="font-head font-bold mb-1">لوحة المدن</h2>
-      <p class="text-xs text-ink-light mb-4">كل مدينة بثلاثة أرقام: حجم الطلب، حالات المشاكل، واستفسارات التغطية.</p>
+      <p class="text-xs text-ink-light mb-4">كل مدينة بثلاثة أرقام: حجم الطلب، حالات المشاكل، استفسارات التغطية.</p>
       <div id="cityBoard" class="space-y-3"></div>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-4 mb-4">
       <div class="card p-4">
-        <h2 class="font-head font-bold mb-3">ترتيب أكثر المدن طلباً</h2>
+        <h2 class="font-head font-bold mb-3">جدول الطلب حسب المدينة</h2>
         <div class="overflow-x-auto"><table class="w-full text-sm">
           <thead><tr class="text-ink-light text-xs border-b border-[#E6EAF4]">
             <th class="text-right font-semibold py-2 w-7">#</th><th class="text-right font-semibold py-2">المدينة</th>
@@ -224,154 +232,92 @@ tailwind.config = { theme: { extend: {
       </div>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-4 mb-4 page-break">
-      <div class="card p-4">
-        <h2 class="font-head font-bold mb-1">المدن المطلوبة للتوسع</h2>
-        <p class="text-xs text-ink-light mb-3">مدن سأل عنها العملاء والتغطية فيها غير متوفرة.</p>
-        <div class="overflow-x-auto"><table class="w-full text-sm">
-          <thead><tr class="text-ink-light text-xs border-b border-[#E6EAF4]">
-            <th class="text-right font-semibold py-2 w-7">#</th><th class="text-right font-semibold py-2">المدينة</th>
-            <th class="text-center font-semibold py-2">استفسارات</th><th class="text-center font-semibold py-2">الفروع</th></tr></thead>
-          <tbody id="tblExpansion"></tbody>
-        </table></div>
-      </div>
-      <div class="card p-4">
-        <h2 class="font-head font-bold mb-3">تقييم الخدمة (من 5)</h2>
-        <div id="rateSummary" class="space-y-3"></div>
-      </div>
-    </div>
-
-    <div class="card p-4 mb-4">
-      <h2 class="font-head font-bold mb-3">توزيع أنواع المشاكل</h2>
-      <div id="issueTypes" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-    </div>
-
     <div class="card p-4 mb-8">
-      <h2 class="font-head font-bold mb-3">ملاحظات الفروع</h2>
+      <h2 class="font-head font-bold mb-3">ملاحظات الموظفين</h2>
       <div id="notesList" class="space-y-3"></div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================ -->
-<!-- ================ 3) الروابط والإعدادات ===================== -->
-<!-- ============================================================ -->
+<!-- ==================== الروابط ==================== -->
 <section id="viewSet" class="hidden fade max-w-3xl mx-auto">
-
   <div class="card p-4 mb-4">
-    <h2 class="font-head font-bold mb-1">رابط الفرع الخاص</h2>
-    <p class="text-sm text-ink-mid mb-4">ولّد رابط لكل فرع وأرسلو للموظف على واتساب. الرابط بيفتح نموذج الإدخال بس — بدون تقرير الإدارة.</p>
+    <h2 class="font-head font-bold mb-1">الروابط الثابتة</h2>
+    <p class="text-sm text-ink-mid mb-4">رابطين ثابتين ما بيتغيروا — احفظهم مرة واحدة.</p>
 
-    <label class="lbl" for="sBase">رابط الملف بعد رفعه على السيرفر</label>
-    <input id="sBase" class="fld mb-1" placeholder="https://survey.weslat.sd/index.html">
-    <p class="text-xs text-ink-light mb-4">لازم الملف يكون مرفوع على استضافة عشان الموظفين يفتحوه من التلفون.</p>
-
-    <label class="lbl" for="sBranch">الفرع</label>
-    <select id="sBranch" class="fld mb-4"></select>
-
-    <label class="lbl" for="sApi">رابط استقبال الردود — Webhook (اختياري)</label>
-    <input id="sApi" class="fld mb-1" placeholder="https://n8n.weslat.sd/webhook/survey" dir="ltr">
-    <p class="text-xs text-ink-light mb-4">لو حطيت رابط n8n أو Google Apps Script، رد الموظف بينرسل ليهو مباشرة من التلفون (POST · JSON).</p>
-
-    <label class="lbl" for="sWa">رقم واتساب الإدارة (بديل احتياطي)</label>
-    <input id="sWa" class="fld mb-1" placeholder="249900000000" dir="ltr" inputmode="numeric">
-    <p class="text-xs text-ink-light mb-4">لو ما في Webhook، الموظف بيرسل الرد كرسالة واتساب جاهزة وأنت بتستوردها من تحت.</p>
-
-    <button onclick="buildLink()" class="btn btn-primary w-full mb-3">توليد الرابط</button>
-    <div id="linkOut" class="hidden">
-      <div class="subcard p-3 mb-2 break-all text-xs num" id="linkText" dir="ltr"></div>
+    <div class="subcard p-3 mb-3">
+      <p class="text-sm font-bold mb-2">رابط الموظفين (خدمة العملاء)</p>
+      <div class="bg-white border border-[#E6EAF4] rounded-lg p-2 text-xs break-all num mb-2" id="linkAgent" dir="ltr"></div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="copyLink()" class="btn btn-ghost flex-1 min-w-[7rem]">نسخ الرابط</button>
-        <button onclick="shareLink()" class="btn btn-wa flex-1 min-w-[7rem]">إرسال واتساب</button>
-        <button onclick="openLink()" class="btn btn-ghost flex-1 min-w-[7rem]">فتح للتجربة</button>
+        <button onclick="copyText('linkAgent')" class="btn btn-ghost flex-1 min-w-[6rem]">نسخ</button>
+        <button onclick="shareText('linkAgent','رابط استبيان خدمة العملاء الشهري')" class="btn btn-wa flex-1 min-w-[6rem]">واتساب</button>
       </div>
+    </div>
+
+    <div class="subcard p-3">
+      <p class="text-sm font-bold mb-2">رابط الإدارة (التقرير)</p>
+      <div class="bg-white border border-[#E6EAF4] rounded-lg p-2 text-xs break-all num mb-2" id="linkAdmin" dir="ltr"></div>
+      <div class="flex gap-2">
+        <button onclick="copyText('linkAdmin')" class="btn btn-ghost w-full">نسخ</button>
+      </div>
+      <p class="text-xs text-ink-light mt-2">احتفظ بيهو ليك — الموظفين ما بيحتاجوه.</p>
     </div>
   </div>
 
   <div class="card p-4 mb-4">
     <h2 class="font-head font-bold mb-1">استيراد رد من موظف</h2>
-    <p class="text-sm text-ink-mid mb-3">الصق كود الرد الواصل عبر واتساب (السطر اللي بيبدأ بـ WSL-) وبينضاف للتقرير.</p>
+    <p class="text-sm text-ink-mid mb-3">الصق الكود الواصل عبر واتساب (بيبدأ بـ WSL-) وبينضاف للتقرير.</p>
     <textarea id="importBox" rows="4" class="fld mb-2" dir="ltr" placeholder="WSL-…"></textarea>
-    <button onclick="importCode()" class="btn btn-primary w-full">استيراد الرد</button>
+    <button onclick="importCode()" class="btn btn-primary w-full">استيراد</button>
     <p id="importMsg" class="text-sm font-bold mt-2"></p>
   </div>
 
   <div class="card p-4 mb-8">
-    <h2 class="font-head font-bold mb-1">إدارة الفروع</h2>
-    <p class="text-sm text-ink-mid mb-3">الفروع الظاهرة في النموذج ورابط التوليد.</p>
-    <div id="branchList" class="flex flex-wrap gap-2 mb-3"></div>
-    <div class="flex gap-2">
-      <input id="newBranch" class="fld" placeholder="اسم فرع جديد">
-      <button onclick="addBranch()" class="btn btn-primary px-5">إضافة</button>
-    </div>
+    <h2 class="font-head font-bold mb-1">الإرسال التلقائي (اختياري)</h2>
+    <p class="text-sm text-ink-mid mb-3">لو عايز ردود الموظفين توصلك تلقائياً بدون واتساب، عدّل السطرين دول في أول ملف <span class="num" dir="ltr">index.html</span> على GitHub:</p>
+    <pre class="bg-ink text-white text-xs rounded-lg p-3 overflow-x-auto" dir="ltr">const WEBHOOK  = "https://your-n8n-url/webhook/survey";
+const ADMIN_WA = "249xxxxxxxxx";</pre>
+    <p class="text-xs text-ink-light mt-2">الأول رابط استقبال البيانات (n8n أو Google Apps Script)، والتاني رقم واتساب الإدارة للطريقة اليدوية.</p>
   </div>
 </section>
 </main>
 
 <footer class="no-print text-center text-xs text-ink-light pb-8 px-4">
-  الردود بتتخزن في متصفح الجهاز، وبتتحوّل للإدارة عبر الـ Webhook أو واتساب.
+  الردود بتتخزن على جهاز الموظف وبتتحوّل للإدارة عبر الإرسال التلقائي أو واتساب.
 </footer>
 
-<datalist id="cityList"></datalist>
-
 <script>
-/* ==================== ثوابت ==================== */
-const CITIES = ["الخرطوم","أم درمان","بحري","بورتسودان","عطبرة","كسلا","ود مدني","القضارف","الأبيض","الدمازين",
-"سنار","سنجة","كوستي","ربك","الدويم","دنقلا","مروي","كريمة","شندي","الدامر","أبو حمد","وادي حلفا","حلفا الجديدة",
-"النهود","الرهد","أم روابة","كادوقلي","الدلنج","الفولة","بابنوسة","المجلد","الفاشر","نيالا","الجنينة","زالنجي",
-"الضعين","الحصاحيصا","رفاعة","الكاملين","المناقل","سواكن","طوكر","سنكات","هيا","أروما","القطينة","تندلتي"];
+/* ══════════ إعدادات تعدّلها مرة واحدة ══════════ */
+const WEBHOOK  = "";            // رابط n8n أو Apps Script لاستقبال الردود
+const ADMIN_WA = "";            // رقم واتساب الإدارة مثال: 249912345678
+/* ═══════════════════════════════════════════════ */
+
+const CITIES = ["الخرطوم","أم درمان","بحري","ود مدني","الحصاحيصا","رفاعة","المناقل","الكاملين","القطينة","الدويم","كوستي","ربك","تندلتي","أم روابة","الرهد","الأبيض","النهود","الفولة","بابنوسة","المجلد","كادوقلي","الدلنج","سنار","سنجة","الدمازين","القضارف","الفاو","كسلا","أروما","حلفا الجديدة","بورتسودان","سواكن","طوكر","سنكات","هيا","عطبرة","الدامر","شندي","بربر","أبو حمد","مروي","كريمة","دنقلا","الدبة","وادي حلفا","الفاشر","نيالا","الضعين","زالنجي","الجنينة"];
 const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
 const ISSUE_TYPES = ["تأخير في التسليم","تلف أو نقص","الأسعار","التتبع والمتابعة","عدم توفر تغطية","سوء تغليف","أخرى"];
 const RATE_KEYS = [["speed","سرعة التوصيل"],["packaging","سلامة التغليف"],["pricing","وضوح الأسعار"],["tracking","دقة التتبع"],["team","تعامل الفريق"]];
-const DEFAULT_BRANCHES = ["أم درمان","بورتسودان","عطبرة","كسلا","الخرطوم"];
-const KEY = "weslat_survey_v2", CFG = "weslat_cfg_v2";
+const KEY = "weslat_survey_v3";
 
-/* ==================== تخزين ==================== */
 const readJSON = (k,f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch(e){ return f; } };
-const writeJSON = (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } };
-let DATA = readJSON(KEY, []).filter(r => !r.demo && r.id > 1000);   // تنظيف أي بيانات تجريبية قديمة
-let CONF = Object.assign({ branches: DEFAULT_BRANCHES.slice(), base:"", api:"", wa:"" }, readJSON(CFG, {}));
-writeJSON(KEY, DATA);
-const persist = () => writeJSON(KEY, DATA);
-const saveConf = () => writeJSON(CFG, CONF);
+let DATA = readJSON(KEY, []);
+const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(DATA)); } catch(e){} };
 
-/* ==================== ترميز ==================== */
 const enc = o => "WSL-" + btoa(unescape(encodeURIComponent(JSON.stringify(o))));
 const dec = s => JSON.parse(decodeURIComponent(escape(atob(String(s).trim().replace(/^WSL-/,"").replace(/\s+/g,"")))));
 
-/* ==================== الوضع (رابط الفرع) ==================== */
-const params = new URLSearchParams(location.hash.replace(/^#\/?/, "").replace(/^agent\??/, ""));
-const IS_AGENT = /^#\/?agent/.test(location.hash);
-const LINK = { branch: params.get("b") || "", api: params.get("api") ? atob(params.get("api")) : "", wa: params.get("wa") || "" };
-const API = IS_AGENT ? LINK.api : CONF.api;
-const WA  = IS_AGENT ? LINK.wa  : CONF.wa;
+const IS_ADMIN = /admin/i.test(location.hash);
 
-/* ==================== تهيئة ==================== */
+/* ── تهيئة القوائم ── */
 const now = new Date();
 const years = [now.getFullYear()-1, now.getFullYear(), now.getFullYear()+1];
-document.getElementById("cityList").innerHTML = CITIES.map(c => `<option value="${c}">`).join("");
-fMonth.innerHTML = MONTHS.map((m,i) => `<option value="${i}">${m}</option>`).join(""); fMonth.value = now.getMonth();
-fYear.innerHTML = years.map(y => `<option>${y}</option>`).join(""); fYear.value = now.getFullYear();
+const cityOptions = `<option value="">اختر المدينة</option>` + CITIES.map(c => `<option>${c}</option>`).join("");
+fMonth.innerHTML = MONTHS.map((m,i)=>`<option value="${i}">${m}</option>`).join(""); fMonth.value = now.getMonth();
+fYear.innerHTML = years.map(y=>`<option>${y}</option>`).join(""); fYear.value = now.getFullYear();
 dMonth.innerHTML = `<option value="all">كل الشهور</option>` + MONTHS.map((m,i)=>`<option value="${i}">${m}</option>`).join(""); dMonth.value = now.getMonth();
 dYear.innerHTML = `<option value="all">الكل</option>` + years.map(y=>`<option>${y}</option>`).join(""); dYear.value = now.getFullYear();
-[dMonth,dYear,dBranch].forEach(el => el.onchange = renderDash);
+[dMonth,dYear,dAgent].forEach(el => el.onchange = renderDash);
 
-function fillBranches(){
-  const list = CONF.branches;
-  fBranch.innerHTML = list.map(b => `<option>${b}</option>`).join("");
-  sBranch.innerHTML = list.map(b => `<option>${b}</option>`).join("");
-  if(LINK.branch){ if(!list.includes(LINK.branch)) fBranch.insertAdjacentHTML("afterbegin", `<option>${LINK.branch}</option>`); fBranch.value = LINK.branch; }
-  branchList.innerHTML = list.map(b => `<span class="chip bg-brand-soft text-brand">${b}
-    <button onclick="delBranch('${b}')" class="text-brand/60 hover:text-alert mr-1">✕</button></span>`).join("");
-}
-function addBranch(){
-  const v = newBranch.value.trim(); if(!v) return;
-  if(!CONF.branches.includes(v)) CONF.branches.push(v);
-  newBranch.value = ""; saveConf(); fillBranches();
-}
-function delBranch(b){ CONF.branches = CONF.branches.filter(x => x !== b); saveConf(); fillBranches(); }
-
-/* ==================== التنقل ==================== */
+/* ── التنقل ── */
 function show(id){
   ["viewForm","viewDone","viewDash","viewSet"].forEach(v => document.getElementById(v).classList.toggle("hidden", v !== id));
   window.scrollTo({top:0});
@@ -386,42 +332,42 @@ function setAdminTab(t){
 tabBtnDash.onclick = () => setAdminTab("dash");
 tabBtnSet.onclick  = () => setAdminTab("set");
 
-/* ==================== صفوف النموذج (بطاقات موبايل) ==================== */
-const cityInput = v => `<div><label class="lbl">المدينة</label><input class="fld" list="cityList" placeholder="اكتب أو اختر" value="${v||""}"></div>`;
+/* ── صفوف النموذج ── */
 const rowHead = t => `<div class="flex items-center justify-between mb-2"><span class="text-xs font-bold text-ink-light">${t}</span>
   <button type="button" onclick="this.closest('.row').remove()" class="text-xs font-bold text-alert px-2 py-1">حذف</button></div>`;
+const citySelect = `<div><label class="lbl">المدينة</label><select class="fld">${cityOptions}</select></div>`;
 
-function addDemand(v={}){
+function addDemand(){
   const r = document.createElement("div"); r.className = "row subcard p-3";
-  r.innerHTML = rowHead("مدينة") + cityInput(v.city) + `
+  r.innerHTML = rowHead("مدينة") + citySelect + `
     <div class="grid grid-cols-2 gap-2 mt-2">
       <div><label class="lbl">الاتجاه</label><select class="fld"><option value="from">شحن منها</option><option value="to">شحن إليها</option></select></div>
-      <div><label class="lbl">عدد الطلبات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0" value="${v.count||""}"></div>
+      <div><label class="lbl">عدد الطلبات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div>
     </div>`;
   demandRows.appendChild(r);
 }
-function addCoverage(v={}){
+function addCoverage(){
   const r = document.createElement("div"); r.className = "row subcard p-3";
-  r.innerHTML = rowHead("استفسار تغطية") + cityInput(v.city) + `
+  r.innerHTML = rowHead("استفسار تغطية") + citySelect + `
     <div class="grid grid-cols-2 gap-2 mt-2">
       <div><label class="lbl">نوع الاستفسار</label><select class="fld"><option value="to">الشحن إليها</option><option value="from">الشحن منها</option></select></div>
       <div><label class="lbl">حالة التغطية</label><select class="fld"><option value="no">غير متوفرة</option><option value="yes">متوفرة</option></select></div>
     </div>
-    <div class="mt-2"><label class="lbl">عدد الاستفسارات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0" value="${v.count||""}"></div>`;
+    <div class="mt-2"><label class="lbl">عدد الاستفسارات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div>`;
   coverageRows.appendChild(r);
 }
-function addIssue(v={}){
+function addIssue(){
   const r = document.createElement("div"); r.className = "row subcard p-3";
-  r.innerHTML = rowHead("مشكلة") + cityInput(v.city) + `
+  r.innerHTML = rowHead("مشكلة") + citySelect + `
     <div class="grid grid-cols-2 gap-2 mt-2">
       <div><label class="lbl">نوع المشكلة</label><select class="fld">${ISSUE_TYPES.map(t=>`<option>${t}</option>`).join("")}</select></div>
-      <div><label class="lbl">عدد الحالات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0" value="${v.count||""}"></div>
+      <div><label class="lbl">عدد الحالات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div>
     </div>
-    <div class="mt-2"><label class="lbl">ملاحظة (اختياري)</label><input class="fld" placeholder="سبب المشكلة أو تفصيل مختصر"></div>`;
+    <div class="mt-2"><label class="lbl">ملاحظة (اختياري)</label><input class="fld" placeholder="تفصيل مختصر"></div>`;
   issueRows.appendChild(r);
 }
 
-/* ==================== النجوم ==================== */
+/* ── النجوم ── */
 let ratings = {};
 function renderRates(){
   rateBox.innerHTML = RATE_KEYS.map(([k,label]) => `
@@ -433,53 +379,48 @@ function renderRates(){
 }
 function setRate(k,n){ ratings[k] = (ratings[k]===n ? 0 : n); renderRates(); }
 
-/* ==================== الإرسال ==================== */
-function collect(container, map){
-  return [...container.querySelectorAll(".row")].map(r => map([...r.querySelectorAll("input,select")])).filter(x => x.city);
-}
+/* ── الإرسال ── */
+const collect = (box, map) => [...box.querySelectorAll(".row")].map(r => map([...r.querySelectorAll("input,select")])).filter(x => x.city);
 function submitResponse(){
+  if(!fAgent.value.trim()) return msg("اكتب اسمك أولاً.", false);
   const rec = {
     id: Date.now(), ts: new Date().toISOString(),
-    month:+fMonth.value, year:+fYear.value,
-    branch: fBranch.value, agent: fAgent.value.trim() || "غير محدد",
-    demand:   collect(demandRows,   f => ({ city:f[0].value.trim(), dir:f[1].value, count:+f[2].value||0 })),
-    coverage: collect(coverageRows, f => ({ city:f[0].value.trim(), dir:f[1].value, available:f[2].value==="yes", count:+f[3].value||0 })),
-    issues:   collect(issueRows,    f => ({ city:f[0].value.trim(), type:f[1].value, count:+f[2].value||0, note:f[3].value.trim() })),
-    ratings: {...ratings}, impression: fImpression.value.trim(), suggestions: fSuggestions.value.trim(), sent:false
+    month:+fMonth.value, year:+fYear.value, agent: fAgent.value.trim(),
+    demand:   collect(demandRows,   f => ({city:f[0].value, dir:f[1].value, count:+f[2].value||0})),
+    coverage: collect(coverageRows, f => ({city:f[0].value, dir:f[1].value, available:f[2].value==="yes", count:+f[3].value||0})),
+    issues:   collect(issueRows,    f => ({city:f[0].value, type:f[1].value, count:+f[2].value||0, note:f[3].value.trim()})),
+    ratings:{...ratings}, impression: fImpression.value.trim(), suggestions: fSuggestions.value.trim(), sent:false
   };
-  if(!fAgent.value.trim()) return msg("اكتب اسمك أولاً.", false);
   if(!rec.demand.length && !rec.coverage.length && !rec.issues.length) return msg("أضف مدينة أو مشكلة واحدة على الأقل.", false);
-
   DATA.push(rec); persist();
-  doneMeta.textContent = `${MONTHS[rec.month]} ${rec.year} — فرع ${rec.branch}`;
-  show("viewDone");
-  deliver(rec);
+  doneMeta.textContent = `${MONTHS[rec.month]} ${rec.year} — ${rec.agent}`;
+  show("viewDone"); deliver(rec.id);
 }
-function deliver(rec){
-  if(API){
+function deliver(id){
+  const rec = DATA.find(x => x.id === id); if(!rec) return;
+  if(WEBHOOK){
     doneStatus.innerHTML = `<p class="text-sm text-ink-mid">جاري الإرسال للإدارة…</p>`;
-    fetch(API, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(rec) })
-      .then(r => { if(!r.ok) throw 0; markSent(rec.id);
-        doneStatus.innerHTML = `<p class="chip bg-good-soft text-good">تم الإرسال للإدارة</p>`; })
-      .catch(() => { doneStatus.innerHTML =
-        `<p class="text-sm text-alert mb-2">الإرسال ما نجح — تأكد من الشبكة.</p>
-         <button onclick='deliver(${JSON.stringify(rec)})' class="btn btn-ghost w-full mb-2">إعادة المحاولة</button>` + waBtn(rec); });
+    fetch(WEBHOOK, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(rec)})
+      .then(r => { if(!r.ok) throw 0; markSent(id); doneStatus.innerHTML = `<p class="chip bg-good-soft text-good">تم الإرسال للإدارة</p>`; })
+      .catch(() => { doneStatus.innerHTML = `<p class="text-sm text-alert mb-2">الإرسال ما نجح — تأكد من الشبكة.</p>
+        <button onclick="deliver(${id})" class="btn btn-ghost w-full mb-2">إعادة المحاولة</button>` + manual(rec); });
   } else {
-    doneStatus.innerHTML = `<p class="text-sm text-ink-mid mb-2">أرسل الرد للإدارة عشان يدخل في التقرير الشهري.</p>` + waBtn(rec);
+    doneStatus.innerHTML = `<p class="text-sm text-ink-mid mb-2">أرسل الرد للإدارة عشان يدخل في التقرير.</p>` + manual(rec);
   }
 }
-function waBtn(rec){
-  const text = `تقرير خدمة العملاء — ${MONTHS[rec.month]} ${rec.year}\nفرع: ${rec.branch}\nالموظف: ${rec.agent}\n\n${enc(rec)}`;
-  const url = `https://wa.me/${(WA||"").replace(/\D/g,"")}?text=${encodeURIComponent(text)}`;
-  return `<a href="${url}" target="_blank" rel="noopener" onclick="markSent(${rec.id})" class="btn btn-wa w-full">إرسال عبر واتساب</a>`;
+function manual(rec){
+  const text = `تقرير خدمة العملاء — ${MONTHS[rec.month]} ${rec.year}\nالموظف: ${rec.agent}\n\n${enc(rec)}`;
+  const url = `https://wa.me/${ADMIN_WA.replace(/\D/g,"")}?text=${encodeURIComponent(text)}`;
+  return `<a href="${url}" target="_blank" rel="noopener" onclick="markSent(${rec.id})" class="btn btn-wa w-full mb-2">إرسال عبر واتساب</a>
+    <button onclick="copyCode(${rec.id})" class="btn btn-ghost w-full">نسخ كود الرد</button>`;
+}
+function copyCode(id){
+  const rec = DATA.find(x => x.id === id); if(!rec) return;
+  navigator.clipboard.writeText(enc(rec)).then(() => { markSent(id); alert("تم نسخ الكود — أرسلو للإدارة."); }, () => alert("تعذّر النسخ."));
 }
 function markSent(id){ const r = DATA.find(x => x.id === id); if(r){ r.sent = true; persist(); renderAgentSaved(); } }
 function startNew(){ resetForm(false); show("viewForm"); renderAgentSaved(); }
-function msg(t, ok){
-  formMsg.textContent = t;
-  formMsg.className = "text-sm font-bold text-center mb-2 " + (ok ? "text-good" : "text-alert");
-  setTimeout(() => formMsg.textContent = "", 4000);
-}
+function msg(t, ok){ formMsg.textContent = t; formMsg.className = "text-sm font-bold text-center mb-2 " + (ok ? "text-good" : "text-alert"); setTimeout(()=>formMsg.textContent="",4000); }
 function resetForm(withMsg){
   demandRows.innerHTML = coverageRows.innerHTML = issueRows.innerHTML = "";
   addDemand(); addCoverage(); addIssue();
@@ -492,187 +433,194 @@ function renderAgentSaved(){
     <h3 class="font-head font-bold text-sm mb-2">ردودك على الجهاز</h3>
     <div class="card divide-y divide-[#F0F3FA]">${mine.map(r => `
       <div class="flex items-center justify-between gap-2 p-3">
-        <div class="min-w-0">
-          <p class="text-sm font-semibold truncate">${MONTHS[r.month]} ${r.year} — ${r.branch}</p>
-          <p class="text-xs text-ink-light">${r.demand.length} مدينة · ${r.issues.length} مشكلة</p>
-        </div>
+        <div class="min-w-0"><p class="text-sm font-semibold truncate">${MONTHS[r.month]} ${r.year}</p>
+        <p class="text-xs text-ink-light">${(r.demand||[]).length} مدينة · ${(r.issues||[]).length} مشكلة</p></div>
         ${r.sent ? `<span class="chip bg-good-soft text-good shrink-0">مُرسل</span>`
-                 : `<button onclick='resend(${r.id})' class="chip bg-gold-soft text-gold-deep shrink-0">لم يُرسل — إعادة</button>`}
+                 : `<button onclick="resend(${r.id})" class="chip bg-gold-soft text-gold-deep shrink-0">لم يُرسل — إعادة</button>`}
       </div>`).join("")}</div>`;
 }
-function resend(id){
-  const r = DATA.find(x => x.id === id); if(!r) return;
-  doneMeta.textContent = `${MONTHS[r.month]} ${r.year} — فرع ${r.branch}`;
-  show("viewDone"); deliver(r);
-}
+function resend(id){ const r = DATA.find(x=>x.id===id); if(!r) return;
+  doneMeta.textContent = `${MONTHS[r.month]} ${r.year} — ${r.agent}`; show("viewDone"); deliver(id); }
 
-/* ==================== الروابط ==================== */
-function buildLink(){
-  CONF.base = sBase.value.trim(); CONF.api = sApi.value.trim(); CONF.wa = sWa.value.replace(/\D/g,""); saveConf();
-  const base = CONF.base || location.href.split("#")[0];
-  let h = "#agent?b=" + encodeURIComponent(sBranch.value);
-  if(CONF.api) h += "&api=" + encodeURIComponent(btoa(CONF.api));
-  if(CONF.wa)  h += "&wa="  + CONF.wa;
-  linkText.textContent = base + h;
-  linkOut.classList.remove("hidden");
+/* ── الروابط ── */
+function baseURL(){ return location.href.split("#")[0]; }
+function copyText(id){
+  navigator.clipboard.writeText(document.getElementById(id).textContent)
+    .then(() => alert("تم النسخ."), () => alert("انسخ الرابط يدوياً."));
 }
-function copyLink(){
-  navigator.clipboard.writeText(linkText.textContent).then(() => alert("تم نسخ الرابط."), () => alert("انسخ الرابط يدوياً."));
+function shareText(id, label){
+  window.open("https://wa.me/?text=" + encodeURIComponent(label + "\n" + document.getElementById(id).textContent), "_blank");
 }
-function shareLink(){
-  const t = `رابط استبيان خدمة العملاء الشهري — فرع ${sBranch.value}\n${linkText.textContent}`;
-  window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank");
-}
-function openLink(){ window.open(linkText.textContent, "_blank"); }
-
 function importCode(){
   try {
     const rec = dec(importBox.value);
     if(!rec || !rec.id) throw 0;
     if(DATA.some(x => x.id === rec.id)) return imsg("الرد ده مستورد قبل كده.", false);
     rec.sent = true; DATA.push(rec); persist(); importBox.value = "";
-    imsg(`تم استيراد رد ${MONTHS[rec.month]} ${rec.year} — فرع ${rec.branch}.`, true);
+    imsg(`تم استيراد رد ${MONTHS[rec.month]} ${rec.year} — ${rec.agent}.`, true);
     renderDash();
   } catch(e){ imsg("الكود غير صالح — تأكد من نسخه كامل.", false); }
 }
 function imsg(t, ok){ importMsg.textContent = t; importMsg.className = "text-sm font-bold mt-2 " + (ok ? "text-good" : "text-alert"); }
 
-/* ==================== لوحة الإدارة ==================== */
-const pct = (v,max) => max > 0 ? Math.round(v/max*100) : 0;
-function filtered(){
-  return DATA.filter(r =>
-    (dMonth.value === "all" || r.month === +dMonth.value) &&
-    (dYear.value  === "all" || r.year  === +dYear.value) &&
-    (dBranch.value === "all" || r.branch === dBranch.value));
+/* ── التقرير ── */
+const pct = (v,m) => m > 0 ? Math.round(v/m*100) : 0;
+const CH = {};
+function chart(id, cfg){
+  if(CH[id]) CH[id].destroy();
+  Chart.defaults.font.family = "'IBM Plex Sans Arabic', sans-serif";
+  Chart.defaults.color = "#43506B";
+  CH[id] = new Chart(document.getElementById(id), cfg);
 }
-function renderDash(){
-  const branches = [...new Set(DATA.map(r => r.branch))];
-  const cur = dBranch.value || "all";
-  dBranch.innerHTML = `<option value="all">كل الفروع</option>` + branches.map(b => `<option>${b}</option>`).join("");
-  dBranch.value = branches.includes(cur) ? cur : "all";
-
-  const recs = filtered();
-  dashEmpty.classList.toggle("hidden", recs.length > 0);
-  dashBody.classList.toggle("hidden", recs.length === 0);
-  printMeta.innerHTML = `${dMonth.value==="all" ? "كل الشهور" : MONTHS[+dMonth.value]} ${dYear.value==="all" ? "" : dYear.value}<br>
-    ${dBranch.value==="all" ? "كل الفروع" : "فرع " + dBranch.value} — ${recs.length} رد`;
-  if(!recs.length) return;
-
-  const city = {}, get = c => city[c] || (city[c] = {from:0,to:0,issues:0,inq:0,gap:0,types:{},branches:new Set()});
+function aggregate(recs){
+  const city = {}, get = c => city[c] || (city[c] = {from:0,to:0,issues:0,inq:0,gap:0,types:{}});
   const typeTotals = {}; let issueTotal = 0, demandTotal = 0;
   const rateSum = {}, rateCount = {};
-
   recs.forEach(r => {
-    (r.demand||[]).forEach(d => { const c = get(d.city); c[d.dir === "from" ? "from" : "to"] += d.count; demandTotal += d.count; });
-    (r.coverage||[]).forEach(v => { const c = get(v.city); c.inq += v.count; if(!v.available){ c.gap += v.count; c.branches.add(r.branch); } });
-    (r.issues||[]).forEach(i => { const c = get(i.city), n = i.count || 1;
+    (r.demand||[]).forEach(d => { const c = get(d.city); c[d.dir==="from"?"from":"to"] += d.count; demandTotal += d.count; });
+    (r.coverage||[]).forEach(v => { const c = get(v.city); c.inq += v.count; if(!v.available) c.gap += v.count; });
+    (r.issues||[]).forEach(i => { const c = get(i.city), n = i.count||1;
       c.issues += n; c.types[i.type] = (c.types[i.type]||0)+n; typeTotals[i.type] = (typeTotals[i.type]||0)+n; issueTotal += n; });
-    RATE_KEYS.forEach(([k]) => { const v = r.ratings?.[k]; if(v > 0){ rateSum[k]=(rateSum[k]||0)+v; rateCount[k]=(rateCount[k]||0)+1; } });
+    RATE_KEYS.forEach(([k]) => { const v = r.ratings?.[k]; if(v>0){ rateSum[k]=(rateSum[k]||0)+v; rateCount[k]=(rateCount[k]||0)+1; } });
   });
-
   const list = Object.entries(city).map(([name,v]) => ({name, ...v, demand: v.from + v.to}));
-  const vals = RATE_KEYS.map(([k]) => rateCount[k] ? rateSum[k]/rateCount[k] : null).filter(v => v !== null);
+  return {list, typeTotals, issueTotal, demandTotal, rateSum, rateCount};
+}
+function renderDash(){
+  const agents = [...new Set(DATA.map(r => r.agent))];
+  const cur = dAgent.value || "all";
+  dAgent.innerHTML = `<option value="all">الكل</option>` + agents.map(a => `<option>${a}</option>`).join("");
+  dAgent.value = agents.includes(cur) ? cur : "all";
+
+  const recs = DATA.filter(r =>
+    (dMonth.value==="all" || r.month===+dMonth.value) &&
+    (dYear.value==="all"  || r.year===+dYear.value) &&
+    (dAgent.value==="all" || r.agent===dAgent.value));
+
+  dashEmpty.classList.toggle("hidden", recs.length > 0);
+  dashBody.classList.toggle("hidden", recs.length === 0);
+  printMeta.innerHTML = `${dMonth.value==="all"?"كل الشهور":MONTHS[+dMonth.value]} ${dYear.value==="all"?"":dYear.value}<br>
+    ${dAgent.value==="all"?"كل الموظفين":dAgent.value} — ${recs.length} رد`;
+  if(!recs.length) return;
+
+  const A = aggregate(recs);
+  const vals = RATE_KEYS.map(([k]) => A.rateCount[k] ? A.rateSum[k]/A.rateCount[k] : null).filter(v => v!==null);
   const avgAll = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
 
   const kpi = (l,v,s,t) => `<div class="card p-3"><p class="text-xs text-ink-light mb-1">${l}</p>
     <p class="font-head font-extrabold text-2xl num ${t||"text-ink"}">${v}</p><p class="text-xs text-ink-light mt-1">${s}</p></div>`;
   kpis.innerHTML =
-    kpi("ردود الفروع", recs.length, [...new Set(recs.map(r=>r.branch))].length + " فرع") +
-    kpi("الطلبات المسجّلة", demandTotal.toLocaleString("en"), list.length + " مدينة") +
-    kpi("حالات المشاكل", issueTotal.toLocaleString("en"), issueTotal ? Object.keys(typeTotals).length + " نوع" : "لا توجد", issueTotal ? "text-alert" : "text-good") +
-    kpi("متوسط التقييم", avgAll ? avgAll.toFixed(1)+" / 5" : "—", "من ملاحظات الفروع", avgAll >= 4 ? "text-good" : avgAll >= 3 ? "text-ink" : "text-alert");
+    kpi("عدد الردود", recs.length, [...new Set(recs.map(r=>r.agent))].length + " موظف") +
+    kpi("الطلبات المسجّلة", A.demandTotal.toLocaleString("en"), A.list.length + " مدينة") +
+    kpi("حالات المشاكل", A.issueTotal.toLocaleString("en"), A.issueTotal ? Object.keys(A.typeTotals).length + " نوع" : "لا توجد", A.issueTotal ? "text-alert" : "text-good") +
+    kpi("متوسط التقييم", avgAll ? avgAll.toFixed(1)+" / 5" : "—", "من ملاحظات الموظفين", avgAll>=4 ? "text-good" : avgAll>=3 ? "text-ink" : "text-alert");
 
-  const board = [...list].sort((a,b)=>b.demand-a.demand).slice(0,12);
+  /* رسم 1 — أكثر المدن طلباً */
+  const dem = [...A.list].filter(c=>c.demand>0).sort((a,b)=>b.demand-a.demand).slice(0,8);
+  chart("chDemand", { type:"bar",
+    data:{ labels: dem.map(c=>c.name), datasets:[
+      {label:"شحن منها", data:dem.map(c=>c.from), backgroundColor:"#002EB0", borderRadius:6},
+      {label:"شحن إليها", data:dem.map(c=>c.to), backgroundColor:"#7B95E8", borderRadius:6}]},
+    options:{ maintainAspectRatio:false, responsive:true, plugins:{legend:{position:"bottom"}},
+      scales:{ x:{stacked:true, grid:{display:false}}, y:{stacked:true, beginAtZero:true, grid:{color:"#EDF1FA"}} } } });
+
+  /* رسم 2 — أنواع المشاكل */
+  const tEntries = Object.entries(A.typeTotals).sort((a,b)=>b[1]-a[1]);
+  chart("chIssues", { type:"doughnut",
+    data:{ labels: tEntries.map(t=>t[0]), datasets:[{ data:tEntries.map(t=>t[1]),
+      backgroundColor:["#B42318","#E86A5E","#FFBA08","#002EB0","#7B95E8","#8391AE","#C9D6F5"], borderWidth:0 }]},
+    options:{ maintainAspectRatio:false, responsive:true, cutout:"58%", plugins:{legend:{position:"bottom", labels:{boxWidth:12}}} } });
+
+  /* رسم 3 — أولوية التوسع */
+  const exp = [...A.list].filter(c=>c.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,8);
+  chart("chExpansion", { type:"bar",
+    data:{ labels: exp.map(c=>c.name), datasets:[{ label:"استفسارات خارج التغطية", data:exp.map(c=>c.gap), backgroundColor:"#FFBA08", borderRadius:6 }]},
+    options:{ indexAxis:"y", maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}},
+      scales:{ x:{beginAtZero:true, grid:{color:"#EDF1FA"}}, y:{grid:{display:false}} } } });
+
+  /* رسم 4 — التقييمات */
+  chart("chRatings", { type:"radar",
+    data:{ labels: RATE_KEYS.map(r=>r[1]), datasets:[{ label:"المتوسط",
+      data: RATE_KEYS.map(([k]) => A.rateCount[k] ? +(A.rateSum[k]/A.rateCount[k]).toFixed(2) : 0),
+      backgroundColor:"rgba(0,46,176,.15)", borderColor:"#002EB0", pointBackgroundColor:"#FFBA08", borderWidth:2 }]},
+    options:{ maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}},
+      scales:{ r:{ min:0, max:5, ticks:{stepSize:1, backdropColor:"transparent"}, grid:{color:"#EDF1FA"}, angleLines:{color:"#EDF1FA"} } } } });
+
+  /* رسم 5 — التطور الشهري (كل البيانات) */
+  const byMonth = {};
+  DATA.forEach(r => {
+    const k = `${r.year}-${String(r.month+1).padStart(2,"0")}`;
+    const b = byMonth[k] || (byMonth[k] = {d:0,i:0});
+    (r.demand||[]).forEach(x => b.d += x.count);
+    (r.issues||[]).forEach(x => b.i += (x.count||1));
+  });
+  const mk = Object.keys(byMonth).sort();
+  chart("chTrend", { type:"line",
+    data:{ labels: mk.map(k => MONTHS[+k.split("-")[1]-1] + " " + k.split("-")[0]), datasets:[
+      { label:"الطلبات", data: mk.map(k=>byMonth[k].d), borderColor:"#002EB0", backgroundColor:"rgba(0,46,176,.08)", fill:true, tension:.3, borderWidth:2 },
+      { label:"المشاكل", data: mk.map(k=>byMonth[k].i), borderColor:"#B42318", backgroundColor:"rgba(180,35,24,.06)", fill:true, tension:.3, borderWidth:2 }]},
+    options:{ maintainAspectRatio:false, responsive:true, plugins:{legend:{position:"bottom"}},
+      scales:{ x:{grid:{display:false}}, y:{beginAtZero:true, grid:{color:"#EDF1FA"}} } } });
+
+  /* لوحة المدن */
+  const board = [...A.list].sort((a,b)=>b.demand-a.demand).slice(0,12);
   const maxD = Math.max(...board.map(c=>c.demand), 1);
   cityBoard.innerHTML = board.map(c => `
     <div class="grid sm:grid-cols-[1fr_2.2fr_auto] items-center gap-2 sm:gap-3 pb-3 border-b border-[#F0F3FA] last:border-0">
-      <div class="flex items-center gap-2">
-        <span class="font-semibold text-sm">${c.name}</span>
-        ${c.gap ? `<span class="chip bg-gold-soft text-gold-deep">فجوة تغطية</span>` : ""}
-      </div>
-      <div>
-        <div class="bar"><i style="width:${pct(c.demand,maxD)}%; background:#002EB0"></i></div>
-        ${c.issues ? `<div class="bar mt-1.5"><i style="width:${pct(c.issues, Math.max(c.demand,c.issues,1))}%; background:#B42318"></i></div>` : ""}
-      </div>
+      <div class="flex items-center gap-2"><span class="font-semibold text-sm">${c.name}</span>
+        ${c.gap ? `<span class="chip bg-gold-soft text-gold-deep">فجوة تغطية</span>` : ""}</div>
+      <div><div class="bar"><i style="width:${pct(c.demand,maxD)}%;background:#002EB0"></i></div>
+        ${c.issues ? `<div class="bar mt-1.5"><i style="width:${pct(c.issues,Math.max(c.demand,c.issues,1))}%;background:#B42318"></i></div>` : ""}</div>
       <div class="flex items-center gap-3 text-xs num">
         <span class="text-brand font-bold">${c.demand} طلب</span>
-        <span class="${c.issues ? "text-alert" : "text-ink-light"} font-bold">${c.issues} مشكلة</span>
-        <span class="text-ink-light font-bold">${c.inq} استفسار</span>
-      </div>
+        <span class="${c.issues?"text-alert":"text-ink-light"} font-bold">${c.issues} مشكلة</span>
+        <span class="text-ink-light font-bold">${c.inq} استفسار</span></div>
     </div>`).join("");
 
-  const dem = [...list].filter(c=>c.demand>0).sort((a,b)=>b.demand-a.demand).slice(0,10);
   tblDemand.innerHTML = dem.length ? dem.map((c,i) => `<tr class="border-b border-[#F0F3FA]">
     <td class="py-2 text-ink-light num">${i+1}</td><td class="py-2 font-semibold">${c.name}</td>
     <td class="py-2 text-center num">${c.from}</td><td class="py-2 text-center num">${c.to}</td>
     <td class="py-2 text-center num font-bold text-brand">${c.demand}</td></tr>`).join("") : emptyRow(5);
 
-  const iss = [...list].filter(c=>c.issues>0).sort((a,b)=>b.issues-a.issues).slice(0,10);
+  const iss = [...A.list].filter(c=>c.issues>0).sort((a,b)=>b.issues-a.issues).slice(0,10);
   tblIssues.innerHTML = iss.length ? iss.map((c,i) => `<tr class="border-b border-[#F0F3FA]">
     <td class="py-2 text-ink-light num">${i+1}</td><td class="py-2 font-semibold">${c.name}</td>
     <td class="py-2"><div class="flex flex-wrap gap-1">${Object.entries(c.types).sort((a,b)=>b[1]-a[1])
       .map(([t,n]) => `<span class="chip bg-alert-soft text-alert">${t} <b class="num">${n}</b></span>`).join("")}</div></td>
     <td class="py-2 text-center num font-bold text-alert">${c.issues}</td></tr>`).join("") : emptyRow(4);
 
-  const exp = [...list].filter(c=>c.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,10);
-  tblExpansion.innerHTML = exp.length ? exp.map((c,i) => `<tr class="border-b border-[#F0F3FA]">
-    <td class="py-2 text-ink-light num">${i+1}</td><td class="py-2 font-semibold">${c.name}</td>
-    <td class="py-2 text-center num font-bold text-gold-deep">${c.gap}</td>
-    <td class="py-2 text-center text-xs text-ink-mid">${[...c.branches].join("، ")}</td></tr>`).join("")
-    : emptyRow(4, "ما في مدن مطلوبة خارج التغطية.");
-
-  rateSummary.innerHTML = RATE_KEYS.map(([k,label]) => {
-    const v = rateCount[k] ? rateSum[k]/rateCount[k] : 0;
-    const color = v >= 4 ? "#067647" : v >= 3 ? "#FFBA08" : "#B42318";
-    return `<div><div class="flex justify-between text-sm mb-1"><span class="text-ink-mid">${label}</span>
-      <span class="font-bold num" style="color:${color}">${v ? v.toFixed(1) : "—"}</span></div>
-      <div class="bar"><i style="width:${v/5*100}%; background:${color}"></i></div></div>`;
-  }).join("");
-
-  issueTypes.innerHTML = Object.entries(typeTotals).sort((a,b)=>b[1]-a[1]).map(([t,n]) => `
-    <div class="border border-[#E6EAF4] rounded-xl p-3">
-      <div class="flex justify-between items-baseline mb-2"><span class="text-sm font-semibold">${t}</span>
-      <span class="num text-sm font-bold text-alert">${n} <span class="text-ink-light font-normal">(${pct(n,issueTotal)}%)</span></span></div>
-      <div class="bar"><i style="width:${pct(n,issueTotal)}%; background:#B42318"></i></div>
-    </div>`).join("") || `<p class="text-sm text-ink-light">ما في مشاكل مسجّلة.</p>`;
-
   const notes = recs.filter(r => r.impression || r.suggestions);
   notesList.innerHTML = notes.length ? notes.map(r => `
     <div class="border-r-2 border-brand-line pr-3">
-      <p class="text-xs text-ink-light mb-1">${r.branch} — ${r.agent} · ${MONTHS[r.month]} ${r.year}</p>
+      <p class="text-xs text-ink-light mb-1">${r.agent} · ${MONTHS[r.month]} ${r.year}</p>
       ${r.impression ? `<p class="text-sm mb-1"><b class="text-ink-mid">انطباع العملاء:</b> ${r.impression}</p>` : ""}
       ${r.suggestions ? `<p class="text-sm"><b class="text-ink-mid">مقترح تحسين:</b> ${r.suggestions}</p>` : ""}
     </div>`).join("") : `<p class="text-sm text-ink-light">ما في ملاحظات مكتوبة.</p>`;
 }
 const emptyRow = (c,t) => `<tr><td colspan="${c}" class="py-4 text-center text-sm text-ink-light">${t||"لا توجد بيانات."}</td></tr>`;
 
-/* ==================== أدوات ==================== */
 function exportJSON(){
   const blob = new Blob([JSON.stringify(DATA,null,2)], {type:"application/json"});
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "weslat-survey-" + new Date().toISOString().slice(0,10) + ".json";
+  a.href = URL.createObjectURL(blob); a.download = "weslat-survey-" + new Date().toISOString().slice(0,10) + ".json";
   a.click(); URL.revokeObjectURL(a.href);
 }
-function clearAll(){
-  if(!confirm("مسح كل الردود المحفوظة على الجهاز ده نهائياً؟")) return;
-  DATA = []; persist(); renderDash(); renderAgentSaved();
-}
+function clearAll(){ if(!confirm("مسح كل الردود على الجهاز ده نهائياً؟")) return; DATA = []; persist(); renderDash(); }
 
-/* ==================== الإقلاع ==================== */
-fillBranches();
+/* ── الإقلاع ── */
 resetForm(false);
-if(IS_AGENT){
-  hTitle.textContent = "استبيان خدمة العملاء";
-  hSub.textContent = LINK.branch ? "فرع " + LINK.branch : "وصلت";
-  document.getElementById("adminTabs").classList.add("hidden");
-  show("viewForm"); renderAgentSaved();
-} else {
+if(IS_ADMIN){
   hTitle.textContent = "وصلت — تقرير خدمة العملاء";
-  document.getElementById("adminTabs").classList.remove("hidden");
-  document.getElementById("adminTabs").classList.add("flex");
-  sBase.value = CONF.base; sApi.value = CONF.api; sWa.value = CONF.wa;
+  hSub.textContent = "واجهة الإدارة";
+  const tabs = document.getElementById("adminTabs");
+  tabs.classList.remove("hidden"); tabs.classList.add("flex");
+  linkAgent.textContent = baseURL();
+  linkAdmin.textContent = baseURL() + "#admin";
   setAdminTab("dash");
+} else {
+  hTitle.textContent = "استبيان خدمة العملاء";
+  hSub.textContent = "وصلت — شحنتك… وعدنا";
+  show("viewForm"); renderAgentSaved();
 }
 </script>
 </body>
