@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#002EB0">
+<title>وصلت — النماذج والتقارير</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201566%201563%22%3E%3Crect%20width=%221566%22%20height=%221563%22%20fill=%22%23002EB0%22/%3E%3Cpath%20fill=%22%23FFBA08%22%20d=%22M786%2057%20L1372%20645%20L982%20645%20L786%20451%20L590%20645%20L196%20645%20Z%22/%3E%3Cpath%20fill=%22%23FFFFFF%22%20d=%22M196%20645%20L590%201039%20L786%20843%20L982%201039%20L1372%20645%20L1372%201040%20L984%201432%20L786%201236%20L588%201432%20L196%201040%20Z%22/%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@500;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{
+ colors:{brand:{DEFAULT:'#002EB0',dark:'#001E77',soft:'#E9EEFB',line:'#C9D6F5'},
+  gold:{DEFAULT:'#FFBA08',soft:'#FFF4D6',deep:'#8A6100'},
+  ink:{DEFAULT:'#0B1220',mid:'#43506B',light:'#8391AE'},
+  alert:{DEFAULT:'#B42318',soft:'#FDECEA'},good:{DEFAULT:'#067647',soft:'#E7F5EE'}},
+ fontFamily:{body:['"IBM Plex Sans Arabic"','system-ui','sans-serif'],head:['"Noto Kufi Arabic"','system-ui','sans-serif']}
+}}}
+</script>
+<style>
+ body{background:#F4F6FB;-webkit-text-size-adjust:100%}
+ .num{font-variant-numeric:tabular-nums}
+ .fld{width:100%;background:#fff;border:1px solid #D9E0EF;border-radius:.75rem;padding:.8rem .85rem;font-size:16px;color:#0B1220;min-height:48px;-webkit-appearance:none;appearance:none}
+ select.fld{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238391AE' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left .7rem center;background-size:18px;padding-left:2.2rem}
+ .fld:focus{outline:none;border-color:#002EB0;box-shadow:0 0 0 3px rgba(0,46,176,.12)}
+ .fld.bad{border-color:#B42318;background:#FFF9F8}
+ .lbl{font-size:.82rem;font-weight:600;color:#43506B;margin-bottom:.35rem;display:block}
+ .req:after{content:" *";color:#B42318}
+ .card{background:#fff;border:1px solid #E6EAF4;border-radius:1rem}
+ .subcard{background:#FBFCFE;border:1px solid #E6EAF4;border-radius:.9rem}
+ .btn{min-height:50px;border-radius:.85rem;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:0 1rem}
+ .btn-primary{background:#002EB0;color:#fff}
+ .btn-ghost{background:#fff;color:#43506B;border:1px solid #D9E0EF}
+ .btn-wa{background:#128C7E;color:#fff}
+ .opt{display:block;cursor:pointer}
+ .opt input{position:absolute;opacity:0;pointer-events:none}
+ .opt span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:46px;padding:.5rem .6rem;border:1px solid #D9E0EF;background:#fff;border-radius:.7rem;font-size:.85rem;font-weight:600;color:#43506B;line-height:1.25}
+ .opt input:checked + span{border-color:#002EB0;background:#E9EEFB;color:#002EB0;box-shadow:inset 0 0 0 1px #002EB0}
+ .star{width:44px;height:44px;font-size:1.7rem;line-height:1;color:#D9E0EF;background:none;border:none;padding:0}
+ .star.on{color:#FFBA08}
+ .chip{display:inline-flex;align-items:center;gap:.25rem;font-size:.72rem;font-weight:600;padding:.2rem .55rem;border-radius:99px}
+ .bar{height:8px;border-radius:99px;background:#EDF1FA;overflow:hidden}
+ .bar>i{display:block;height:100%;border-radius:99px}
+ .step{width:26px;height:26px;border-radius:99px;background:#002EB0;color:#fff;font-size:.8rem;font-weight:700;display:grid;place-items:center;flex:none}
+ .chartbox{position:relative;height:280px}
+ @media(max-width:640px){.chartbox{height:240px}}
+ tbody tr:nth-child(even){background:#FBFCFE}
+ .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 1.5rem)}
+ .fade{animation:fade .22s ease-out}
+ @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+ @media print{@page{size:A4;margin:12mm}body{background:#fff}.no-print{display:none!important}.print-only{display:block!important}.card{break-inside:avoid}.page-break{break-before:page}}
+ .print-only{display:none}
+</style>
+</head>
+<body class="font-body text-ink">
+
+<header class="no-print sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#E6EAF4]">
+ <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center gap-3 justify-between">
+  <div class="flex items-center gap-2.5 min-w-0">
+   <div class="w-10 h-10 rounded-xl bg-brand grid place-items-center shrink-0 p-1.5">
+    <svg viewBox="0 0 1566 1563" class="w-full h-auto" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="وصلت"><path fill="#FFBA08" d="M786 57 L1372 645 L982 645 L786 451 L590 645 L196 645 Z"/><path fill="#FFFFFF" d="M196 645 L590 1039 L786 843 L982 1039 L1372 645 L1372 1040 L984 1432 L786 1236 L588 1432 L196 1040 Z"/></svg></div>
+   <div class="min-w-0">
+    <h1 id="hTitle" class="font-head font-bold text-[.95rem] leading-tight truncate">وصلت</h1>
+    <p id="hSub" class="text-[.7rem] text-ink-light truncate">شحنتك… وعدنا</p></div>
+  </div>
+  <div id="adminTabs" class="hidden items-center gap-1 bg-[#F4F6FB] p-1 rounded-xl border border-[#E6EAF4] shrink-0">
+   <button id="tS" class="px-2.5 py-2 rounded-lg text-[.78rem] font-bold">الموظفين</button>
+   <button id="tC" class="px-2.5 py-2 rounded-lg text-[.78rem] font-bold">العملاء</button>
+   <button id="tL" class="px-2.5 py-2 rounded-lg text-[.78rem] font-bold">الإعدادات</button>
+  </div>
+ </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-5">
+
+<!-- ═════════ الصفحة الافتتاحية ═════════ -->
+<section id="vHome" class="hidden fade max-w-lg mx-auto">
+ <div class="card p-6 mb-4 text-center">
+  <div class="w-20 h-20 rounded-2xl bg-brand grid place-items-center mx-auto mb-3 p-3">
+   <svg viewBox="0 0 1566 1563" class="w-full h-auto" width="56" height="56" xmlns="http://www.w3.org/2000/svg" aria-label="وصلت"><path fill="#FFBA08" d="M786 57 L1372 645 L982 645 L786 451 L590 645 L196 645 Z"/><path fill="#FFFFFF" d="M196 645 L590 1039 L786 843 L982 1039 L1372 645 L1372 1040 L984 1432 L786 1236 L588 1432 L196 1040 Z"/></svg></div>
+  <h2 class="font-head font-bold text-lg mb-1">وصلت</h2>
+  <p class="text-sm text-ink-mid">شحنتك… وعدنا — اختر النموذج المناسب ليك.</p>
+ </div>
+ <a href="#join" class="card p-4 mb-3 flex items-center gap-3 hover:border-brand transition">
+  <span class="w-11 h-11 rounded-xl bg-brand-soft text-brand grid place-items-center text-xl font-bold">＋</span>
+  <span><span class="block font-bold text-sm">تسجيل نشاط تجاري</span>
+  <span class="block text-xs text-ink-light">للتجار والشركات الراغبة في الانضمام لوصلت</span></span>
+ </a>
+ <a href="#staff" class="card p-4 flex items-center gap-3 hover:border-brand transition">
+  <span class="w-11 h-11 rounded-xl bg-gold-soft text-gold-deep grid place-items-center text-xl font-bold">✓</span>
+  <span><span class="block font-bold text-sm">استبيان خدمة العملاء الشهري</span>
+  <span class="block text-xs text-ink-light">لفريق خدمة العملاء في وصلت</span></span>
+ </a>
+</section>
+
+<!-- ═════════ استبيان الموظفين ═════════ -->
+<section id="vStaff" class="hidden fade max-w-xl mx-auto">
+ <div class="card p-4 mb-4">
+  <h2 class="font-head font-bold text-base mb-1">استبيان خدمة العملاء الشهري</h2>
+  <p class="text-sm text-ink-mid">عبّي النموذج في نهاية كل شهر من واقع مكالمات ورسائل العملاء.</p>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-3 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> بيانات التقرير</h3>
+  <div class="grid grid-cols-2 gap-3">
+   <div><label class="lbl" for="fMonth">الشهر</label><select id="fMonth" class="fld"></select></div>
+   <div><label class="lbl" for="fYear">السنة</label><select id="fYear" class="fld"></select></div>
+  </div>
+  <div class="mt-3"><label class="lbl req" for="fAgent">اسمك</label><input id="fAgent" class="fld" placeholder="الاسم الكامل"></div>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> المدن الأكثر طلباً</h3>
+  <p class="text-xs text-ink-light mb-3">المدن اللي العملاء شحنوا منها أو ليها بكثرة.</p>
+  <div id="demandRows" class="space-y-3"></div>
+  <button type="button" onclick="addDemand()" class="btn btn-ghost w-full mt-3">+ إضافة مدينة</button>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-gold rounded-full"></span> استفسارات التغطية</h3>
+  <p class="text-xs text-ink-light mb-3">مدن سأل عنها العملاء — وضّح إذا الخدمة متوفرة فيها ولا لأ.</p>
+  <div id="coverageRows" class="space-y-3"></div>
+  <button type="button" onclick="addCoverage()" class="btn btn-ghost w-full mt-3">+ إضافة استفسار</button>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-1 flex items-center gap-2"><span class="w-1.5 h-4 bg-alert rounded-full"></span> المشاكل حسب المدينة</h3>
+  <p class="text-xs text-ink-light mb-3">كل صف = نوع مشكلة واحد في مدينة واحدة.</p>
+  <div id="issueRows" class="space-y-3"></div>
+  <button type="button" onclick="addIssue()" class="btn btn-ghost w-full mt-3">+ إضافة مشكلة</button>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-3 flex items-center gap-2"><span class="w-1.5 h-4 bg-brand rounded-full"></span> تقييم عام لخدمات الشحن</h3>
+  <div id="rateBox" class="mb-4"></div>
+  <label class="lbl" for="fImpression">انطباع العملاء خلال الشهر</label>
+  <textarea id="fImpression" rows="3" class="fld mb-3" placeholder="أكتر شي سمعتو من العملاء…"></textarea>
+  <label class="lbl" for="fSuggestions">ملاحظات لتحسين الشحن والتغليف</label>
+  <textarea id="fSuggestions" rows="3" class="fld" placeholder="مقترحات عملية…"></textarea>
+ </div>
+
+ <p id="staffMsg" class="text-sm font-bold text-center mb-2"></p>
+ <div class="safe-bottom">
+  <button onclick="submitStaff()" class="btn btn-primary w-full">إرسال رد الشهر</button>
+  <button onclick="resetStaff(true)" class="btn btn-ghost w-full mt-2">تفريغ النموذج</button>
+ </div>
+</section>
+
+<!-- ═════════ نموذج العملاء ═════════ -->
+<section id="vJoin" class="hidden fade max-w-2xl mx-auto">
+ <div class="card p-4 mb-4">
+  <h2 class="font-head font-bold text-base mb-1">سجّل نشاطك التجاري مع وصلت</h2>
+  <p class="text-sm text-ink-mid">عبّي البيانات في أقل من دقيقتين، وفريق وصلت بيتواصل معاك لتفعيل الحساب وتحديد الأسعار.</p>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-4 flex items-center gap-2"><span class="step">1</span> بيانات النشاط التجاري</h3>
+  <label class="lbl req" for="bizName">اسم النشاط التجاري</label>
+  <input id="bizName" class="fld mb-3" placeholder="مثال: بدر تكنولوجي">
+  <span class="lbl req">نوع النشاط</span>
+  <div class="grid grid-cols-2 gap-2 mb-3" id="bizType"></div>
+  <input id="bizTypeOther" class="fld mb-3 hidden" placeholder="حدد نوع النشاط">
+  <label class="lbl" for="bizLink">رابط المتجر أو صفحة التواصل</label>
+  <input id="bizLink" class="fld mb-3" dir="ltr" placeholder="اختياري">
+  <label class="lbl" for="bizReg">رقم السجل التجاري</label>
+  <input id="bizReg" class="fld num" dir="ltr" placeholder="اختياري — للحسابات المؤسسية">
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-4 flex items-center gap-2"><span class="step">2</span> الشخص المسؤول</h3>
+  <label class="lbl req" for="cName">الاسم الكامل</label>
+  <input id="cName" class="fld mb-3" placeholder="الاسم">
+  <label class="lbl" for="cRole">الصفة</label>
+  <input id="cRole" class="fld mb-3" placeholder="مثال: صاحب النشاط / مدير العمليات">
+  <label class="lbl req" for="cPhone">رقم الهاتف / واتساب</label>
+  <input id="cPhone" type="tel" inputmode="tel" class="fld num mb-3" dir="ltr" placeholder="09xxxxxxxx">
+  <label class="lbl" for="cEmail">البريد الإلكتروني</label>
+  <input id="cEmail" type="email" class="fld mb-3" dir="ltr" placeholder="اختياري">
+  <span class="lbl">وسيلة التواصل المفضلة</span>
+  <div class="grid grid-cols-3 gap-2" id="contactPref"></div>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-4 flex items-center gap-2"><span class="step">3</span> الموقع والالتقاط</h3>
+  <label class="lbl req" for="city">مدينة النشاط</label>
+  <select id="city" class="fld mb-3"></select>
+  <label class="lbl req" for="pickupCity">مدينة التقاط الشحنات</label>
+  <select id="pickupCity" class="fld mb-3"></select>
+  <label class="lbl" for="pickupAddr">وصف موقع الالتقاط</label>
+  <input id="pickupAddr" class="fld mb-3" placeholder="الحي / الشارع / أقرب علامة مميزة">
+  <span class="lbl">وقت الالتقاط المفضل</span>
+  <div class="grid grid-cols-3 gap-2" id="pickupTime"></div>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-4 flex items-center gap-2"><span class="step">4</span> تفاصيل التشغيل والشحن</h3>
+  <span class="lbl req">طبيعة استخدام الخدمة</span>
+  <div class="grid grid-cols-1 gap-2 mb-4" id="usage"></div>
+  <span class="lbl req">الخدمة المطلوبة</span>
+  <div class="grid grid-cols-2 gap-2 mb-4" id="service"></div>
+  <span class="lbl req">نوع البضاعة (أكثر من اختيار)</span>
+  <div class="grid grid-cols-2 gap-2 mb-4" id="goods"></div>
+  <span class="lbl req">متوسط وزن الشحنة</span>
+  <div class="grid grid-cols-2 gap-2 mb-4" id="weight"></div>
+  <span class="lbl req">متوسط عدد الشحنات الشهري</span>
+  <div class="grid grid-cols-2 gap-2 mb-4" id="volume"></div>
+  <div class="flex items-center justify-between gap-2 mb-2">
+   <span class="lbl mb-0 req">المدن الأكثر شحناً إليها</span>
+   <label class="opt shrink-0"><input type="checkbox" id="allStates"><span class="!min-h-0 !py-1.5 !px-3 !text-xs">جميع الولايات</span></label>
+  </div>
+  <div id="destCities" class="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-64 overflow-y-auto p-1"></div>
+ </div>
+
+ <div class="card p-4 mb-3">
+  <h3 class="font-head font-bold text-sm mb-4 flex items-center gap-2"><span class="step">5</span> الخدمات الإضافية</h3>
+  <span class="lbl">التحصيل عند التسليم (COD)</span>
+  <div class="grid grid-cols-2 gap-2 mb-3" id="cod"></div>
+  <div id="codCycleWrap" class="hidden mb-4">
+   <span class="lbl">دورية تحويل المبالغ المحصّلة</span>
+   <div class="grid grid-cols-3 gap-2" id="codCycle"></div>
+  </div>
+  <span class="lbl">خدمات أخرى تحتاجها</span>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4" id="extras"></div>
+  <span class="lbl">جاهزية بدء التشغيل</span>
+  <div class="grid grid-cols-3 gap-2 mb-4" id="ready"></div>
+  <label class="lbl" for="notes">ملاحظات إضافية</label>
+  <textarea id="notes" rows="3" class="fld" placeholder="أي تفاصيل تساعدنا في تجهيز عرض مناسب ليك…"></textarea>
+ </div>
+
+ <div class="card p-4 mb-4">
+  <label class="flex items-start gap-3 cursor-pointer">
+   <input type="checkbox" id="agree" class="mt-1 w-5 h-5 accent-[#002EB0]">
+   <span class="text-sm text-ink-mid">أوافق على تواصل فريق وصلت معي عبر البيانات المدخلة، وعلى شروط تقديم الخدمة.</span>
+  </label>
+ </div>
+
+ <p id="joinMsg" class="text-sm font-bold text-center mb-2"></p>
+ <div class="safe-bottom"><button onclick="submitJoin()" class="btn btn-primary w-full">إرسال الطلب</button></div>
+</section>
+
+<!-- ═════════ شاشة الإرسال ═════════ -->
+<section id="vDone" class="hidden fade max-w-xl mx-auto">
+ <div class="card p-6 text-center">
+  <div class="w-14 h-14 rounded-full bg-good-soft text-good grid place-items-center mx-auto mb-3 text-2xl">✓</div>
+  <h2 id="doneTitle" class="font-head font-bold text-lg mb-1">تم الحفظ</h2>
+  <p id="doneMeta" class="text-sm text-ink-mid mb-4"></p>
+  <div id="doneStatus" class="space-y-2 mb-4"></div>
+  <details class="text-right mb-4">
+   <summary class="text-sm font-bold text-brand cursor-pointer mb-2">عرض الملخص</summary>
+   <pre id="summary" class="text-xs bg-[#FBFCFE] border border-[#E6EAF4] rounded-lg p-3 whitespace-pre-wrap"></pre>
+  </details>
+  <button id="againBtn" class="btn btn-ghost w-full">إدخال جديد</button>
+ </div>
+</section>
+
+<!-- ═════════ تقارير الموظفين ═════════ -->
+<section id="vRepStaff" class="hidden fade">
+ <div class="no-print card p-4 mb-4">
+  <h2 class="font-head font-bold mb-1">استبيان الموظفين</h2>
+  <p class="text-sm text-ink-mid mb-3">رابط ثابت لفريق خدمة العملاء — أرسلو مرة واحدة.</p>
+  <div class="bg-[#FBFCFE] border border-[#E6EAF4] rounded-lg p-2 text-xs break-all num mb-2" id="lkStaff" dir="ltr"></div>
+  <div class="flex flex-wrap gap-2 mb-4">
+   <button onclick="copyEl('lkStaff')" class="btn btn-ghost flex-1 min-w-[6rem]">نسخ الرابط</button>
+   <button onclick="waShare('lkStaff','رابط استبيان خدمة العملاء الشهري')" class="btn btn-wa flex-1 min-w-[6rem]">إرسال واتساب</button>
+   <button onclick="toggle('impS')" class="btn btn-ghost flex-1 min-w-[6rem]">استيراد رد</button>
+  </div>
+  <div id="impS" class="hidden">
+   <label class="lbl" for="importS">الصق كود الرد الواصل عبر واتساب</label>
+   <textarea id="importS" rows="3" class="fld mb-2" dir="ltr" placeholder="WSL-…"></textarea>
+   <button onclick="importCode('importS')" class="btn btn-primary w-full">استيراد</button>
+   <p id="importMsgS" class="text-sm font-bold mt-2"></p>
+  </div>
+ </div>
+ <div class="print-only mb-4 pb-3" style="border-bottom:2px solid #002EB0">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+   <div style="display:flex;gap:10px;align-items:center"><svg viewBox="0 0 1566 1563" class="" width="38" height="38" xmlns="http://www.w3.org/2000/svg" aria-label="وصلت"><path fill="#FFBA08" d="M786 57 L1372 645 L982 645 L786 451 L590 645 L196 645 Z"/><path fill="#002EB0" d="M196 645 L590 1039 L786 843 L982 1039 L1372 645 L1372 1040 L984 1432 L786 1236 L588 1432 L196 1040 Z"/></svg><div><div style="font-family:'Noto Kufi Arabic';font-weight:800;font-size:20px;color:#002EB0">وصلت — تقرير خدمة العملاء الشهري</div>
+   <div style="font-size:12px;color:#43506B">شحنتك… وعدنا</div></div></div>
+   <div id="printMetaS" style="font-size:12px;color:#43506B;text-align:left"></div>
+  </div>
+ </div>
+
+ <div class="no-print card p-4 mb-4">
+  <div class="grid grid-cols-3 gap-2 mb-3">
+   <div><label class="lbl" for="dMonth">الشهر</label><select id="dMonth" class="fld"></select></div>
+   <div><label class="lbl" for="dYear">السنة</label><select id="dYear" class="fld"></select></div>
+   <div><label class="lbl" for="dAgent">الموظف</label><select id="dAgent" class="fld"></select></div>
+  </div>
+  <div class="flex flex-wrap gap-2">
+   <button onclick="window.print()" class="btn btn-primary flex-1 min-w-[9rem]">طباعة / PDF</button>
+   <button onclick="exportStaffCSV()" class="btn btn-ghost flex-1 min-w-[7rem]">تصدير CSV</button>
+   <button onclick="wipe('staff')" class="btn btn-ghost flex-1 min-w-[7rem] !text-alert !border-alert/30">مسح</button>
+  </div>
+ </div>
+
+ <div id="emptyS" class="hidden card p-8 text-center">
+  <p class="font-head font-bold mb-1">ما في ردود للفترة دي</p>
+  <p class="text-sm text-ink-mid">استورد ردود الموظفين من تبويب «الروابط».</p>
+ </div>
+
+ <div id="bodyS">
+  <div id="kpisS" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4"></div>
+  <div class="grid lg:grid-cols-2 gap-4 mb-4">
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">أكثر المدن طلباً</h2><div class="chartbox"><canvas id="chDemand"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">توزيع أنواع المشاكل</h2><div class="chartbox"><canvas id="chIssues"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-1">المدن المطلوبة للتوسع</h2>
+    <p class="text-xs text-ink-light mb-3">استفسارات على مدن التغطية فيها غير متوفرة.</p>
+    <div class="chartbox"><canvas id="chExpansion"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">تقييم الخدمة (من 5)</h2><div class="chartbox"><canvas id="chRatings"></canvas></div></div>
+  </div>
+  <div class="card p-4 mb-4 page-break">
+   <h2 class="font-head font-bold mb-1">التطور الشهري</h2>
+   <p class="text-xs text-ink-light mb-3">الطلبات مقابل المشاكل عبر الشهور (كل البيانات).</p>
+   <div class="chartbox"><canvas id="chTrend"></canvas></div>
+  </div>
+  <div class="card p-4 mb-4">
+   <h2 class="font-head font-bold mb-1">لوحة المدن</h2>
+   <p class="text-xs text-ink-light mb-4">حجم الطلب، حالات المشاكل، واستفسارات التغطية لكل مدينة.</p>
+   <div id="cityBoard" class="space-y-3"></div>
+  </div>
+  <div class="grid lg:grid-cols-2 gap-4 mb-4">
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">جدول الطلب حسب المدينة</h2>
+    <div class="overflow-x-auto"><table class="w-full text-sm">
+     <thead><tr class="text-ink-light text-xs border-b border-[#E6EAF4]">
+      <th class="text-right font-semibold py-2 w-7">#</th><th class="text-right font-semibold py-2">المدينة</th>
+      <th class="text-center font-semibold py-2">منها</th><th class="text-center font-semibold py-2">إليها</th>
+      <th class="text-center font-semibold py-2">الإجمالي</th></tr></thead>
+     <tbody id="tblDemand"></tbody></table></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">المدن الأكثر تعرّضاً للمشاكل</h2>
+    <div class="overflow-x-auto"><table class="w-full text-sm">
+     <thead><tr class="text-ink-light text-xs border-b border-[#E6EAF4]">
+      <th class="text-right font-semibold py-2 w-7">#</th><th class="text-right font-semibold py-2">المدينة</th>
+      <th class="text-right font-semibold py-2">الأنواع</th><th class="text-center font-semibold py-2">الحالات</th></tr></thead>
+     <tbody id="tblIssues"></tbody></table></div></div>
+  </div>
+  <div class="card p-4 mb-8"><h2 class="font-head font-bold mb-3">ملاحظات الموظفين</h2><div id="notesList" class="space-y-3"></div></div>
+ </div>
+</section>
+
+<!-- ═════════ تقارير العملاء ═════════ -->
+<section id="vRepClients" class="hidden fade">
+ <div class="no-print card p-4 mb-4">
+  <h2 class="font-head font-bold mb-1">استبيان العملاء</h2>
+  <p class="text-sm text-ink-mid mb-3">رابط تسجيل الأنشطة التجارية — للنشر والحملات.</p>
+  <div class="bg-[#FBFCFE] border border-[#E6EAF4] rounded-lg p-2 text-xs break-all num mb-2" id="lkJoin" dir="ltr"></div>
+  <div class="flex flex-wrap gap-2 mb-4">
+   <button onclick="copyEl('lkJoin')" class="btn btn-ghost flex-1 min-w-[6rem]">نسخ الرابط</button>
+   <button onclick="waShare('lkJoin','سجّل نشاطك التجاري مع وصلت')" class="btn btn-wa flex-1 min-w-[6rem]">إرسال واتساب</button>
+   <button onclick="toggle('impC')" class="btn btn-ghost flex-1 min-w-[6rem]">استيراد طلب</button>
+  </div>
+  <div id="impC" class="hidden">
+   <label class="lbl" for="importC">الصق كود الطلب الواصل عبر واتساب</label>
+   <textarea id="importC" rows="3" class="fld mb-2" dir="ltr" placeholder="WSL-…"></textarea>
+   <button onclick="importCode('importC')" class="btn btn-primary w-full">استيراد</button>
+   <p id="importMsgC" class="text-sm font-bold mt-2"></p>
+  </div>
+ </div>
+ <div class="print-only mb-4 pb-3" style="border-bottom:2px solid #002EB0">
+  <div style="display:flex;gap:10px;align-items:center"><svg viewBox="0 0 1566 1563" class="" width="38" height="38" xmlns="http://www.w3.org/2000/svg" aria-label="وصلت"><path fill="#FFBA08" d="M786 57 L1372 645 L982 645 L786 451 L590 645 L196 645 Z"/><path fill="#002EB0" d="M196 645 L590 1039 L786 843 L982 1039 L1372 645 L1372 1040 L984 1432 L786 1236 L588 1432 L196 1040 Z"/></svg><div style="font-family:'Noto Kufi Arabic';font-weight:800;font-size:20px;color:#002EB0">وصلت — تقرير طلبات الانضمام</div></div>
+  <div id="printMetaC" style="font-size:12px;color:#43506B"></div>
+ </div>
+
+ <div class="no-print card p-4 mb-4">
+  <div class="grid grid-cols-2 gap-2 mb-3">
+   <div><label class="lbl" for="cFilterType">نوع النشاط</label><select id="cFilterType" class="fld"></select></div>
+   <div><label class="lbl" for="cFilterCity">المدينة</label><select id="cFilterCity" class="fld"></select></div>
+  </div>
+  <div class="flex flex-wrap gap-2">
+   <button onclick="window.print()" class="btn btn-primary flex-1 min-w-[9rem]">طباعة / PDF</button>
+   <button onclick="exportJoinCSV()" class="btn btn-ghost flex-1 min-w-[7rem]">تصدير CSV</button>
+   <button onclick="wipe('join')" class="btn btn-ghost flex-1 min-w-[7rem] !text-alert !border-alert/30">مسح</button>
+  </div>
+ </div>
+
+ <div id="emptyC" class="hidden card p-8 text-center">
+  <p class="font-head font-bold mb-1">ما في طلبات انضمام</p>
+  <p class="text-sm text-ink-mid">الطلبات بتظهر هنا بعد استيرادها من تبويب «الروابط».</p>
+ </div>
+
+ <div id="bodyC">
+  <div id="kpisC" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4"></div>
+  <div class="grid lg:grid-cols-2 gap-4 mb-4">
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">أنواع الأنشطة</h2><div class="chartbox"><canvas id="chBiz"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-3">حجم الشحنات الشهري</h2><div class="chartbox"><canvas id="chVol"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-1">مدن العملاء</h2>
+    <p class="text-xs text-ink-light mb-3">مدينة النشاط ومدينة الالتقاط.</p>
+    <div class="chartbox"><canvas id="chCity"></canvas></div></div>
+   <div class="card p-4"><h2 class="font-head font-bold mb-1">المدن المطلوب الشحن إليها</h2>
+    <p class="text-xs text-ink-light mb-3">حسب ما ذكره العملاء في طلباتهم.</p>
+    <div class="chartbox"><canvas id="chDest"></canvas></div></div>
+  </div>
+  <div class="card p-4 mb-4 page-break">
+   <h2 class="font-head font-bold mb-3">الخدمات المطلوبة</h2>
+   <div class="chartbox"><canvas id="chExtras"></canvas></div>
+  </div>
+  <div class="card p-4 mb-8">
+   <h2 class="font-head font-bold mb-3">قائمة الطلبات</h2>
+   <div id="clientList" class="space-y-3"></div>
+  </div>
+ </div>
+</section>
+
+<!-- ═════════ دخول الإدارة ═════════ -->
+<section id="vLogin" class="hidden fade max-w-sm mx-auto">
+ <div class="card p-5">
+  <div class="w-16 h-16 rounded-2xl bg-brand grid place-items-center mx-auto mb-4 p-2.5">
+   <svg viewBox="0 0 1566 1563" class="w-full h-auto" width="44" height="44" xmlns="http://www.w3.org/2000/svg" aria-label="وصلت"><path fill="#FFBA08" d="M786 57 L1372 645 L982 645 L786 451 L590 645 L196 645 Z"/><path fill="#FFFFFF" d="M196 645 L590 1039 L786 843 L982 1039 L1372 645 L1372 1040 L984 1432 L786 1236 L588 1432 L196 1040 Z"/></svg></div>
+  <h2 class="font-head font-bold text-base mb-1">دخول الإدارة</h2>
+  <p class="text-sm text-ink-mid mb-4">سجّل الدخول لعرض التقارير المحفوظة على السيرفر.</p>
+  <label class="lbl" for="lgEmail">البريد الإلكتروني</label>
+  <input id="lgEmail" type="email" class="fld mb-3" dir="ltr" autocomplete="username">
+  <label class="lbl" for="lgPass">كلمة المرور</label>
+  <input id="lgPass" type="password" class="fld mb-4" dir="ltr" autocomplete="current-password">
+  <button onclick="sbLogin()" class="btn btn-primary w-full">دخول</button>
+  <p id="lgMsg" class="text-sm font-bold text-center mt-2"></p>
+ </div>
+</section>
+
+<!-- ═════════ الإعدادات ═════════ -->
+<section id="vLinks" class="hidden fade max-w-3xl mx-auto">
+ <div class="card p-4 mb-4">
+  <h2 class="font-head font-bold mb-1">رابط الإدارة</h2>
+  <p class="text-sm text-ink-mid mb-3">احتفظ بيهو ليك — ما بينرسل للموظفين ولا العملاء.</p>
+  <div class="bg-[#FBFCFE] border border-[#E6EAF4] rounded-lg p-2 text-xs break-all num mb-2" id="lkAdmin" dir="ltr"></div>
+  <button onclick="copyEl('lkAdmin')" class="btn btn-ghost w-full">نسخ</button>
+ </div>
+
+ <div id="sbBox" class="hidden card p-4 mb-4">
+  <h2 class="font-head font-bold mb-1">البيانات على السيرفر</h2>
+  <p id="sbInfo" class="text-sm text-ink-mid mb-3"></p>
+  <div class="flex flex-wrap gap-2">
+   <button onclick="sbSync(true)" class="btn btn-primary flex-1 min-w-[8rem]">تحديث من السيرفر</button>
+   <button onclick="sbLogout()" class="btn btn-ghost flex-1 min-w-[7rem]">تسجيل الخروج</button>
+  </div>
+ </div>
+
+ <div class="card p-4 mb-8">
+  <h2 class="font-head font-bold mb-1">الحفظ المركزي (اختياري)</h2>
+  <p class="text-sm text-ink-mid mb-3">بدون الإعداد ده، كل رد بيتخزن على جهاز صاحبو بس وبيوصلك عبر واتساب. عدّل السطور دي في أول ملف <span class="num" dir="ltr">index.html</span>:</p>
+  <pre class="bg-ink text-white text-xs rounded-lg p-3 overflow-x-auto" dir="ltr">const ADMIN_WA = "249xxxxxxxxx";
+const SUPA_URL = "https://xxxx.supabase.co";
+const SUPA_KEY = "eyJ...";   // anon public key</pre>
+  <p class="text-xs text-ink-light mt-2">بعد تعبئتها، الردود بتنحفظ في قاعدة البيانات وبتظهر هنا بعد تسجيل الدخول.</p>
+ </div>
+</section>
+</main>
+
+<footer class="no-print text-center text-xs text-ink-light pb-8 px-4">وصلت — خدمات لوجستية وتشغيل عمليات التوصيل</footer>
+
+<script>
+/* ══════════ إعدادات تعدّلها مرة واحدة ══════════ */
+const ADMIN_WA = "";   // رقم واتساب الإدارة — مثال: 249912345678
+const WEBHOOK  = "";   // رابط Apps Script أو n8n (بديل لسوبابيس)
+const SUPA_URL = "";   // مثال: https://abcdefg.supabase.co
+const SUPA_KEY = "";   // مفتاح anon public
+/* ═══════════════════════════════════════════════ */
+const SB = (SUPA_URL && SUPA_KEY && window.supabase) ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
+
+const CITIES=["الخرطوم","أم درمان","بحري","ود مدني","الحصاحيصا","رفاعة","المناقل","الكاملين","القطينة","الدويم","كوستي","ربك","تندلتي","أم روابة","الرهد","الأبيض","النهود","الفولة","بابنوسة","المجلد","كادوقلي","الدلنج","سنار","سنجة","الدمازين","القضارف","الفاو","كسلا","أروما","حلفا الجديدة","بورتسودان","سواكن","طوكر","سنكات","هيا","عطبرة","الدامر","شندي","بربر","أبو حمد","مروي","كريمة","دنقلا","الدبة","وادي حلفا","الفاشر","نيالا","الضعين","زالنجي","الجنينة"];
+const MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const ISSUE_TYPES=["تأخير في التسليم","تلف أو نقص","الأسعار","التتبع والمتابعة","عدم توفر تغطية","سوء تغليف","أخرى"];
+const RATE_KEYS=[["speed","سرعة التوصيل"],["packaging","سلامة التغليف"],["pricing","وضوح الأسعار"],["tracking","دقة التتبع"],["team","تعامل الفريق"]];
+const OPTS={
+ bizType:["متجر إلكتروني","متجر فعلي","شركة أو مؤسسة","تاجر","عمل حر / منزلي","أخرى"],
+ contactPref:["واتساب","اتصال","بريد إلكتروني"],
+ pickupTime:["صباحاً","ظهراً","مساءً"],
+ usage:["شحن لعملائي (زبائن نهائيين)","نقل بضاعة بين فروعي أو مخازني","شحن شخصي","الاثنين معاً"],
+ service:["من الباب إلى الباب","من الباب إلى المكتب","من المكتب إلى المكتب"],
+ goods:["إلكترونيات","ملابس وأحذية","مستحضرات تجميل","أدوية ومستلزمات طبية","مواد غذائية","مستندات","قطع غيار","أخرى"],
+ weight:["أقل من 2 كجم","2 – 5 كجم","5 – 10 كجم","أكثر من 10 كجم"],
+ volume:["أقل من 20 شحنة","20 – 50 شحنة","51 – 120 شحنة","أكثر من 120 شحنة"],
+ cod:["نعم","لا"], codCycle:["أسبوعي","كل أسبوعين","شهري"],
+ extras:["تخزين المخزون لدى وصلت","التغليف والتجهيز","إرجاع الشحنات المرفوضة","فواتير وعقد مؤسسي","ربط تقني مع متجري (API)","تقارير شهرية للعمليات"],
+ ready:["فوراً","خلال أسبوع","خلال شهر"]
+};
+const MULTI=["goods","extras","destCities"];
+const K_STAFF="weslat_staff_v4", K_JOIN="weslat_join_v4";
+
+const load=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let STAFF=load(K_STAFF), JOIN=load(K_JOIN);
+const enc=o=>"WSL-"+btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const dec=s=>JSON.parse(decodeURIComponent(escape(atob(String(s).trim().replace(/^WSL-/,"").replace(/\s+/g,"")))));
+
+/* ── القوائم ── */
+const now=new Date(), years=[now.getFullYear()-1,now.getFullYear(),now.getFullYear()+1];
+const cityOpts=`<option value="">اختر المدينة</option>`+CITIES.map(c=>`<option>${c}</option>`).join("");
+fMonth.innerHTML=MONTHS.map((m,i)=>`<option value="${i}">${m}</option>`).join(""); fMonth.value=now.getMonth();
+fYear.innerHTML=years.map(y=>`<option>${y}</option>`).join(""); fYear.value=now.getFullYear();
+dMonth.innerHTML=`<option value="all">كل الشهور</option>`+MONTHS.map((m,i)=>`<option value="${i}">${m}</option>`).join(""); dMonth.value=now.getMonth();
+dYear.innerHTML=`<option value="all">الكل</option>`+years.map(y=>`<option>${y}</option>`).join(""); dYear.value=now.getFullYear();
+[dMonth,dYear,dAgent].forEach(el=>el.onchange=renderStaffReport);
+[cFilterType,cFilterCity].forEach(el=>el.onchange=renderClientReport);
+city.innerHTML=cityOpts; pickupCity.innerHTML=cityOpts;
+city.onchange=()=>{ if(!pickupCity.value) pickupCity.value=city.value; };
+
+function build(id,list,multi){
+ document.getElementById(id).innerHTML=list.map(v=>`<label class="opt">
+  <input type="${multi?"checkbox":"radio"}" name="${id}" value="${v}"><span>${v}</span></label>`).join("");
+}
+Object.entries(OPTS).forEach(([k,v])=>build(k,v,MULTI.includes(k)));
+build("destCities",CITIES,true);
+document.getElementById("bizType").addEventListener("change",e=>bizTypeOther.classList.toggle("hidden",e.target.value!=="أخرى"));
+document.getElementById("cod").addEventListener("change",e=>codCycleWrap.classList.toggle("hidden",e.target.value!=="نعم"));
+allStates.addEventListener("change",()=>{
+ document.querySelectorAll('#destCities input').forEach(i=>{i.checked=false;i.disabled=allStates.checked});
+ document.getElementById("destCities").style.opacity=allStates.checked?".45":"1";
+});
+
+/* ── التوجيه ── */
+const VIEWS=["vHome","vStaff","vJoin","vDone","vLogin","vRepStaff","vRepClients","vLinks"];
+const show=id=>{VIEWS.forEach(v=>document.getElementById(v).classList.toggle("hidden",v!==id));window.scrollTo({top:0})};
+function adminTab(t){
+ const set=(b,on)=>b.className="px-2.5 py-2 rounded-lg text-[.78rem] font-bold "+(on?"bg-brand text-white":"text-ink-mid");
+ set(tS,t==="s"); set(tC,t==="c"); set(tL,t==="l");
+ if(t==="s"){show("vRepStaff");renderStaffReport();}
+ else if(t==="c"){show("vRepClients");renderClientReport();}
+ else show("vLinks");
+}
+tS.onclick=()=>adminTab("s"); tC.onclick=()=>adminTab("c"); tL.onclick=()=>adminTab("l");
+
+function route(){
+ const h=location.hash.toLowerCase();
+ const tabs=document.getElementById("adminTabs");
+ tabs.classList.add("hidden"); tabs.classList.remove("flex");
+ if(h.includes("admin")){
+  hTitle.textContent="وصلت — لوحة الإدارة"; hSub.textContent="تقارير الموظفين والعملاء";
+  adminEnter();
+ } else if(h.includes("staff")){
+  hTitle.textContent="استبيان خدمة العملاء"; hSub.textContent="وصلت — شحنتك… وعدنا"; show("vStaff");
+ } else if(h.includes("join")){
+  hTitle.textContent="وصلت — طلب انضمام"; hSub.textContent="للتجار والشركات"; show("vJoin");
+ } else {
+  hTitle.textContent="وصلت"; hSub.textContent="شحنتك… وعدنا"; show("vHome");
+ }
+}
+window.addEventListener("hashchange",route);
+
+/* ══════════ نموذج الموظفين ══════════ */
+const rowHead=t=>`<div class="flex items-center justify-between mb-2"><span class="text-xs font-bold text-ink-light">${t}</span>
+ <button type="button" onclick="this.closest('.row').remove()" class="text-xs font-bold text-alert px-2 py-1">حذف</button></div>`;
+const citySel=`<div><label class="lbl">المدينة</label><select class="fld">${cityOpts}</select></div>`;
+function addDemand(){const r=document.createElement("div");r.className="row subcard p-3";
+ r.innerHTML=rowHead("مدينة")+citySel+`<div class="grid grid-cols-2 gap-2 mt-2">
+  <div><label class="lbl">الاتجاه</label><select class="fld"><option value="from">شحن منها</option><option value="to">شحن إليها</option></select></div>
+  <div><label class="lbl">عدد الطلبات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div></div>`;
+ demandRows.appendChild(r);}
+function addCoverage(){const r=document.createElement("div");r.className="row subcard p-3";
+ r.innerHTML=rowHead("استفسار تغطية")+citySel+`<div class="grid grid-cols-2 gap-2 mt-2">
+  <div><label class="lbl">نوع الاستفسار</label><select class="fld"><option value="to">الشحن إليها</option><option value="from">الشحن منها</option></select></div>
+  <div><label class="lbl">حالة التغطية</label><select class="fld"><option value="no">غير متوفرة</option><option value="yes">متوفرة</option></select></div></div>
+  <div class="mt-2"><label class="lbl">عدد الاستفسارات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div>`;
+ coverageRows.appendChild(r);}
+function addIssue(){const r=document.createElement("div");r.className="row subcard p-3";
+ r.innerHTML=rowHead("مشكلة")+citySel+`<div class="grid grid-cols-2 gap-2 mt-2">
+  <div><label class="lbl">نوع المشكلة</label><select class="fld">${ISSUE_TYPES.map(t=>`<option>${t}</option>`).join("")}</select></div>
+  <div><label class="lbl">عدد الحالات</label><input type="number" inputmode="numeric" min="0" class="fld num" placeholder="0"></div></div>
+  <div class="mt-2"><label class="lbl">ملاحظة (اختياري)</label><input class="fld" placeholder="تفصيل مختصر"></div>`;
+ issueRows.appendChild(r);}
+
+let ratings={};
+function renderRates(){
+ rateBox.innerHTML=RATE_KEYS.map(([k,label])=>`
+  <div class="flex items-center justify-between gap-2 py-1 border-b border-dashed border-[#EDF1FA] last:border-0">
+   <span class="text-sm font-medium text-ink-mid">${label}</span>
+   <span class="flex flex-row-reverse">${[5,4,3,2,1].map(n=>
+    `<button type="button" class="star ${ratings[k]>=n?"on":""}" aria-label="${n} من 5" onclick="setRate('${k}',${n})">★</button>`).join("")}</span>
+  </div>`).join("");
+}
+function setRate(k,n){ratings[k]=(ratings[k]===n?0:n);renderRates();}
+const collect=(box,map)=>[...box.querySelectorAll(".row")].map(r=>map([...r.querySelectorAll("input,select")])).filter(x=>x.city);
+
+function submitStaff(){
+ if(!fAgent.value.trim()){fAgent.classList.add("bad");return say("staffMsg","اكتب اسمك أولاً.",false);}
+ fAgent.classList.remove("bad");
+ const rec={type:"staff",id:Date.now(),ts:new Date().toISOString(),
+  month:+fMonth.value,year:+fYear.value,agent:fAgent.value.trim(),
+  demand:collect(demandRows,f=>({city:f[0].value,dir:f[1].value,count:+f[2].value||0})),
+  coverage:collect(coverageRows,f=>({city:f[0].value,dir:f[1].value,available:f[2].value==="yes",count:+f[3].value||0})),
+  issues:collect(issueRows,f=>({city:f[0].value,type:f[1].value,count:+f[2].value||0,note:f[3].value.trim()})),
+  ratings:{...ratings},impression:fImpression.value.trim(),suggestions:fSuggestions.value.trim()};
+ if(!rec.demand.length&&!rec.coverage.length&&!rec.issues.length) return say("staffMsg","أضف مدينة أو مشكلة واحدة على الأقل.",false);
+ STAFF.push(rec); store(K_STAFF,STAFF);
+ doneTitle.textContent="تم حفظ ردك";
+ doneMeta.textContent=`${MONTHS[rec.month]} ${rec.year} — ${rec.agent}`;
+ summary.textContent=staffText(rec);
+ againBtn.onclick=()=>{resetStaff(false);show("vStaff")};
+ show("vDone"); deliver(rec,staffText(rec));
+}
+function staffText(r){
+ const L=(l,v)=>v&&v.length?`• ${l}: ${v}\n`:"";
+ return `تقرير خدمة العملاء — ${MONTHS[r.month]} ${r.year}\nالموظف: ${r.agent}\n\n`
+ +`المدن الأكثر طلباً:\n`+(r.demand.map(d=>`  - ${d.city} (${d.dir==="from"?"منها":"إليها"}): ${d.count}`).join("\n")||"  -")
+ +`\n\nاستفسارات التغطية:\n`+(r.coverage.map(c=>`  - ${c.city}: ${c.count} (${c.available?"متوفرة":"غير متوفرة"})`).join("\n")||"  -")
+ +`\n\nالمشاكل:\n`+(r.issues.map(i=>`  - ${i.city} — ${i.type}: ${i.count}${i.note?" ("+i.note+")":""}`).join("\n")||"  -")
+ +`\n\nالتقييم:\n`+RATE_KEYS.map(([k,l])=>`  - ${l}: ${r.ratings[k]||"—"}/5`).join("\n")
+ +`\n\n`+L("انطباع العملاء",r.impression)+L("مقترحات",r.suggestions)+`\n${enc(r)}`;
+}
+function resetStaff(withMsg){
+ demandRows.innerHTML=coverageRows.innerHTML=issueRows.innerHTML="";
+ addDemand();addCoverage();addIssue();ratings={};renderRates();
+ fImpression.value="";fSuggestions.value="";
+ if(withMsg) say("staffMsg","تم تفريغ النموذج.",true);
+}
+
+/* ══════════ نموذج العملاء ══════════ */
+const one=id=>(document.querySelector(`input[name="${id}"]:checked`)||{}).value||"";
+const many=id=>[...document.querySelectorAll(`input[name="${id}"]:checked`)].map(i=>i.value);
+const val=id=>document.getElementById(id).value.trim();
+
+function submitJoin(){
+ document.querySelectorAll("#vJoin .fld").forEach(f=>f.classList.remove("bad"));
+ const req=[["bizName",val("bizName")],["cName",val("cName")],["cPhone",val("cPhone")],["city",val("city")],["pickupCity",val("pickupCity")]];
+ const miss=req.find(([,v])=>!v);
+ if(miss){const el=document.getElementById(miss[0]);el.classList.add("bad");el.scrollIntoView({block:"center",behavior:"smooth"});
+  return say("joinMsg","أكمل الحقول المطلوبة المعلّمة بالأحمر.",false);}
+ if(!/^[+\d\s-]{9,}$/.test(val("cPhone"))){cPhone.classList.add("bad");cPhone.scrollIntoView({block:"center",behavior:"smooth"});
+  return say("joinMsg","رقم الهاتف غير صحيح.",false);}
+ const dest=allStates.checked?["جميع الولايات"]:many("destCities");
+ const need=[["نوع النشاط",one("bizType")],["طبيعة الاستخدام",one("usage")],["الخدمة المطلوبة",one("service")],
+  ["نوع البضاعة",many("goods").length],["متوسط الوزن",one("weight")],["عدد الشحنات",one("volume")],["مدن الشحن",dest.length]].find(x=>!x[1]);
+ if(need) return say("joinMsg","اختر: "+need[0]+".",false);
+ if(!agree.checked) return say("joinMsg","لازم توافق على شروط التواصل.",false);
+
+ const rec={type:"join",id:Date.now(),ts:new Date().toISOString(),
+  bizName:val("bizName"),bizType:one("bizType")==="أخرى"?(val("bizTypeOther")||"أخرى"):one("bizType"),
+  bizLink:val("bizLink"),bizReg:val("bizReg"),
+  cName:val("cName"),cRole:val("cRole"),cPhone:val("cPhone"),cEmail:val("cEmail"),contactPref:one("contactPref"),
+  city:val("city"),pickupCity:val("pickupCity"),pickupAddr:val("pickupAddr"),pickupTime:one("pickupTime"),
+  usage:one("usage"),service:one("service"),goods:many("goods"),weight:one("weight"),volume:one("volume"),dest,
+  cod:one("cod"),codCycle:one("cod")==="نعم"?one("codCycle"):"",extras:many("extras"),ready:one("ready"),notes:val("notes")};
+ JOIN.push(rec); store(K_JOIN,JOIN);
+ doneTitle.textContent="تم تسجيل طلبك";
+ doneMeta.textContent="أرسل نسخة الطلب لفريق وصلت عشان نبدأ التفعيل.";
+ summary.textContent=joinText(rec);
+ againBtn.onclick=()=>location.reload();
+ show("vDone"); deliver(rec,joinText(rec));
+}
+function joinText(r){
+ const L=(l,v)=>v&&v.length?`• ${l}: ${Array.isArray(v)?v.join("، "):v}\n`:"";
+ return `طلب انضمام جديد — وصلت\n\n— بيانات النشاط —\n`
+ +L("اسم النشاط",r.bizName)+L("نوع النشاط",r.bizType)+L("السجل التجاري",r.bizReg)+L("الرابط",r.bizLink)
+ +`\n— الشخص المسؤول —\n`+L("الاسم",r.cName)+L("الصفة",r.cRole)+L("الهاتف / واتساب",r.cPhone)+L("البريد",r.cEmail)+L("وسيلة التواصل",r.contactPref)
+ +`\n— الموقع —\n`+L("المدينة",r.city)+L("مدينة الالتقاط",r.pickupCity)+L("موقع الالتقاط",r.pickupAddr)+L("وقت الالتقاط",r.pickupTime)
+ +`\n— التشغيل —\n`+L("طبيعة الاستخدام",r.usage)+L("الخدمة المطلوبة",r.service)+L("نوع البضاعة",r.goods)
+ +L("متوسط الوزن",r.weight)+L("عدد الشحنات الشهري",r.volume)+L("المدن الأكثر شحناً",r.dest)
+ +`\n— خدمات إضافية —\n`+L("التحصيل عند التسليم",r.cod)+L("دورية التحويل",r.codCycle)+L("خدمات أخرى",r.extras)
+ +L("جاهزية البدء",r.ready)+L("ملاحظات",r.notes)+`\n${enc(r)}`;
+}
+
+/* ── الإرسال المشترك ── */
+function deliver(rec,txt){
+ const wa=`https://wa.me/${ADMIN_WA.replace(/\D/g,"")}?text=${encodeURIComponent(txt)}`;
+ const btns=`<a href="${wa}" target="_blank" rel="noopener" class="btn btn-wa w-full">إرسال عبر واتساب</a>
+  <button onclick="copyTxt()" class="btn btn-ghost w-full">نسخ النص</button>`;
+ if(SB){
+  doneStatus.innerHTML=`<p class="text-sm text-ink-mid">جاري الإرسال…</p>`;
+  SB.from("submissions").insert({type:rec.type,payload:rec})
+   .then(({error})=>{ if(error) throw error;
+    doneStatus.innerHTML=`<p class="inline-block text-sm font-bold text-good bg-good-soft rounded-full px-4 py-2">وصل للإدارة</p>`; })
+   .catch(()=>{ doneStatus.innerHTML=`<p class="text-sm text-alert mb-2">تعذّر الإرسال — استخدم واتساب.</p>`+btns; });
+ } else if(WEBHOOK){
+  doneStatus.innerHTML=`<p class="text-sm text-ink-mid">جاري الإرسال…</p>`;
+  fetch(WEBHOOK,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(rec)})
+   .then(r=>{if(!r.ok)throw 0;doneStatus.innerHTML=`<p class="inline-block text-sm font-bold text-good bg-good-soft rounded-full px-4 py-2">وصل للإدارة</p>`;})
+   .catch(()=>{doneStatus.innerHTML=`<p class="text-sm text-alert mb-2">تعذّر الإرسال التلقائي — استخدم واتساب.</p>`+btns;});
+ } else doneStatus.innerHTML=btns;
+}
+function copyTxt(){navigator.clipboard.writeText(summary.textContent).then(()=>alert("تم النسخ."),()=>alert("تعذّر النسخ."));}
+function say(id,t,ok){const el=document.getElementById(id);el.textContent=t;
+ el.className="text-sm font-bold text-center mb-2 "+(ok?"text-good":"text-alert");setTimeout(()=>el.textContent="",5000);}
+
+/* ══════════ الروابط والاستيراد ══════════ */
+const base=()=>location.href.split("#")[0];
+function fillLinks(){lkJoin.textContent=base()+"#join";lkStaff.textContent=base()+"#staff";lkAdmin.textContent=base()+"#admin";}
+function copyEl(id){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>alert("تم النسخ."),()=>alert("انسخ يدوياً."));}
+function waShare(id,label){window.open("https://wa.me/?text="+encodeURIComponent(label+"\n"+document.getElementById(id).textContent),"_blank");}
+function toggle(id){document.getElementById(id).classList.toggle("hidden");}
+function importCode(boxId){
+ const box=document.getElementById(boxId), msgId=boxId==="importS"?"importMsgS":"importMsgC";
+ try{
+  const m=box.value.match(/WSL-[A-Za-z0-9+/=\s]+/);
+  const rec=dec(m?m[0]:box.value);
+  if(!rec||!rec.id) throw 0;
+  if(rec.type==="join"){
+   if(JOIN.some(x=>x.id===rec.id)) return say(msgId,"الطلب ده مستورد قبل كده.",false);
+   JOIN.push(rec); store(K_JOIN,JOIN); say(msgId,`تم استيراد طلب: ${rec.bizName}.`,true); renderClientReport();
+  } else {
+   if(STAFF.some(x=>x.id===rec.id)) return say(msgId,"الرد ده مستورد قبل كده.",false);
+   STAFF.push(rec); store(K_STAFF,STAFF); say(msgId,`تم استيراد رد ${MONTHS[rec.month]} ${rec.year} — ${rec.agent}.`,true); renderStaffReport();
+  }
+  box.value="";
+ }catch(e){say(msgId,"الكود غير صالح — تأكد من نسخه كامل.",false);}
+}
+function wipe(kind){
+ if(!confirm("مسح البيانات دي نهائياً من الجهاز؟")) return;
+ if(kind==="staff"){STAFF=[];store(K_STAFF,STAFF);renderStaffReport();}
+ else {JOIN=[];store(K_JOIN,JOIN);renderClientReport();}
+}
+
+/* ══════════ الرسوم ══════════ */
+const CH={};
+function chart(id,cfg){
+ if(CH[id])CH[id].destroy();
+ Chart.defaults.font.family="'IBM Plex Sans Arabic', sans-serif";
+ Chart.defaults.color="#43506B";
+ CH[id]=new Chart(document.getElementById(id),cfg);
+}
+const PALETTE=["#002EB0","#7B95E8","#FFBA08","#B42318","#067647","#8391AE","#E86A5E","#C9D6F5"];
+const pct=(v,m)=>m>0?Math.round(v/m*100):0;
+const countBy=(arr)=>arr.reduce((a,v)=>{if(v){a[v]=(a[v]||0)+1}return a},{});
+const topN=(obj,n)=>Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);
+
+/* ══════════ تقرير الموظفين ══════════ */
+function renderStaffReport(){
+ const agents=[...new Set(STAFF.map(r=>r.agent))], cur=dAgent.value||"all";
+ dAgent.innerHTML=`<option value="all">كل الموظفين</option>`+agents.map(a=>`<option>${a}</option>`).join("");
+ dAgent.value=agents.includes(cur)?cur:"all";
+ const recs=STAFF.filter(r=>(dMonth.value==="all"||r.month===+dMonth.value)&&(dYear.value==="all"||r.year===+dYear.value)&&(dAgent.value==="all"||r.agent===dAgent.value));
+ emptyS.classList.toggle("hidden",recs.length>0);
+ bodyS.classList.toggle("hidden",recs.length===0);
+ printMetaS.innerHTML=`${dMonth.value==="all"?"كل الشهور":MONTHS[+dMonth.value]} ${dYear.value==="all"?"":dYear.value}<br>${dAgent.value==="all"?"كل الموظفين":dAgent.value} — ${recs.length} رد`;
+ if(!recs.length) return;
+
+ const city={},get=c=>city[c]||(city[c]={from:0,to:0,issues:0,inq:0,gap:0,types:{}});
+ const typeTotals={};let issueTotal=0,demandTotal=0;const rSum={},rCnt={};
+ recs.forEach(r=>{
+  (r.demand||[]).forEach(d=>{const c=get(d.city);c[d.dir==="from"?"from":"to"]+=d.count;demandTotal+=d.count});
+  (r.coverage||[]).forEach(v=>{const c=get(v.city);c.inq+=v.count;if(!v.available)c.gap+=v.count});
+  (r.issues||[]).forEach(i=>{const c=get(i.city),n=i.count||1;c.issues+=n;c.types[i.type]=(c.types[i.type]||0)+n;
+   typeTotals[i.type]=(typeTotals[i.type]||0)+n;issueTotal+=n});
+  RATE_KEYS.forEach(([k])=>{const v=r.ratings?.[k];if(v>0){rSum[k]=(rSum[k]||0)+v;rCnt[k]=(rCnt[k]||0)+1}});
+ });
+ const list=Object.entries(city).map(([name,v])=>({name,...v,demand:v.from+v.to}));
+ const vals=RATE_KEYS.map(([k])=>rCnt[k]?rSum[k]/rCnt[k]:null).filter(v=>v!==null);
+ const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+
+ kpisS.innerHTML=kpi("عدد الردود",recs.length,[...new Set(recs.map(r=>r.agent))].length+" موظف")
+  +kpi("الطلبات المسجّلة",demandTotal.toLocaleString("en"),list.length+" مدينة")
+  +kpi("حالات المشاكل",issueTotal.toLocaleString("en"),issueTotal?Object.keys(typeTotals).length+" نوع":"لا توجد",issueTotal?"text-alert":"text-good")
+  +kpi("متوسط التقييم",avg?avg.toFixed(1)+" / 5":"—","من ملاحظات الموظفين",avg>=4?"text-good":avg>=3?"text-ink":"text-alert");
+
+ const dem=[...list].filter(c=>c.demand>0).sort((a,b)=>b.demand-a.demand).slice(0,8);
+ chart("chDemand",{type:"bar",data:{labels:dem.map(c=>c.name),datasets:[
+  {label:"شحن منها",data:dem.map(c=>c.from),backgroundColor:"#002EB0",borderRadius:6},
+  {label:"شحن إليها",data:dem.map(c=>c.to),backgroundColor:"#7B95E8",borderRadius:6}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:"bottom"}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:"#EDF1FA"}}}}});
+
+ const te=Object.entries(typeTotals).sort((a,b)=>b[1]-a[1]);
+ chart("chIssues",{type:"doughnut",data:{labels:te.map(t=>t[0]),datasets:[{data:te.map(t=>t[1]),backgroundColor:PALETTE,borderWidth:0}]},
+  options:{maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"bottom",labels:{boxWidth:12}}}}});
+
+ const exp=[...list].filter(c=>c.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,8);
+ chart("chExpansion",{type:"bar",data:{labels:exp.map(c=>c.name),datasets:[{data:exp.map(c=>c.gap),backgroundColor:"#FFBA08",borderRadius:6}]},
+  options:{indexAxis:"y",maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:"#EDF1FA"}},y:{grid:{display:false}}}}});
+
+ chart("chRatings",{type:"radar",data:{labels:RATE_KEYS.map(r=>r[1]),datasets:[{data:RATE_KEYS.map(([k])=>rCnt[k]?+(rSum[k]/rCnt[k]).toFixed(2):0),
+  backgroundColor:"rgba(0,46,176,.15)",borderColor:"#002EB0",pointBackgroundColor:"#FFBA08",borderWidth:2}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{stepSize:1,backdropColor:"transparent"},grid:{color:"#EDF1FA"},angleLines:{color:"#EDF1FA"}}}}});
+
+ const byMonth={};
+ STAFF.forEach(r=>{const k=`${r.year}-${String(r.month+1).padStart(2,"0")}`;const b=byMonth[k]||(byMonth[k]={d:0,i:0});
+  (r.demand||[]).forEach(x=>b.d+=x.count);(r.issues||[]).forEach(x=>b.i+=(x.count||1));});
+ const mk=Object.keys(byMonth).sort();
+ chart("chTrend",{type:"line",data:{labels:mk.map(k=>MONTHS[+k.split("-")[1]-1]+" "+k.split("-")[0]),datasets:[
+  {label:"الطلبات",data:mk.map(k=>byMonth[k].d),borderColor:"#002EB0",backgroundColor:"rgba(0,46,176,.08)",fill:true,tension:.3,borderWidth:2},
+  {label:"المشاكل",data:mk.map(k=>byMonth[k].i),borderColor:"#B42318",backgroundColor:"rgba(180,35,24,.06)",fill:true,tension:.3,borderWidth:2}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:"bottom"}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:"#EDF1FA"}}}}});
+
+ const board=[...list].sort((a,b)=>b.demand-a.demand).slice(0,12),maxD=Math.max(...board.map(c=>c.demand),1);
+ cityBoard.innerHTML=board.map(c=>`
+  <div class="grid sm:grid-cols-[1fr_2.2fr_auto] items-center gap-2 sm:gap-3 pb-3 border-b border-[#F0F3FA] last:border-0">
+   <div class="flex items-center gap-2"><span class="font-semibold text-sm">${c.name}</span>
+    ${c.gap?`<span class="chip bg-gold-soft text-gold-deep">فجوة تغطية</span>`:""}</div>
+   <div><div class="bar"><i style="width:${pct(c.demand,maxD)}%;background:#002EB0"></i></div>
+    ${c.issues?`<div class="bar mt-1.5"><i style="width:${pct(c.issues,Math.max(c.demand,c.issues,1))}%;background:#B42318"></i></div>`:""}</div>
+   <div class="flex items-center gap-3 text-xs num"><span class="text-brand font-bold">${c.demand} طلب</span>
+    <span class="${c.issues?"text-alert":"text-ink-light"} font-bold">${c.issues} مشكلة</span>
+    <span class="text-ink-light font-bold">${c.inq} استفسار</span></div></div>`).join("");
+
+ tblDemand.innerHTML=dem.length?dem.map((c,i)=>`<tr class="border-b border-[#F0F3FA]">
+  <td class="py-2 text-ink-light num">${i+1}</td><td class="py-2 font-semibold">${c.name}</td>
+  <td class="py-2 text-center num">${c.from}</td><td class="py-2 text-center num">${c.to}</td>
+  <td class="py-2 text-center num font-bold text-brand">${c.demand}</td></tr>`).join(""):empty(5);
+
+ const iss=[...list].filter(c=>c.issues>0).sort((a,b)=>b.issues-a.issues).slice(0,10);
+ tblIssues.innerHTML=iss.length?iss.map((c,i)=>`<tr class="border-b border-[#F0F3FA]">
+  <td class="py-2 text-ink-light num">${i+1}</td><td class="py-2 font-semibold">${c.name}</td>
+  <td class="py-2"><div class="flex flex-wrap gap-1">${Object.entries(c.types).sort((a,b)=>b[1]-a[1])
+   .map(([t,n])=>`<span class="chip bg-alert-soft text-alert">${t} <b class="num">${n}</b></span>`).join("")}</div></td>
+  <td class="py-2 text-center num font-bold text-alert">${c.issues}</td></tr>`).join(""):empty(4);
+
+ const notes=recs.filter(r=>r.impression||r.suggestions);
+ notesList.innerHTML=notes.length?notes.map(r=>`
+  <div class="border-r-2 border-brand-line pr-3">
+   <p class="text-xs text-ink-light mb-1">${r.agent} · ${MONTHS[r.month]} ${r.year}</p>
+   ${r.impression?`<p class="text-sm mb-1"><b class="text-ink-mid">انطباع العملاء:</b> ${r.impression}</p>`:""}
+   ${r.suggestions?`<p class="text-sm"><b class="text-ink-mid">مقترح تحسين:</b> ${r.suggestions}</p>`:""}
+  </div>`).join(""):`<p class="text-sm text-ink-light">ما في ملاحظات مكتوبة.</p>`;
+}
+const kpi=(l,v,s,t)=>`<div class="card p-3"><p class="text-xs text-ink-light mb-1">${l}</p>
+ <p class="font-head font-extrabold text-2xl num ${t||"text-ink"}">${v}</p><p class="text-xs text-ink-light mt-1">${s}</p></div>`;
+const empty=(c,t)=>`<tr><td colspan="${c}" class="py-4 text-center text-sm text-ink-light">${t||"لا توجد بيانات."}</td></tr>`;
+
+/* ══════════ تقرير العملاء ══════════ */
+function renderClientReport(){
+ const types=[...new Set(JOIN.map(r=>r.bizType))],cities=[...new Set(JOIN.map(r=>r.city))];
+ const ct=cFilterType.value||"all",cc=cFilterCity.value||"all";
+ cFilterType.innerHTML=`<option value="all">كل الأنواع</option>`+types.map(t=>`<option>${t}</option>`).join("");
+ cFilterCity.innerHTML=`<option value="all">كل المدن</option>`+cities.map(c=>`<option>${c}</option>`).join("");
+ cFilterType.value=types.includes(ct)?ct:"all"; cFilterCity.value=cities.includes(cc)?cc:"all";
+
+ const recs=JOIN.filter(r=>(cFilterType.value==="all"||r.bizType===cFilterType.value)&&(cFilterCity.value==="all"||r.city===cFilterCity.value));
+ emptyC.classList.toggle("hidden",recs.length>0);
+ bodyC.classList.toggle("hidden",recs.length===0);
+ printMetaC.textContent=`${recs.length} طلب — ${cFilterType.value==="all"?"كل الأنواع":cFilterType.value} · ${cFilterCity.value==="all"?"كل المدن":cFilterCity.value}`;
+ if(!recs.length) return;
+
+ const codYes=recs.filter(r=>r.cod==="نعم").length;
+ const storeYes=recs.filter(r=>(r.extras||[]).some(e=>e.includes("تخزين"))).length;
+ const bigVol=recs.filter(r=>/120|أكثر/.test(r.volume||"")).length;
+ kpisC.innerHTML=kpi("عدد الطلبات",recs.length,[...new Set(recs.map(r=>r.city))].length+" مدينة")
+  +kpi("يطلبون COD",pct(codYes,recs.length)+"%",codYes+" من "+recs.length)
+  +kpi("يطلبون التخزين",pct(storeYes,recs.length)+"%",storeYes+" عميل")
+  +kpi("حجم شحنات مرتفع",bigVol,"أكثر من 120 شحنة/شهر","text-good");
+
+ const bt=topN(countBy(recs.map(r=>r.bizType)),8);
+ chart("chBiz",{type:"bar",data:{labels:bt.map(x=>x[0]),datasets:[{data:bt.map(x=>x[1]),backgroundColor:"#002EB0",borderRadius:6}]},
+  options:{indexAxis:"y",maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:"#EDF1FA"},ticks:{precision:0}},y:{grid:{display:false}}}}});
+
+ const vol=OPTS.volume.map(v=>recs.filter(r=>r.volume===v).length);
+ chart("chVol",{type:"doughnut",data:{labels:OPTS.volume,datasets:[{data:vol,backgroundColor:PALETTE,borderWidth:0}]},
+  options:{maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"bottom",labels:{boxWidth:12}}}}});
+
+ const cityCount=topN(countBy(recs.map(r=>r.city)),8);
+ chart("chCity",{type:"bar",data:{labels:cityCount.map(x=>x[0]),datasets:[{label:"عدد العملاء",data:cityCount.map(x=>x[1]),backgroundColor:"#7B95E8",borderRadius:6}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:"#EDF1FA"},ticks:{precision:0}}}}});
+
+ const destAll=[];recs.forEach(r=>(r.dest||[]).forEach(d=>destAll.push(d)));
+ const dst=topN(countBy(destAll),8);
+ chart("chDest",{type:"bar",data:{labels:dst.map(x=>x[0]),datasets:[{data:dst.map(x=>x[1]),backgroundColor:"#FFBA08",borderRadius:6}]},
+  options:{indexAxis:"y",maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:"#EDF1FA"},ticks:{precision:0}},y:{grid:{display:false}}}}});
+
+ const exAll=[];recs.forEach(r=>(r.extras||[]).forEach(e=>exAll.push(e)));
+ const ex=topN(countBy(exAll),8);
+ chart("chExtras",{type:"bar",data:{labels:ex.map(x=>x[0]),datasets:[{data:ex.map(x=>x[1]),backgroundColor:"#067647",borderRadius:6}]},
+  options:{indexAxis:"y",maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:"#EDF1FA"},ticks:{precision:0}},y:{grid:{display:false}}}}});
+
+ clientList.innerHTML=[...recs].reverse().map(r=>`
+  <details class="border border-[#E6EAF4] rounded-xl p-3">
+   <summary class="cursor-pointer">
+    <span class="font-bold text-sm">${r.bizName}</span>
+    <span class="text-xs text-ink-light"> — ${r.bizType} · ${r.city}</span>
+    <div class="text-xs text-ink-light num mt-1" dir="ltr">${r.cPhone} · ${new Date(r.ts).toLocaleDateString("en-GB")}</div>
+   </summary>
+   <pre class="text-xs whitespace-pre-wrap mt-3 text-ink-mid">${joinText(r).split("\nWSL-")[0]}</pre>
+  </details>`).join("");
+}
+
+/* ══════════ التصدير ══════════ */
+function csv(rows,head,name){
+ const esc=v=>`"${String(Array.isArray(v)?v.join(" - "):(v??"")).replace(/"/g,'""')}"`;
+ const out="\uFEFF"+[head.join(","),...rows.map(r=>r.map(esc).join(","))].join("\n");
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([out],{type:"text/csv;charset=utf-8"}));
+ a.download=name+"-"+new Date().toISOString().slice(0,10)+".csv";a.click();URL.revokeObjectURL(a.href);
+}
+function exportJoinCSV(){
+ if(!JOIN.length) return alert("ما في بيانات.");
+ const cols=["ts","bizName","bizType","bizReg","bizLink","cName","cRole","cPhone","cEmail","contactPref","city","pickupCity","pickupAddr","pickupTime","usage","service","goods","weight","volume","dest","cod","codCycle","extras","ready","notes"];
+ const head=["التاريخ","النشاط","النوع","السجل","الرابط","المسؤول","الصفة","الهاتف","البريد","التواصل","المدينة","مدينة الالتقاط","موقع الالتقاط","وقت الالتقاط","الاستخدام","الخدمة","البضاعة","الوزن","الشحنات","المدن","COD","الدورية","خدمات إضافية","الجاهزية","ملاحظات"];
+ csv(JOIN.map(r=>cols.map(c=>r[c])),head,"weslat-clients");
+}
+function exportStaffCSV(){
+ if(!STAFF.length) return alert("ما في بيانات.");
+ const rows=[];
+ STAFF.forEach(r=>{
+  (r.demand||[]).forEach(d=>rows.push([r.ts,MONTHS[r.month]+" "+r.year,r.agent,"طلب",d.city,d.dir==="from"?"شحن منها":"شحن إليها",d.count,""]));
+  (r.coverage||[]).forEach(c=>rows.push([r.ts,MONTHS[r.month]+" "+r.year,r.agent,"استفسار تغطية",c.city,c.available?"متوفرة":"غير متوفرة",c.count,""]));
+  (r.issues||[]).forEach(i=>rows.push([r.ts,MONTHS[r.month]+" "+r.year,r.agent,"مشكلة",i.city,i.type,i.count,i.note]));
+ });
+ csv(rows,["التاريخ","الشهر","الموظف","النوع","المدينة","التفصيل","العدد","ملاحظة"],"weslat-staff");
+}
+
+/* ══════════ دخول الإدارة والمزامنة ══════════ */
+function openAdmin(){
+ const tabs=document.getElementById("adminTabs");
+ tabs.classList.remove("hidden"); tabs.classList.add("flex");
+ sbBox.classList.toggle("hidden",!SB);
+ adminTab("s");
+}
+async function adminEnter(){
+ if(!SB) return openAdmin();
+ const {data}=await SB.auth.getSession();
+ if(!data.session) return show("vLogin");
+ await sbSync(false); openAdmin();
+}
+async function sbLogin(){
+ const {error}=await SB.auth.signInWithPassword({email:lgEmail.value.trim(),password:lgPass.value});
+ if(error) return say("lgMsg","بيانات الدخول غير صحيحة.",false);
+ lgPass.value=""; adminEnter();
+}
+async function sbLogout(){ await SB.auth.signOut(); location.hash="#admin"; location.reload(); }
+async function sbSync(alert_){
+ if(!SB) return;
+ const {data,error}=await SB.from("submissions").select("payload").order("created_at",{ascending:false}).limit(2000);
+ if(error){ if(alert_) alert("تعذّر جلب البيانات — تأكد من الاتصال وصلاحيات الجدول."); return; }
+ let nS=0,nC=0;
+ (data||[]).forEach(row=>{
+  const r=row.payload; if(!r||!r.id) return;
+  if(r.type==="join"){ if(!JOIN.some(x=>x.id===r.id)){JOIN.push(r);nC++;} }
+  else { if(!STAFF.some(x=>x.id===r.id)){STAFF.push(r);nS++;} }
+ });
+ store(K_STAFF,STAFF); store(K_JOIN,JOIN);
+ sbInfo.textContent=`${STAFF.length} رد موظف · ${JOIN.length} طلب عميل — آخر تحديث ${new Date().toLocaleTimeString("en-GB")}`;
+ renderStaffReport(); renderClientReport();
+ if(alert_) alert(nS+nC?`تم جلب ${nS} رد و${nC} طلب جديد.`:"ما في بيانات جديدة.");
+}
+
+/* ══════════ الإقلاع ══════════ */
+resetStaff(false);
+fillLinks();
+route();
+</script>
+</body>
+</html>
