@@ -1,21 +1,21 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 /**
- * TEMP wordmark. The approved vector logo (/public/brand/creatvo-logo.svg)
- * was not supplied to this session — this renders the brand name in the
- * heading face as a stand-in so the header isn't dead space. Swap for
- * <Image src="/brand/creatvo-logo.svg" .../> once the real asset lands;
- * see the implementation notes for details.
+ * Official Creatvo lockup, extracted as outlined vector paths from the
+ * supplied artwork — original artboard 138.403 × 37.1263. Do not
+ * redraw, recolor, or distort; render at this aspect ratio only.
  */
 export function Logo({ className }: { className?: string }) {
   return (
-    <span
-      className={cn(
-        "font-heading text-lg font-semibold tracking-tight text-foreground",
-        className
-      )}
-    >
-      Creatvo
-    </span>
+    <Image
+      src="/brand/creatvo-logo.svg"
+      alt="Creatvo"
+      width={138.403}
+      height={37.1263}
+      priority
+      className={cn("h-8 w-auto", className)}
+    />
   );
 }

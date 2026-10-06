@@ -138,7 +138,7 @@ export default async function Home() {
 
       <footer className="border-t border-border bg-background py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-muted-foreground sm:flex-row">
-          <Logo className="text-sm" />
+          <Logo className="h-6" />
           <p>&copy; {new Date().getFullYear()} Creatvo. Media production for organizations.</p>
         </div>
       </footer>
