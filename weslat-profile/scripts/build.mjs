@@ -49,6 +49,30 @@ try {
   await sheet.close();
   fs.rmSync(sheetHtml);
 
+  // 3c. Cover options (not in the PDF until one is chosen): preview/cover-A|B|C.png + covers-compare.png
+  const coversSrc = path.join(root, 'src/covers.html');
+  if (fs.existsSync(coversSrc)) {
+    const cp = await browser.newPage({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 2 });
+    await cp.goto(pathToFileURL(coversSrc).href, { waitUntil: 'networkidle' });
+    await cp.evaluate(() => document.fonts.ready);
+    const ids = await cp.$$eval('section[data-cover]', (xs) => xs.map((x) => x.dataset.cover));
+    for (const id of ids) {
+      await cp.evaluate((k) => document.querySelectorAll('section[data-cover]').forEach((x) => (x.style.display = x.dataset.cover === k ? '' : 'none')), id);
+      await cp.screenshot({ path: path.join(previewDir, `cover-${id}.png`), clip: { x: 0, y: 0, width: 793.7, height: 1122.5 } });
+    }
+    await cp.close();
+    const cmpHtml = path.join(previewDir, '.covers.html');
+    fs.writeFileSync(cmpHtml, `<body style="margin:0;background:#5b6270;display:flex;gap:24px;padding:24px;width:max-content;font-family:sans-serif">${ids
+      .map((id) => `<figure style="margin:0;color:#fff;text-align:center;font-size:22px"><img src="cover-${id}.png" style="width:560px;display:block"><figcaption style="padding-top:10px">Option ${id}</figcaption></figure>`)
+      .join('')}</body>`);
+    const cmp = await browser.newPage({ viewport: { width: 1800, height: 900 }, deviceScaleFactor: 1.5 });
+    await cmp.goto(pathToFileURL(cmpHtml).href, { waitUntil: 'networkidle' });
+    await cmp.screenshot({ path: path.join(previewDir, 'covers-compare.png'), fullPage: true });
+    await cmp.close();
+    fs.rmSync(cmpHtml);
+    console.log(`Cover options: ${ids.map((i) => `cover-${i}.png`).join(', ')} + covers-compare.png in preview/`);
+  }
+
   // 4. Missing photos report (photo slots fall back to a designed brand panel)
   const missing = await page.$$eval('section.page', (secs) =>
     secs.flatMap((s, i) =>
@@ -59,7 +83,7 @@ try {
   console.log(`PDF: ${path.relative(root, pdfOut)}`);
   console.log(`PNG previews: ${sections.length} pages + contact-sheet.png in preview/`);
   if (missing.length) {
-    console.log('\nMissing photos (brand panel / initials shown instead):');
+    console.log('\nMissing photos (brand panel shown, or text-only leadership layout):');
     for (const m of missing) console.log(`  page ${String(m.page).padStart(2, '0')}: assets/photos/${m.file}`);
   } else {
     console.log('All photos present.');

@@ -78,9 +78,13 @@ for (const c of Object.values(cities)) {
 }
 defs += `</g>\n</defs></svg>`;
 
-const htmlPath = path.join(root, 'src/profile.html');
-const html = fs.readFileSync(htmlPath, 'utf8');
+// Inject into every page source that carries the markers (profile + cover options).
 const re = /(<!-- map:start -->)[\s\S]*?(<!-- map:end -->)/;
-if (!re.test(html)) throw new Error('map markers not found in src/profile.html');
-fs.writeFileSync(htmlPath, html.replace(re, `$1\n${defs}\n$2`));
+for (const file of ['src/profile.html', 'src/covers.html']) {
+  const htmlPath = path.join(root, file);
+  if (!fs.existsSync(htmlPath)) continue;
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  if (!re.test(html)) throw new Error(`map markers not found in ${file}`);
+  fs.writeFileSync(htmlPath, html.replace(re, `$1\n${defs}\n$2`));
+}
 console.log(`map written: viewBox 0 0 1000 ${f(H)}`);
