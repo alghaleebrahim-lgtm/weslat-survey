@@ -1,29 +1,34 @@
-/* Weslat — Corporate Profile 2026
-   A4 portrait, Arabic RTL. Cairo only, loaded from /assets/fonts.
-   Grid: 170mm content width, 12 columns × 9.58mm, 5mm gutters.
-   1 col 9.6 · 3 col 38.8 · 4 col 53.3 · 5 col 67.9 · 6 col 82.5 · 7 col 97.1 · 8 col 111.7 */
+/* Weslat — Corporate Profile 2026 · v2
+   A4 portrait, Arabic RTL, Cairo only (local files). */
 
-/* ---------- Fonts (local) ---------- */
-@font-face { font-family: 'Cairo'; font-weight: 300; src: url(../assets/fonts/cairo-arabic-300-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
 @font-face { font-family: 'Cairo'; font-weight: 400; src: url(../assets/fonts/cairo-arabic-400-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
-@font-face { font-family: 'Cairo'; font-weight: 600; src: url(../assets/fonts/cairo-arabic-600-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
-@font-face { font-family: 'Cairo'; font-weight: 700; src: url(../assets/fonts/cairo-arabic-700-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
-@font-face { font-family: 'Cairo'; font-weight: 300; src: url(../assets/fonts/cairo-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Cairo'; font-weight: 400; src: url(../assets/fonts/cairo-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 500; src: url(../assets/fonts/cairo-arabic-500-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 500; src: url(../assets/fonts/cairo-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 600; src: url(../assets/fonts/cairo-arabic-600-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
 @font-face { font-family: 'Cairo'; font-weight: 600; src: url(../assets/fonts/cairo-latin-600-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 700; src: url(../assets/fonts/cairo-arabic-700-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
 @font-face { font-family: 'Cairo'; font-weight: 700; src: url(../assets/fonts/cairo-latin-700-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 800; src: url(../assets/fonts/cairo-arabic-800-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 800; src: url(../assets/fonts/cairo-latin-800-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 900; src: url(../assets/fonts/cairo-arabic-900-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 900; src: url(../assets/fonts/cairo-latin-900-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
 
 /* ---------- Tokens ---------- */
 :root {
   --blue: #002EB0;
   --yellow: #FFBA08;
+  --navy: #0A1A4F;
+  --white: #FFFFFF;
+  --tint: #EEF2FC;
   --ink: #0F172A;
-  --muted: #475569;
-  --surface: #F4F6F9;
-  --rule: #D9DEE6;
-  --blue-rule: #4D6CC8; /* thin rules on blue pages */
-  --m-side: 20mm;
-  --m-top: 18mm;
+  --muted: #4A5675;
+  --rule: #D3DBEF;
+  --on-blue-muted: #B9C7F2;
+  --on-blue-rule: #3D5FCC;
+  --on-navy-muted: #A9B4D6;
+  --on-navy-rule: #26386F;
+  --shipping-gray: #8E9BC4;
 }
 
 /* ---------- Page ---------- */
@@ -32,171 +37,173 @@
 html, body { margin: 0; padding: 0; background: #fff; }
 body {
   font-family: 'Cairo', sans-serif;
-  font-size: 11.5pt;
+  font-size: 12.5pt;
   line-height: 1.75;
   color: var(--ink);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-  text-rendering: geometricPrecision;
 }
-.page {
-  position: relative;
-  width: 210mm;
-  height: 297mm;
-  overflow: hidden;
-  background: #fff;
-  page-break-after: always;
-  break-after: page;
-}
+.page { position: relative; width: 210mm; height: 297mm; overflow: hidden; background: #fff; page-break-after: always; break-after: page; }
 .page:last-child { page-break-after: auto; break-after: auto; }
-.page--blue { background: var(--blue); color: #fff; }
+.bg-blue { background: var(--blue); color: #fff; }
+.bg-navy { background: var(--navy); color: #fff; }
+.bg-tint { background: var(--tint); }
+h1, h2, h3, p, ul, ol, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
 
-/* Absolute block positioned from the right (RTL start) */
-.blk { position: absolute; }
-/* Flowing content column: stacks children so wrapped headlines push content down */
-.flow { position: absolute; right: var(--m-side); left: var(--m-side); display: flex; flex-direction: column; align-items: stretch; }
-.row { display: flex; justify-content: space-between; align-items: flex-start; }
+.abs { position: absolute; }
+.flow { position: absolute; right: 20mm; left: 20mm; display: flex; flex-direction: column; }
+.fill { position: absolute; inset: 0; }
+svg { display: block; overflow: visible; }
 
 /* ---------- Footer ---------- */
 .footer {
-  position: absolute;
-  right: var(--m-side);
-  left: var(--m-side);
-  bottom: 10mm;
-  padding-top: 2.4mm;
-  border-top: 0.5pt solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  font-size: 8.5pt;
-  line-height: 1.4;
-  color: var(--muted);
+  position: absolute; right: 20mm; left: 20mm; bottom: 10mm;
+  padding-top: 2.4mm; border-top: 0.5pt solid var(--rule);
+  display: flex; justify-content: space-between;
+  font-size: 9pt; font-weight: 500; line-height: 1.4; color: var(--muted); z-index: 5;
 }
+.footer b { color: var(--blue); font-weight: 800; }
+.bg-blue .footer, .footer.on-blue { color: var(--on-blue-muted); border-color: var(--on-blue-rule); }
+.bg-blue .footer b, .footer.on-blue b { color: var(--yellow); }
+.bg-navy .footer { color: var(--on-navy-muted); border-color: var(--on-navy-rule); }
+.bg-navy .footer b { color: var(--yellow); }
 
 /* ---------- Type ---------- */
-h1, h2, h3, p, ul, ol, figure { margin: 0; padding: 0; }
-.h1 { font-size: 30pt; font-weight: 700; line-height: 1.2; color: var(--ink); }
-.h1--xl { font-size: 36pt; }
-.lead { font-size: 15.5pt; font-weight: 600; line-height: 1.4; }
-.h3 { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
-.body { font-size: 11.5pt; line-height: 1.75; }
-.body p + p { margin-top: 3.4mm; }
-.label { font-size: 11.5pt; font-weight: 600; line-height: 1.4; color: var(--blue); }
-.muted { color: var(--muted); }
-.blue { color: var(--blue); }
-.caption { font-size: 9pt; line-height: 1.4; color: var(--muted); }
+.display { font-size: 74pt; font-weight: 900; line-height: 1.08; text-wrap: balance; }
+.h1 { font-size: 40pt; font-weight: 800; line-height: 1.2; text-wrap: balance; }
+.h1--l { font-size: 46pt; }
+.h1--s { font-size: 34pt; }
+.h2 { font-size: 26pt; font-weight: 800; line-height: 1.25; }
+.h3 { font-size: 18pt; font-weight: 700; line-height: 1.4; }
+.lead { font-size: 15pt; font-weight: 400; line-height: 1.7; }
+.body { font-size: 12.5pt; font-weight: 400; line-height: 1.75; }
+.body p + p { margin-top: 3.6mm; }
+.caption { font-size: 10pt; font-weight: 500; line-height: 1.45; }
+.kicker { font-size: 13pt; font-weight: 700; line-height: 1.4; color: var(--blue); }
+.y { color: var(--yellow); }
+.b { color: var(--blue); }
+.w { color: #fff; }
+.n { color: var(--navy); }
 .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+.num { direction: ltr; unicode-bidi: isolate; }
 
-/* Typographic list with thin rules */
-.list { list-style: none; }
-.list li { border-top: 0.5pt solid var(--rule); padding: 2.6mm 0 2.8mm; line-height: 1.6; }
-.list li:last-child { border-bottom: 0.5pt solid var(--rule); }
-.list b { font-weight: 700; }
+/* Thin-rule list */
+.rules li { border-top: 0.5pt solid var(--rule); padding: 2.6mm 0 2.8mm; line-height: 1.55; }
+.rules li:last-child { border-bottom: 0.5pt solid var(--rule); }
 
-/* ---------- Photos ---------- */
-.photo { position: absolute; overflow: hidden; background: var(--surface); }
-.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; z-index: 1; }
-.photo .ph {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 10mm; text-align: center;
-  font-size: 9pt; line-height: 1.4; color: var(--muted);
+/* Yellow bar callout: "القيمة للتاجر" */
+.value { background: var(--yellow); color: var(--navy); padding: 4.5mm 6mm 5mm; }
+.value .tag { font-size: 12.5pt; font-weight: 900; line-height: 1.4; }
+.value p { font-size: 15pt; font-weight: 700; line-height: 1.5; }
+
+/* Yellow check bullets */
+.checks li { position: relative; padding: 2.6mm 9mm 2.8mm 0; border-top: 0.5pt solid var(--on-blue-rule); line-height: 1.55; }
+.checks li:last-child { border-bottom: 0.5pt solid var(--on-blue-rule); }
+.checks li::before {
+  content: ""; position: absolute; right: 0.6mm; top: 4.4mm;
+  width: 2.2mm; height: 4.4mm; border: solid var(--yellow); border-width: 0 0.9mm 0.9mm 0; transform: rotate(45deg);
 }
 
+/* ---------- Photos ---------- */
+/* A photo sits over a finished brand panel; if the file is missing the <img> removes itself. */
+.photo { position: absolute; overflow: hidden; }
+.photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; z-index: 2; filter: url(#duotone); }
+.photo > .panel { position: absolute; inset: 0; }
+
 /* ---------- 01 Cover ---------- */
-.cover-logo { position: absolute; top: 22mm; right: var(--m-side); width: 56mm; }
-.cover-title { font-size: 78pt; font-weight: 700; line-height: 1.1; }
-.cover-en { font-size: 19pt; font-weight: 300; line-height: 1.4; margin-top: 4mm; direction: ltr; text-align: right; }
-.cover-rule { border: 0; border-top: 0.5pt solid #fff; margin: 12mm 0 6mm; width: 100%; }
-.cover-services { font-size: 14pt; font-weight: 400; line-height: 1.4; }
-.cover-foot { position: absolute; right: var(--m-side); left: var(--m-side); bottom: 18mm; display: flex; justify-content: space-between; align-items: baseline; direction: ltr; }
-.cover-foot .doc { font-size: 13pt; font-weight: 600; line-height: 1.4; }
-.cover-foot .web { font-size: 11.5pt; font-weight: 400; line-height: 1.4; }
+.cover-logo { position: absolute; top: 20mm; right: 20mm; width: 54mm; }
+.cover-map { position: absolute; left: -40mm; width: 200mm; top: 164mm;
+  --map-stroke: #5C7BDE; --map-sw: 3; --route: var(--yellow); --route-sw: 11; --dot: #fff; --dot-ring: var(--blue); --hq: var(--yellow); }
+.cover-foot { position: absolute; right: 20mm; left: 20mm; bottom: 14mm; display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 0.5pt solid var(--on-blue-rule); padding-top: 3mm; font-size: 11pt; line-height: 1.4; }
+.cover-foot .tag { font-size: 14pt; font-weight: 800; }
 
-/* ---------- 02 Founder ---------- */
-.sign-name { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
-.sign-role { font-size: 11.5pt; line-height: 1.5; color: var(--muted); }
+/* ---------- 02 Story ---------- */
+.stat-xl { font-size: 170pt; font-weight: 900; line-height: 0.95; color: var(--yellow); }
 
-/* ---------- 03 Leadership ---------- */
-.leader-name { font-size: 16pt; font-weight: 700; line-height: 1.4; margin-top: 6mm; }
-.leader-role { font-size: 11.5pt; font-weight: 600; line-height: 1.5; color: var(--blue); }
-.leader-bio { margin-top: 4mm; padding-top: 4mm; border-top: 0.5pt solid var(--rule); }
+/* ---------- 03 Time bars ---------- */
+.bars .row { display: grid; grid-template-columns: 30mm 1fr; align-items: center; column-gap: 5mm; }
+.bars .row + .row { margin-top: 8mm; }
+.bars .lbl { font-size: 15pt; font-weight: 800; line-height: 1.3; }
+.bars .bar { display: flex; height: 22mm; }
+.bars .seg { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12.5pt; font-weight: 700; line-height: 1.3; color: #fff; padding: 0 3mm; }
+.seg--ship { background: var(--shipping-gray); }
+.seg--grow { background: var(--blue); }
+.seg--weslat { background: var(--yellow); color: var(--navy) !important; font-size: 11pt !important; }
+.bars .scale { display: grid; grid-template-columns: 30mm 1fr; column-gap: 5mm; margin-top: 3mm; }
+.bars .scale > div:last-child { display: flex; justify-content: space-between; font-size: 10pt; font-weight: 500; color: var(--muted); }
 
-/* ---------- 04 Figures row ---------- */
-.figures { display: flex; }
-.figure { flex: 1; padding: 0 6mm; border-right: 0.5pt solid var(--rule); }
-.figure:first-child { padding-right: 0; border-right: 0; }
-.figure .num { font-size: 60pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; }
-.figure .lbl { font-size: 11.5pt; line-height: 1.4; margin-top: 3mm; color: var(--muted); }
+/* ---------- 04 Stats strip ---------- */
+.stats { display: flex; }
+.stats > div { flex: 1; padding: 0 6mm; border-right: 0.5pt solid var(--on-navy-rule); }
+.stats > div:first-child { padding-right: 0; border-right: 0; }
+.stats .v { font-size: 76pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
+.stats .l { white-space: nowrap; font-size: 13pt; font-weight: 600; line-height: 1.4; margin-top: 3mm; color: #fff; }
 
-/* ---------- 05 Values ---------- */
-.statement { font-size: 24pt; font-weight: 700; line-height: 1.35; }
-.mission { font-size: 15.5pt; font-weight: 400; line-height: 1.6; }
-.values li { display: grid; grid-template-columns: 53.3mm 1fr; column-gap: 5mm; align-items: baseline; padding: 4mm 0 4.2mm; }
-.values .v-name { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
-.values .v-text { font-size: 12pt; line-height: 1.6; }
+/* ---------- 05 Values row ---------- */
+.values { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 5mm; }
+.values > div { border-top: 1.2mm solid var(--yellow); padding-top: 4mm; }
+.values .vn { font-size: 26pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
+.values .vt { font-size: 15pt; font-weight: 800; line-height: 1.4; margin-top: 3mm; }
+.values .vd { font-size: 12.5pt; line-height: 1.55; margin-top: 1.5mm; color: var(--on-navy-muted); }
 
-/* ---------- 06 Comparison ---------- */
-.compare { display: flex; }
-.compare-col { flex: 1; padding-top: 8mm; padding-bottom: 9mm; }
-.compare-col--before { background: var(--surface); margin-right: -20mm; padding-right: 20mm; padding-left: 9mm; border-left: 0.5pt solid var(--rule); }
-.compare-col--with { padding-right: 9mm; }
-.compare-col .h3 { margin-bottom: 4mm; }
-.compare-col .list li { font-size: 12pt; }
+/* ---------- 06 Value blocks ---------- */
+.vnum { font-size: 40pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
+.vblock .t { font-size: 20pt; font-weight: 800; line-height: 1.35; margin-top: 2mm; }
+.vblock .d { font-size: 13pt; line-height: 1.6; margin-top: 1mm; }
+.vgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10mm; row-gap: 7mm; }
+.vgrid .vblock { border-top: 0.5pt solid var(--rule); padding-top: 4mm; }
 
-/* ---------- 12 Journey ---------- */
-.journey-line { position: absolute; left: 0; right: 0; border-top: 0.75pt solid var(--ink); }
-.steps { position: absolute; right: var(--m-side); left: var(--m-side); display: grid; grid-template-columns: repeat(7, 1fr); column-gap: 3mm; }
-.step { position: relative; }
-.step .n { font-size: 22pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; height: 13mm; }
-.step .dot { width: 3.2mm; height: 3.2mm; border-radius: 50%; background: var(--blue); margin: 0 0 6mm; }
-.step .dot--final { background: var(--yellow); }
-.step .t { font-size: 12pt; font-weight: 700; line-height: 1.4; margin-bottom: 1.5mm; }
-.step .d { font-size: 11.5pt; line-height: 1.55; color: var(--muted); }
+/* ---------- 09 Split ---------- */
+.split-title { font-size: 40pt; font-weight: 900; line-height: 1.1; }
+.split-sub { font-size: 18pt; font-weight: 700; line-height: 1.4; margin-top: 2mm; }
 
-/* ---------- 13 Sectors ---------- */
-.sector { border-top: 0.5pt solid var(--rule); padding-top: 4.5mm; }
-.sector .h3 { margin-bottom: 2.5mm; }
-.sector .body { font-size: 12pt; }
+/* ---------- 11 Platform list ---------- */
+.feat li { padding: 4mm 0 4.4mm; border-top: 0.5pt solid var(--on-navy-rule); }
+.feat li:last-child { border-bottom: 0.5pt solid var(--on-navy-rule); }
+.feat .t { font-size: 17pt; font-weight: 800; line-height: 1.4; color: #fff; }
+.feat .t span { color: var(--yellow); margin-left: 3mm; }
+.feat .d { font-size: 12.5pt; line-height: 1.6; color: var(--on-navy-muted); }
 
-/* ---------- 14 Three columns ---------- */
-.cols3 { display: flex; }
-.cols3 > div { flex: 1; padding: 0 5mm; border-right: 0.5pt solid var(--rule); }
-.cols3 > div:first-child { padding-right: 0; border-right: 0; }
-.cols3 > div:last-child { padding-left: 0; }
-.cols3 .h3 { margin-bottom: 2.5mm; }
+/* ---------- 12 Solutions ---------- */
+.sol li { padding: 7mm 0 7.5mm; border-top: 0.5pt solid var(--rule); }
+.sol li:last-child { border-bottom: 0.5pt solid var(--rule); }
+.sol .t { font-size: 18pt; font-weight: 800; line-height: 1.4; }
+.sol .d { font-size: 12.5pt; line-height: 1.6; color: var(--muted); }
 
-/* ---------- 15 Governance ---------- */
-.list--onblue li { border-color: var(--blue-rule); }
+/* ---------- 13 Journey ---------- */
+.stop-t { font-size: 14pt; font-weight: 800; line-height: 1.35; }
+.stop-d { font-size: 12.5pt; line-height: 1.5; color: var(--muted); }
 
-/* ---------- 16 Org chart + map ---------- */
-.org-top { position: absolute; z-index: 1; background: var(--blue); color: #fff; text-align: center; padding: 3.6mm 4mm 4mm; }
-.org-top .t { font-size: 14pt; font-weight: 700; line-height: 1.4; }
-.org-top .s { font-size: 11.5pt; line-height: 1.4; }
-.org-line { position: absolute; background: var(--muted); }
-.org-node { position: absolute; text-align: center; }
-.org-node .t { font-size: 13pt; font-weight: 700; line-height: 1.4; }
-.org-node .s { font-size: 11.5pt; line-height: 1.75; color: var(--muted); }
-.map { display: block; width: 100%; height: auto; overflow: visible; }
-.map-outline { fill: none; stroke: #8A94A6; stroke-width: 2.2; stroke-linejoin: round; }
-.map-link { stroke: var(--blue); stroke-width: 2.2; stroke-dasharray: 2 9; stroke-linecap: round; }
-.map-dot { fill: var(--blue); }
-.map-dot--hq { fill: var(--yellow); }
-.map-label { font-family: 'Cairo'; font-size: 31px; font-weight: 700; fill: var(--ink); direction: rtl; }
-.map-note { font-weight: 400; fill: var(--muted); font-size: 28px; }
+/* ---------- 14 Sector blocks ---------- */
+.sector { position: absolute; padding: 9mm 9mm 0 9mm; }
+.sector .sn { font-size: 15pt; font-weight: 900; line-height: 1; direction: ltr; text-align: right; }
+.sector .t { font-size: 24pt; font-weight: 800; line-height: 1.25; margin-top: 4mm; }
+.sector .d { font-size: 14pt; line-height: 1.6; margin-top: 3mm; }
 
-/* ---------- 17 Reasons ---------- */
-.reasons li { display: grid; grid-template-columns: 30mm 1fr; align-items: baseline; padding: 5mm 0 5.4mm; }
-.reasons .n { font-size: 28pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; }
-.reasons .t { font-size: 16pt; font-weight: 600; line-height: 1.45; }
+/* ---------- 15 Network ---------- */
+.net-map { --map-stroke: var(--navy); --map-sw: 3; --map-fill: var(--tint); --route: var(--yellow); --route-sw: 10; --dot: var(--blue); --dot-ring: #fff; --hq: var(--yellow); --label: var(--navy); --label-note: var(--blue); --label-size: 36px; }
+
+/* ---------- 16 Standards ---------- */
+.stat-hours { white-space: nowrap; font-size: 56pt; font-weight: 900; line-height: 1; color: var(--yellow); }
+
+/* ---------- 17 Leadership ---------- */
+.portrait { position: absolute; overflow: hidden; background: var(--tint); }
+.portrait > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; z-index: 2; filter: url(#duotone); }
+.portrait .initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 84pt; font-weight: 800; line-height: 1; color: var(--blue); }
+.leader-name { font-size: 22pt; font-weight: 800; line-height: 1.3; }
+.leader-role { font-size: 13pt; font-weight: 700; line-height: 1.4; color: var(--blue); margin-top: 1mm; }
+.leader-bio { font-size: 12.5pt; line-height: 1.7; margin-top: 3mm; }
 
 /* ---------- 18 Back cover ---------- */
-.contact-big { font-size: 40pt; font-weight: 700; line-height: 1; }
-.branches { list-style: none; }
-.branches li { display: flex; justify-content: space-between; border-top: 0.5pt solid var(--blue-rule); padding: 2mm 0; font-size: 12pt; line-height: 1.5; }
-.branches li:last-child { border-bottom: 0.5pt solid var(--blue-rule); }
+.big-phone { font-size: 46pt; font-weight: 900; line-height: 1; color: var(--yellow); }
+.branch-row { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 4mm; }
+.branch-row > div { border-top: 0.5pt solid var(--on-blue-rule); padding-top: 2.5mm; }
+.branch-row .c { font-size: 13pt; font-weight: 800; line-height: 1.4; }
+.branch-row .p { font-size: 11pt; font-weight: 500; line-height: 1.4; color: var(--on-blue-muted); }
 
-/* ---------- 11 Tech list ---------- */
-.tech li { grid-template-columns: 67.9mm 1fr; }
-.steps-inline b { font-weight: 700; margin-left: 1.6mm; }
-.steps-inline .gap { display: inline-block; width: 7mm; }
-.h1, .statement, .cover-title, .mission { text-wrap: balance; }
+/* ---------- 07 Services index ---------- */
+.svc-index { display: flex; flex-wrap: wrap; gap: 2mm 7mm; border-top: 0.5pt solid var(--on-blue-rule); padding-top: 5mm; font-size: 13pt; font-weight: 700; line-height: 1.5; }
+.svc-index li { position: relative; padding-right: 4.5mm; }
+.svc-index li::before { content: ""; position: absolute; right: 0; top: 2.6mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--yellow); }

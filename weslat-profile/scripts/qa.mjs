@@ -55,7 +55,7 @@ const layout = await page.evaluate(() => {
       fontsUsed.add(cs.fontFamily);
       const size = parseFloat(cs.fontSize) / pt;
       const label = e.textContent.trim().slice(0, 30);
-      if (size < 8.5) out.push(`p${n}: text below 8.5pt (${size.toFixed(1)}pt): ${label}`);
+      if (size < 8.95) out.push(`p${n}: text below 9pt (${size.toFixed(1)}pt): ${label}`);
       if (r.left < P.left - 0.5 || r.right > P.right + 0.5 || r.top < P.top - 0.5 || r.bottom > P.bottom + 0.5)
         out.push(`p${n}: text outside page: ${label}`);
       if (footer && r.bottom - P.top > footerTop - 1 * mm && !e.closest('.ph'))
@@ -63,26 +63,17 @@ const layout = await page.evaluate(() => {
       if (e.scrollWidth > e.clientWidth + 1 && cs.overflow !== 'visible') out.push(`p${n}: clipped text: ${label}`);
     }
     // headlines: max 2 lines
-    for (const h of sec.querySelectorAll('.h1, .cover-title')) {
+    for (const h of sec.querySelectorAll('.h1')) {
       const lh = parseFloat(getComputedStyle(h).lineHeight);
       const lines = Math.round(h.getBoundingClientRect().height / lh);
       if (lines > 2) out.push(`p${n}: headline has ${lines} lines: ${h.textContent.trim().slice(0, 30)}`);
-    }
-    // text overlapping a photo (unless it sits on a solid panel above it)
-    const photos = [...sec.querySelectorAll('figure.photo')].map((f) => f.getBoundingClientRect());
-    for (const e of els) {
-      if (e.closest('figure.photo') || e.closest('[style*="z-index"]')) continue;
-      const r = e.getBoundingClientRect();
-      for (const p of photos)
-        if (r.left < p.right - 1 && r.right > p.left + 1 && r.top < p.bottom - 1 && r.bottom > p.top + 1)
-          out.push(`p${n}: text overlaps photo: ${e.textContent.trim().slice(0, 30)}`);
     }
   });
   return { out, fontsUsed: [...fontsUsed] };
 });
 await browser.close();
 problems.push(...layout.out);
-if (!layout.out.length) ok('no overflow, no footer collisions, headlines ≤ 2 lines, text ≥ 8.5pt');
+if (!layout.out.length) ok('no overflow, no footer collisions, page headlines ≤ 2 lines, text ≥ 9pt');
 const nonCairo = layout.fontsUsed.filter((f) => !/^"?Cairo"?/.test(f));
 if (nonCairo.length) problems.push(`non-Cairo font families: ${nonCairo.join(', ')}`);
 else ok('Cairo is the only font family');

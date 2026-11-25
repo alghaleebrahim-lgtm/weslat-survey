@@ -39,23 +39,28 @@ try {
   }
   await page.evaluate(() => document.querySelectorAll('section.page').forEach((s) => (s.style.display = '')));
 
-  // 4. Missing photos report
+  // 3b. Contact sheet: all pages side by side (6 × 3) to check the colour rhythm
+  const sheetHtml = path.join(previewDir, '.contact-sheet.html');
+  const imgs = sections.map((_, i) => `<img src="page-${String(i + 1).padStart(2, '0')}.png">`).join('');
+  fs.writeFileSync(sheetHtml, `<body style="margin:0;background:#5b6270;display:grid;grid-template-columns:repeat(6,300px);gap:14px;padding:14px;width:max-content">${imgs.replace(/<img /g, '<img style="width:300px;display:block" ')}</body>`);
+  const sheet = await browser.newPage({ viewport: { width: 1900, height: 800 }, deviceScaleFactor: 1.5 });
+  await sheet.goto(pathToFileURL(sheetHtml).href, { waitUntil: 'networkidle' });
+  await sheet.screenshot({ path: path.join(previewDir, 'contact-sheet.png'), fullPage: true });
+  await sheet.close();
+  fs.rmSync(sheetHtml);
+
+  // 4. Missing photos report (photo slots fall back to a designed brand panel)
   const missing = await page.$$eval('section.page', (secs) =>
     secs.flatMap((s, i) =>
-      [...s.querySelectorAll('figure.photo')]
-        .filter((f) => !f.querySelector('img'))
-        .map((f) => ({ page: i + 1, caption: f.querySelector('.ph')?.textContent.trim() })),
+      [...s.querySelectorAll('[data-photo]')].filter((f) => !f.querySelector('img')).map((f) => ({ page: i + 1, file: f.dataset.photo })),
     ),
   );
-  const html = fs.readFileSync(src, 'utf8');
-  const wanted = [...new Set([...html.matchAll(/assets\/photos\/([\w-]+\.jpg)/g)].map((m) => m[1]))];
-  const absent = wanted.filter((f) => !fs.existsSync(path.join(root, 'assets/photos', f)));
 
   console.log(`PDF: ${path.relative(root, pdfOut)}`);
-  console.log(`PNG previews: ${sections.length} pages in preview/`);
-  if (absent.length) {
-    console.log(`\nMissing photos (placeholders used): ${absent.join(', ')}`);
-    for (const m of missing) console.log(`  page ${String(m.page).padStart(2, '0')}: ${m.caption}`);
+  console.log(`PNG previews: ${sections.length} pages + contact-sheet.png in preview/`);
+  if (missing.length) {
+    console.log('\nMissing photos (brand panel / initials shown instead):');
+    for (const m of missing) console.log(`  page ${String(m.page).padStart(2, '0')}: assets/photos/${m.file}`);
   } else {
     console.log('All photos present.');
   }
