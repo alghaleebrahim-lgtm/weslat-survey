@@ -1,0 +1,202 @@
+/* Weslat — Corporate Profile 2026
+   A4 portrait, Arabic RTL. Cairo only, loaded from /assets/fonts.
+   Grid: 170mm content width, 12 columns × 9.58mm, 5mm gutters.
+   1 col 9.6 · 3 col 38.8 · 4 col 53.3 · 5 col 67.9 · 6 col 82.5 · 7 col 97.1 · 8 col 111.7 */
+
+/* ---------- Fonts (local) ---------- */
+@font-face { font-family: 'Cairo'; font-weight: 300; src: url(../assets/fonts/cairo-arabic-300-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 400; src: url(../assets/fonts/cairo-arabic-400-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 600; src: url(../assets/fonts/cairo-arabic-600-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 700; src: url(../assets/fonts/cairo-arabic-700-normal.woff2) format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC; }
+@font-face { font-family: 'Cairo'; font-weight: 300; src: url(../assets/fonts/cairo-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 400; src: url(../assets/fonts/cairo-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 600; src: url(../assets/fonts/cairo-latin-600-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Cairo'; font-weight: 700; src: url(../assets/fonts/cairo-latin-700-normal.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+
+/* ---------- Tokens ---------- */
+:root {
+  --blue: #002EB0;
+  --yellow: #FFBA08;
+  --ink: #0F172A;
+  --muted: #475569;
+  --surface: #F4F6F9;
+  --rule: #D9DEE6;
+  --blue-rule: #4D6CC8; /* thin rules on blue pages */
+  --m-side: 20mm;
+  --m-top: 18mm;
+}
+
+/* ---------- Page ---------- */
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body {
+  font-family: 'Cairo', sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.75;
+  color: var(--ink);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-rendering: geometricPrecision;
+}
+.page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: #fff;
+  page-break-after: always;
+  break-after: page;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+.page--blue { background: var(--blue); color: #fff; }
+
+/* Absolute block positioned from the right (RTL start) */
+.blk { position: absolute; }
+/* Flowing content column: stacks children so wrapped headlines push content down */
+.flow { position: absolute; right: var(--m-side); left: var(--m-side); display: flex; flex-direction: column; align-items: stretch; }
+.row { display: flex; justify-content: space-between; align-items: flex-start; }
+
+/* ---------- Footer ---------- */
+.footer {
+  position: absolute;
+  right: var(--m-side);
+  left: var(--m-side);
+  bottom: 10mm;
+  padding-top: 2.4mm;
+  border-top: 0.5pt solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* ---------- Type ---------- */
+h1, h2, h3, p, ul, ol, figure { margin: 0; padding: 0; }
+.h1 { font-size: 30pt; font-weight: 700; line-height: 1.2; color: var(--ink); }
+.h1--xl { font-size: 36pt; }
+.lead { font-size: 15.5pt; font-weight: 600; line-height: 1.4; }
+.h3 { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
+.body { font-size: 11.5pt; line-height: 1.75; }
+.body p + p { margin-top: 3.4mm; }
+.label { font-size: 11.5pt; font-weight: 600; line-height: 1.4; color: var(--blue); }
+.muted { color: var(--muted); }
+.blue { color: var(--blue); }
+.caption { font-size: 9pt; line-height: 1.4; color: var(--muted); }
+.ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+/* Typographic list with thin rules */
+.list { list-style: none; }
+.list li { border-top: 0.5pt solid var(--rule); padding: 2.6mm 0 2.8mm; line-height: 1.6; }
+.list li:last-child { border-bottom: 0.5pt solid var(--rule); }
+.list b { font-weight: 700; }
+
+/* ---------- Photos ---------- */
+.photo { position: absolute; overflow: hidden; background: var(--surface); }
+.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; z-index: 1; }
+.photo .ph {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 10mm; text-align: center;
+  font-size: 9pt; line-height: 1.4; color: var(--muted);
+}
+
+/* ---------- 01 Cover ---------- */
+.cover-logo { position: absolute; top: 22mm; right: var(--m-side); width: 56mm; }
+.cover-title { font-size: 78pt; font-weight: 700; line-height: 1.1; }
+.cover-en { font-size: 19pt; font-weight: 300; line-height: 1.4; margin-top: 4mm; direction: ltr; text-align: right; }
+.cover-rule { border: 0; border-top: 0.5pt solid #fff; margin: 12mm 0 6mm; width: 100%; }
+.cover-services { font-size: 14pt; font-weight: 400; line-height: 1.4; }
+.cover-foot { position: absolute; right: var(--m-side); left: var(--m-side); bottom: 18mm; display: flex; justify-content: space-between; align-items: baseline; direction: ltr; }
+.cover-foot .doc { font-size: 13pt; font-weight: 600; line-height: 1.4; }
+.cover-foot .web { font-size: 11.5pt; font-weight: 400; line-height: 1.4; }
+
+/* ---------- 02 Founder ---------- */
+.sign-name { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
+.sign-role { font-size: 11.5pt; line-height: 1.5; color: var(--muted); }
+
+/* ---------- 03 Leadership ---------- */
+.leader-name { font-size: 16pt; font-weight: 700; line-height: 1.4; margin-top: 6mm; }
+.leader-role { font-size: 11.5pt; font-weight: 600; line-height: 1.5; color: var(--blue); }
+.leader-bio { margin-top: 4mm; padding-top: 4mm; border-top: 0.5pt solid var(--rule); }
+
+/* ---------- 04 Figures row ---------- */
+.figures { display: flex; }
+.figure { flex: 1; padding: 0 6mm; border-right: 0.5pt solid var(--rule); }
+.figure:first-child { padding-right: 0; border-right: 0; }
+.figure .num { font-size: 60pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; }
+.figure .lbl { font-size: 11.5pt; line-height: 1.4; margin-top: 3mm; color: var(--muted); }
+
+/* ---------- 05 Values ---------- */
+.statement { font-size: 24pt; font-weight: 700; line-height: 1.35; }
+.mission { font-size: 15.5pt; font-weight: 400; line-height: 1.6; }
+.values li { display: grid; grid-template-columns: 53.3mm 1fr; column-gap: 5mm; align-items: baseline; padding: 4mm 0 4.2mm; }
+.values .v-name { font-size: 15.5pt; font-weight: 700; line-height: 1.4; }
+.values .v-text { font-size: 12pt; line-height: 1.6; }
+
+/* ---------- 06 Comparison ---------- */
+.compare { display: flex; }
+.compare-col { flex: 1; padding-top: 8mm; padding-bottom: 9mm; }
+.compare-col--before { background: var(--surface); margin-right: -20mm; padding-right: 20mm; padding-left: 9mm; border-left: 0.5pt solid var(--rule); }
+.compare-col--with { padding-right: 9mm; }
+.compare-col .h3 { margin-bottom: 4mm; }
+.compare-col .list li { font-size: 12pt; }
+
+/* ---------- 12 Journey ---------- */
+.journey-line { position: absolute; left: 0; right: 0; border-top: 0.75pt solid var(--ink); }
+.steps { position: absolute; right: var(--m-side); left: var(--m-side); display: grid; grid-template-columns: repeat(7, 1fr); column-gap: 3mm; }
+.step { position: relative; }
+.step .n { font-size: 22pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; height: 13mm; }
+.step .dot { width: 3.2mm; height: 3.2mm; border-radius: 50%; background: var(--blue); margin: 0 0 6mm; }
+.step .dot--final { background: var(--yellow); }
+.step .t { font-size: 12pt; font-weight: 700; line-height: 1.4; margin-bottom: 1.5mm; }
+.step .d { font-size: 11.5pt; line-height: 1.55; color: var(--muted); }
+
+/* ---------- 13 Sectors ---------- */
+.sector { border-top: 0.5pt solid var(--rule); padding-top: 4.5mm; }
+.sector .h3 { margin-bottom: 2.5mm; }
+.sector .body { font-size: 12pt; }
+
+/* ---------- 14 Three columns ---------- */
+.cols3 { display: flex; }
+.cols3 > div { flex: 1; padding: 0 5mm; border-right: 0.5pt solid var(--rule); }
+.cols3 > div:first-child { padding-right: 0; border-right: 0; }
+.cols3 > div:last-child { padding-left: 0; }
+.cols3 .h3 { margin-bottom: 2.5mm; }
+
+/* ---------- 15 Governance ---------- */
+.list--onblue li { border-color: var(--blue-rule); }
+
+/* ---------- 16 Org chart + map ---------- */
+.org-top { position: absolute; z-index: 1; background: var(--blue); color: #fff; text-align: center; padding: 3.6mm 4mm 4mm; }
+.org-top .t { font-size: 14pt; font-weight: 700; line-height: 1.4; }
+.org-top .s { font-size: 11.5pt; line-height: 1.4; }
+.org-line { position: absolute; background: var(--muted); }
+.org-node { position: absolute; text-align: center; }
+.org-node .t { font-size: 13pt; font-weight: 700; line-height: 1.4; }
+.org-node .s { font-size: 11.5pt; line-height: 1.75; color: var(--muted); }
+.map { display: block; width: 100%; height: auto; overflow: visible; }
+.map-outline { fill: none; stroke: #8A94A6; stroke-width: 2.2; stroke-linejoin: round; }
+.map-link { stroke: var(--blue); stroke-width: 2.2; stroke-dasharray: 2 9; stroke-linecap: round; }
+.map-dot { fill: var(--blue); }
+.map-dot--hq { fill: var(--yellow); }
+.map-label { font-family: 'Cairo'; font-size: 31px; font-weight: 700; fill: var(--ink); direction: rtl; }
+.map-note { font-weight: 400; fill: var(--muted); font-size: 28px; }
+
+/* ---------- 17 Reasons ---------- */
+.reasons li { display: grid; grid-template-columns: 30mm 1fr; align-items: baseline; padding: 5mm 0 5.4mm; }
+.reasons .n { font-size: 28pt; font-weight: 700; line-height: 1; color: var(--blue); direction: ltr; text-align: right; }
+.reasons .t { font-size: 16pt; font-weight: 600; line-height: 1.45; }
+
+/* ---------- 18 Back cover ---------- */
+.contact-big { font-size: 40pt; font-weight: 700; line-height: 1; }
+.branches { list-style: none; }
+.branches li { display: flex; justify-content: space-between; border-top: 0.5pt solid var(--blue-rule); padding: 2mm 0; font-size: 12pt; line-height: 1.5; }
+.branches li:last-child { border-bottom: 0.5pt solid var(--blue-rule); }
+
+/* ---------- 11 Tech list ---------- */
+.tech li { grid-template-columns: 67.9mm 1fr; }
+.steps-inline b { font-weight: 700; margin-left: 1.6mm; }
+.steps-inline .gap { display: inline-block; width: 7mm; }
+.h1, .statement, .cover-title, .mission { text-wrap: balance; }
