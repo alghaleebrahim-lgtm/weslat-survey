@@ -37,8 +37,8 @@
 html, body { margin: 0; padding: 0; background: #fff; }
 body {
   font-family: 'Cairo', sans-serif;
-  font-size: 11pt;
-  line-height: 1.7;
+  font-size: 12.5pt;
+  line-height: 1.75;
   color: var(--ink);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -61,7 +61,7 @@ svg { display: block; overflow: visible; }
   position: absolute; right: 20mm; left: 20mm; bottom: 10mm;
   padding-top: 2.4mm; border-top: 0.5pt solid var(--rule);
   display: flex; justify-content: space-between;
-  font-size: 8.5pt; font-weight: 500; line-height: 1.4; color: var(--muted); z-index: 5;
+  font-size: 9pt; font-weight: 500; line-height: 1.4; color: var(--muted); z-index: 5;
 }
 .footer b { color: var(--blue); font-weight: 800; }
 .bg-blue .footer, .footer.on-blue { color: var(--on-blue-muted); border-color: var(--on-blue-rule); }
@@ -70,17 +70,17 @@ svg { display: block; overflow: visible; }
 .bg-navy .footer b { color: var(--yellow); }
 
 /* ---------- Type ---------- */
-.display { font-size: 62pt; font-weight: 900; line-height: 1.08; text-wrap: balance; }
-.h1 { font-size: 34pt; font-weight: 800; line-height: 1.2; text-wrap: balance; }
-.h1--l { font-size: 38pt; }
-.h1--s { font-size: 30pt; }
-.h2 { font-size: 22pt; font-weight: 800; line-height: 1.25; }
-.h3 { font-size: 15pt; font-weight: 700; line-height: 1.4; }
-.lead { font-size: 13pt; font-weight: 400; line-height: 1.7; }
-.body { font-size: 11pt; font-weight: 400; line-height: 1.7; }
+.display { font-size: 74pt; font-weight: 900; line-height: 1.08; text-wrap: balance; }
+.h1 { font-size: 40pt; font-weight: 800; line-height: 1.2; text-wrap: balance; }
+.h1--l { font-size: 46pt; }
+.h1--s { font-size: 34pt; }
+.h2 { font-size: 26pt; font-weight: 800; line-height: 1.25; }
+.h3 { font-size: 18pt; font-weight: 700; line-height: 1.4; }
+.lead { font-size: 15pt; font-weight: 400; line-height: 1.7; }
+.body { font-size: 12.5pt; font-weight: 400; line-height: 1.75; }
 .body p + p { margin-top: 3.6mm; }
-.caption { font-size: 9pt; font-weight: 500; line-height: 1.45; }
-.kicker { font-size: 11pt; font-weight: 700; line-height: 1.4; color: var(--blue); }
+.caption { font-size: 10pt; font-weight: 500; line-height: 1.45; }
+.kicker { font-size: 13pt; font-weight: 700; line-height: 1.4; color: var(--blue); }
 .y { color: var(--yellow); }
 .b { color: var(--blue); }
 .w { color: #fff; }
@@ -94,8 +94,8 @@ svg { display: block; overflow: visible; }
 
 /* Yellow bar callout: "القيمة للتاجر" */
 .value { background: var(--yellow); color: var(--navy); padding: 4.5mm 6mm 5mm; }
-.value .tag { font-size: 11pt; font-weight: 900; line-height: 1.4; }
-.value p { font-size: 13pt; font-weight: 700; line-height: 1.5; }
+.value .tag { font-size: 12.5pt; font-weight: 900; line-height: 1.4; }
+.value p { font-size: 15pt; font-weight: 700; line-height: 1.5; }
 
 /* Yellow check bullets */
 .checks li { position: relative; padding: 2.6mm 9mm 2.8mm 0; border-top: 0.5pt solid var(--on-blue-rule); line-height: 1.55; }
@@ -116,101 +116,133 @@ svg { display: block; overflow: visible; }
 .cover-map { position: absolute; left: -40mm; width: 200mm; top: 164mm;
   --map-stroke: #5C7BDE; --map-sw: 3; --route: var(--yellow); --route-sw: 11; --dot: #fff; --dot-ring: var(--blue); --hq: var(--yellow); }
 .cover-foot { position: absolute; right: 20mm; left: 20mm; bottom: 14mm; display: flex; justify-content: space-between; align-items: baseline;
-  border-top: 0.5pt solid var(--on-blue-rule); padding-top: 3mm; font-size: 9.5pt; line-height: 1.4; }
-.cover-foot .tag { font-size: 11.5pt; font-weight: 800; }
+  border-top: 0.5pt solid var(--on-blue-rule); padding-top: 3mm; font-size: 11pt; line-height: 1.4; }
+.cover-foot .tag { font-size: 14pt; font-weight: 800; }
 
 /* ---------- 02 Story ---------- */
-.stat-xl { font-size: 130pt; font-weight: 900; line-height: 0.95; color: var(--yellow); }
+.stat-xl { font-size: 170pt; font-weight: 900; line-height: 0.95; color: var(--yellow); }
 
 /* ---------- 03 Time bars ---------- */
 .bars .row { display: grid; grid-template-columns: 30mm 1fr; align-items: center; column-gap: 5mm; }
 .bars .row + .row { margin-top: 8mm; }
-.bars .lbl { font-size: 13pt; font-weight: 800; line-height: 1.3; }
+.bars .lbl { font-size: 15pt; font-weight: 800; line-height: 1.3; }
 .bars .bar { display: flex; height: 22mm; }
-.bars .seg { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11pt; font-weight: 700; line-height: 1.3; color: #fff; padding: 0 3mm; }
+.bars .seg { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12.5pt; font-weight: 700; line-height: 1.3; color: #fff; padding: 0 3mm; }
 .seg--ship { background: var(--shipping-gray); }
 .seg--grow { background: var(--blue); }
-.seg--weslat { background: var(--yellow); color: var(--navy) !important; font-size: 9.5pt !important; }
+.seg--weslat { background: var(--yellow); color: var(--navy) !important; font-size: 11pt !important; }
 .bars .scale { display: grid; grid-template-columns: 30mm 1fr; column-gap: 5mm; margin-top: 3mm; }
-.bars .scale > div:last-child { display: flex; justify-content: space-between; font-size: 9pt; font-weight: 500; color: var(--muted); }
+.bars .scale > div:last-child { display: flex; justify-content: space-between; font-size: 10pt; font-weight: 500; color: var(--muted); }
 
 /* ---------- 04 Stats strip ---------- */
 .stats { display: flex; }
 .stats > div { flex: 1; padding: 0 6mm; border-right: 0.5pt solid var(--on-navy-rule); }
 .stats > div:first-child { padding-right: 0; border-right: 0; }
 .stats .v { font-size: 76pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
-.stats .l { white-space: nowrap; font-size: 11pt; font-weight: 600; line-height: 1.4; margin-top: 3mm; color: #fff; }
+.stats .l { white-space: nowrap; font-size: 13pt; font-weight: 600; line-height: 1.4; margin-top: 3mm; color: #fff; }
 
 /* ---------- 05 Values row ---------- */
 .values { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 5mm; }
 .values > div { border-top: 1.2mm solid var(--yellow); padding-top: 4mm; }
-.values .vn { font-size: 22pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
-.values .vt { font-size: 13pt; font-weight: 800; line-height: 1.4; margin-top: 3mm; }
-.values .vd { font-size: 11pt; line-height: 1.55; margin-top: 1.5mm; color: var(--on-navy-muted); }
+.values .vn { font-size: 26pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
+.values .vt { font-size: 15pt; font-weight: 800; line-height: 1.4; margin-top: 3mm; }
+.values .vd { font-size: 12.5pt; line-height: 1.55; margin-top: 1.5mm; color: var(--on-navy-muted); }
 
 /* ---------- 06 Value blocks ---------- */
-.vnum { font-size: 34pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
-.vblock .t { font-size: 17pt; font-weight: 800; line-height: 1.35; margin-top: 2mm; }
-.vblock .d { font-size: 11pt; line-height: 1.6; margin-top: 1mm; }
+.vnum { font-size: 40pt; font-weight: 900; line-height: 1; color: var(--yellow); direction: ltr; text-align: right; }
+.vblock .t { font-size: 20pt; font-weight: 800; line-height: 1.35; margin-top: 2mm; }
+.vblock .d { font-size: 13pt; line-height: 1.6; margin-top: 1mm; }
 .vgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10mm; row-gap: 7mm; }
 .vgrid .vblock { border-top: 0.5pt solid var(--rule); padding-top: 4mm; }
 
 /* ---------- 09 Split ---------- */
-.split-title { font-size: 34pt; font-weight: 900; line-height: 1.1; }
-.split-sub { font-size: 15pt; font-weight: 700; line-height: 1.4; margin-top: 2mm; }
+.split-title { font-size: 40pt; font-weight: 900; line-height: 1.1; }
+.split-sub { font-size: 18pt; font-weight: 700; line-height: 1.4; margin-top: 2mm; }
 
 /* ---------- 11 Platform list ---------- */
 .feat li { padding: 4mm 0 4.4mm; border-top: 0.5pt solid var(--on-navy-rule); }
 .feat li:last-child { border-bottom: 0.5pt solid var(--on-navy-rule); }
-.feat .t { font-size: 14.5pt; font-weight: 800; line-height: 1.4; color: #fff; }
+.feat .t { font-size: 17pt; font-weight: 800; line-height: 1.4; color: #fff; }
 .feat .t span { color: var(--yellow); margin-left: 3mm; }
-.feat .d { font-size: 11pt; line-height: 1.6; color: var(--on-navy-muted); }
+.feat .d { font-size: 12.5pt; line-height: 1.6; color: var(--on-navy-muted); }
 
 /* ---------- 12 Solutions ---------- */
 .sol li { padding: 7mm 0 7.5mm; border-top: 0.5pt solid var(--rule); }
 .sol li:last-child { border-bottom: 0.5pt solid var(--rule); }
-.sol .t { font-size: 15pt; font-weight: 800; line-height: 1.4; }
-.sol .d { font-size: 11pt; line-height: 1.6; color: var(--muted); }
+.sol .t { font-size: 18pt; font-weight: 800; line-height: 1.4; }
+.sol .d { font-size: 12.5pt; line-height: 1.6; color: var(--muted); }
 
 /* ---------- 13 Journey ---------- */
-.stop-t { font-size: 11.5pt; font-weight: 800; line-height: 1.35; }
-.stop-d { font-size: 11pt; line-height: 1.5; color: var(--muted); }
+.stop-t { font-size: 14pt; font-weight: 800; line-height: 1.35; }
+.stop-d { font-size: 12.5pt; line-height: 1.5; color: var(--muted); }
 
 /* ---------- 14 Sector blocks ---------- */
 .sector { position: absolute; padding: 9mm 9mm 0 9mm; }
-.sector .sn { font-size: 13pt; font-weight: 900; line-height: 1; direction: ltr; text-align: right; }
-.sector .t { font-size: 20pt; font-weight: 800; line-height: 1.25; margin-top: 4mm; }
-.sector .d { font-size: 11.5pt; line-height: 1.6; margin-top: 3mm; }
+.sector .sn { font-size: 15pt; font-weight: 900; line-height: 1; direction: ltr; text-align: right; }
+.sector .t { font-size: 24pt; font-weight: 800; line-height: 1.25; margin-top: 4mm; }
+.sector .d { font-size: 14pt; line-height: 1.6; margin-top: 3mm; }
 
 /* ---------- 15 Network ---------- */
 .net-map { --map-stroke: var(--navy); --map-sw: 3; --map-fill: var(--tint); --route: var(--yellow); --route-sw: 10; --dot: var(--blue); --dot-ring: #fff; --hq: var(--yellow); --label: var(--navy); --label-note: var(--blue); --label-size: 36px; }
 
 /* ---------- 16 Standards ---------- */
-.stat-hours { white-space: nowrap; font-size: 48pt; font-weight: 900; line-height: 1; color: var(--yellow); }
+.stat-hours { white-space: nowrap; font-size: 56pt; font-weight: 900; line-height: 1; color: var(--yellow); }
 
 /* ---------- 17 Leadership ---------- */
 .portrait { position: absolute; overflow: hidden; background: var(--tint); }
 .portrait > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; z-index: 2; filter: url(#duotone); }
-.portrait .initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 72pt; font-weight: 800; line-height: 1; color: var(--blue); }
-.leader-name { font-size: 18.5pt; font-weight: 800; line-height: 1.3; }
-.leader-role { font-size: 11pt; font-weight: 700; line-height: 1.4; color: var(--blue); margin-top: 1mm; }
-.leader-bio { font-size: 11pt; line-height: 1.7; margin-top: 3mm; }
+.portrait .initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 84pt; font-weight: 800; line-height: 1; color: var(--blue); }
+.leader-name { font-size: 22pt; font-weight: 800; line-height: 1.3; }
+.leader-role { font-size: 13pt; font-weight: 700; line-height: 1.4; color: var(--blue); margin-top: 1mm; }
+.leader-bio { font-size: 12.5pt; line-height: 1.7; margin-top: 3mm; }
 
 /* ---------- 18 Back cover ---------- */
-.big-phone { font-size: 38pt; font-weight: 900; line-height: 1; color: var(--yellow); }
+.big-phone { font-size: 46pt; font-weight: 900; line-height: 1; color: var(--yellow); }
 .branch-row { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 4mm; }
 .branch-row > div { border-top: 0.5pt solid var(--on-blue-rule); padding-top: 2.5mm; }
-.branch-row .c { font-size: 11pt; font-weight: 800; line-height: 1.4; }
-.branch-row .p { font-size: 9.5pt; font-weight: 500; line-height: 1.4; color: var(--on-blue-muted); }
+.branch-row .c { font-size: 13pt; font-weight: 800; line-height: 1.4; }
+.branch-row .p { font-size: 11pt; font-weight: 500; line-height: 1.4; color: var(--on-blue-muted); }
 
 /* ---------- 07 Services index ---------- */
-.svc-index { display: flex; flex-wrap: wrap; gap: 2mm 7mm; border-top: 0.5pt solid var(--on-blue-rule); padding-top: 5mm; font-size: 11pt; font-weight: 700; line-height: 1.5; }
+.svc-index { display: flex; flex-wrap: wrap; gap: 2mm 7mm; border-top: 0.5pt solid var(--on-blue-rule); padding-top: 5mm; font-size: 13pt; font-weight: 700; line-height: 1.5; }
 .svc-index li { position: relative; padding-right: 4.5mm; }
 .svc-index li::before { content: ""; position: absolute; right: 0; top: 2.6mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--yellow); }
 
 /* ---------- 12 Tech in the field ---------- */
-.list-tech li { display: grid; grid-template-columns: 60mm 1fr; column-gap: 6mm; align-items: baseline; padding: 3.4mm 0 3.6mm; border-top: 0.5pt solid var(--rule); }
+.list-tech li { display: grid; grid-template-columns: 60mm 1fr; column-gap: 6mm; align-items: baseline; padding: 2.4mm 0 2.6mm; border-top: 0.5pt solid var(--rule); }
 .list-tech li:last-child { border-bottom: 0.5pt solid var(--rule); }
 .list-tech .n { font-size: 14pt; font-weight: 800; line-height: 1.4; }
-.list-tech .d { font-size: 11pt; line-height: 1.6; color: var(--muted); }
-.result { margin-top: 7mm; font-size: 16pt; font-weight: 800; line-height: 1.45; color: var(--blue); }
+.list-tech .d { font-size: 12.5pt; line-height: 1.65; color: var(--muted); }
+.result { margin-top: 5mm; font-size: 16pt; font-weight: 800; line-height: 1.45; color: var(--blue); }
+
+/* ================= Headline system (v2.1b) =================
+   Inner pages: kicker line at 18mm (fixed 6.5mm + 1.5mm gap, empty spacer if no kicker),
+   so every page headline starts at 26mm on the 20mm right edge. Headline → 8mm → body. */
+.hk { display: block; height: 6.5mm; line-height: 6.5mm; margin: 0 0 1.5mm !important; white-space: nowrap; }
+.h1, .h1--l, .h1--s { font-size: 28pt; font-weight: 700; line-height: 1.3; margin-top: 0 !important; text-wrap: balance; }
+.display { font-weight: 800; line-height: 1.3; text-wrap: balance; }
+.split-title { font-size: 28pt; font-weight: 700; line-height: 1.3; }
+.split-sub { font-size: 16pt; font-weight: 700; margin-top: 1mm; }
+
+/* Big stats 60–84pt, 800 */
+.stat-xl { font-size: 84pt; font-weight: 800; line-height: 1; }
+.stats .v { font-size: 64pt; font-weight: 800; }
+.stat-hours { font-size: 60pt; font-weight: 800; }
+
+/* Numbered labels 22–26pt, 700 */
+.vnum { font-size: 26pt; font-weight: 700; line-height: 1; }
+.hk.vnum { font-size: 26pt; line-height: 6.5mm; height: 6.5mm; }
+.values .vn { font-size: 24pt; font-weight: 700; }
+.sector .sn { font-size: 22pt; font-weight: 700; }
+
+/* Sub-headlines 16–17pt, 700 */
+.h2 { font-size: 17pt; font-weight: 700; line-height: 1.4; }
+.h3 { font-size: 17pt; font-weight: 700; }
+.vblock .t { font-size: 17pt; font-weight: 700; }
+.sector .t { font-size: 17pt; font-weight: 700; line-height: 1.35; }
+.feat .t, .sol .t { font-size: 17pt; font-weight: 700; }
+.list-tech .n { font-size: 16pt; font-weight: 700; }
+.leader-name { font-size: 17pt; font-weight: 700; }
+.values .vt { font-size: 16pt; font-weight: 700; }
+.stop-t { font-size: 16pt; font-weight: 700; }
+.result { font-size: 17pt; font-weight: 700; }

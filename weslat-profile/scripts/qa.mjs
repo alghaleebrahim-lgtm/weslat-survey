@@ -69,6 +69,13 @@ const layout = await page.evaluate(() => {
         out.push(`p${n}: text runs into footer zone: ${label}`);
       if (e.scrollWidth > e.clientWidth + 1 && cs.overflow !== 'visible') out.push(`p${n}: clipped text: ${label}`);
     }
+    // headline grid: every inner-page headline starts at 26mm from the top, on the 20mm right edge
+    const h = sec.querySelector('.h1, .split-title');
+    if (h && i > 0 && i < 18 && !sec.querySelector('.display')) {
+      const hr = h.getBoundingClientRect();
+      const top = (hr.top - P.top) / mm, right = (P.right - hr.right) / mm;
+      if (Math.abs(top - 26) > 0.6 || Math.abs(right - 20) > 0.6) out.push(`p${n}: headline at top ${top.toFixed(1)}mm / right ${right.toFixed(1)}mm (expected 26 / 20)`);
+    }
     // headlines: max 2 lines
     for (const h of sec.querySelectorAll('.h1')) {
       const lh = parseFloat(getComputedStyle(h).lineHeight);
