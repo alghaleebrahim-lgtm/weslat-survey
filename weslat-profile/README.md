@@ -2,10 +2,15 @@
 
 A4 portrait, 19 pages, Arabic RTL. Plain HTML/CSS rendered to PDF with Playwright.
 
+Two editions are built from the same text:
+
+- **Designed edition:** `src/profile.html` → `dist/Weslat-Corporate-Profile-2026.pdf`, `preview/`
+- **Typographic edition** (same text, font and colours; no graphics): `src/profile-text.html` → `dist/Weslat-Corporate-Profile-2026-Text.pdf`, `preview/text/`
+
 ```bash
 npm install
 npm run build   # → dist/Weslat-Corporate-Profile-2026.pdf + preview/page-01…19.png + preview/contact-sheet.png
-npm run qa      # forbidden words + dialect scan, 19 A4 pages, overflow, headline lines, text ≥ 8.5pt, Cairo only
+npm run qa      # both editions: forbidden words + dialect scan, 19 A4 pages, overflow, headline lines, text ≥ 8.5pt, Cairo only
 ```
 
 ## Adding photos

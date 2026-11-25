@@ -6,8 +6,8 @@ import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const src = path.join(root, 'src/profile.html');
-const pdf = path.join(root, 'dist/Weslat-Corporate-Profile-2026.pdf');
+const src = path.join(root, process.env.QA_SRC || 'src/profile.html');
+const pdf = path.join(root, process.env.QA_PDF || 'dist/Weslat-Corporate-Profile-2026.pdf');
 const problems = [];
 const ok = (msg) => console.log(`  ✓ ${msg}`);
 

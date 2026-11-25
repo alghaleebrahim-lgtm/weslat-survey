@@ -88,6 +88,33 @@ try {
   } else {
     console.log('All photos present.');
   }
+
+  // 5. Typographic edition (same text, font and colours; no graphics):
+  //    dist/Weslat-Corporate-Profile-2026-Text.pdf + preview/text/page-XX.png + preview/text/contact-sheet.png
+  const textSrc = path.join(root, 'src/profile-text.html');
+  if (fs.existsSync(textSrc)) {
+    const textPdf = path.join(root, 'dist/Weslat-Corporate-Profile-2026-Text.pdf');
+    const textDir = path.join(previewDir, 'text');
+    fs.mkdirSync(textDir, { recursive: true });
+    const tp = await browser.newPage({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 2 });
+    await tp.goto(pathToFileURL(textSrc).href, { waitUntil: 'networkidle' });
+    await tp.evaluate(() => document.fonts.ready);
+    await tp.pdf({ path: textPdf, printBackground: true, preferCSSPageSize: true });
+    const n = await tp.$$eval('section.page', (xs) => xs.length);
+    for (let i = 0; i < n; i++) {
+      await tp.evaluate((k) => document.querySelectorAll('section.page').forEach((x, j) => (x.style.display = j === k ? '' : 'none')), i);
+      await tp.screenshot({ path: path.join(textDir, `page-${String(i + 1).padStart(2, '0')}.png`), clip: { x: 0, y: 0, width: 793.7, height: 1122.5 } });
+    }
+    await tp.close();
+    const tSheet = path.join(textDir, '.contact-sheet.html');
+    fs.writeFileSync(tSheet, `<body style="margin:0;background:#5b6270;display:grid;grid-template-columns:repeat(6,300px);gap:14px;padding:14px;width:max-content">${Array.from({ length: n }, (_, i) => `<img style="width:300px;display:block" src="page-${String(i + 1).padStart(2, '0')}.png">`).join('')}</body>`);
+    const ts = await browser.newPage({ viewport: { width: 1900, height: 800 }, deviceScaleFactor: 1.5 });
+    await ts.goto(pathToFileURL(tSheet).href, { waitUntil: 'networkidle' });
+    await ts.screenshot({ path: path.join(textDir, 'contact-sheet.png'), fullPage: true });
+    await ts.close();
+    fs.rmSync(tSheet);
+    console.log(`Typographic edition: ${path.relative(root, textPdf)} + ${n} pages in preview/text/`);
+  }
 } finally {
   await browser.close();
 }

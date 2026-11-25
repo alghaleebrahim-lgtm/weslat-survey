@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "qa": "node scripts/qa.mjs"
+    "qa": "node scripts/qa.mjs && QA_SRC=src/profile-text.html QA_PDF=dist/Weslat-Corporate-Profile-2026-Text.pdf node scripts/qa.mjs"
   },
   "devDependencies": {
     "playwright": "1.63.0",
