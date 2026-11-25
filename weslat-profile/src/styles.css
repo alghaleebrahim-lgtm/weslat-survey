@@ -260,3 +260,9 @@ svg { display: block; overflow: visible; }
 .leader + .leader { padding-left: 0; padding-right: 10mm; border-right: 0.7mm solid var(--yellow); }
 .leader .portrait { position: relative; width: 45mm; height: 55mm; margin-bottom: 6mm; }
 .leader .portrait:not(:has(img)) { display: none; }
+/* 18: both columns share rows (photo / name / role / bio) so names line up even when only one portrait exists */
+.leaders { grid-template-rows: auto auto auto auto; }
+.leader { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; }
+.leader .portrait:not(:has(img)) { display: block; visibility: hidden; height: 0; margin: 0; }
+/* head-and-shoulders crop of the supplied portrait */
+.leader .portrait img[src$="gm-musab.jpg"] { object-view-box: inset(16.5% 22.9% 25% 22.9%); }
